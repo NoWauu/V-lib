@@ -30,7 +30,7 @@ file named `.env`. The structure should look like this:
 SECRET_KEY="insert your key here"
 ```
 
-You can use a key generator found on internet.
+You can use a [key generator](https://djecrety.ir/) found on internet.
 
 ## Prerequisites
 
