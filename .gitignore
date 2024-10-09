@@ -1,2 +1,2 @@
-# Serveur django
-Pipfile*        
+# Variables d'environnement
+.env
