@@ -40,5 +40,3 @@ def get_station_data(station_id):
             return station
 
     return -1
-
-print(get_station_data(19331959862))
