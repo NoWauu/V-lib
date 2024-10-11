@@ -35,7 +35,11 @@ def get_station_data(station_id):
     result = result.json()
 
     for station in result["data"]["stations"]:
-        if station["station_id"] == station_id:
+        if station["is_installed"] == 0:
+            return -1
+        elif station["station_id"] == station_id:
+            for to_remove in ["num_bikes_available", "num_docks_available", "is_install"]:
+                del station[to_remove]
             return station
 
     return -1
