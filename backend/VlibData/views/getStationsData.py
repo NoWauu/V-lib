@@ -8,8 +8,10 @@ def get_station_data_request(req: HttpRequest) -> JsonResponse:
     
     :return: A dictionnary containing the data of a given velib station
     """
+    # Get the id of the station in the request parameters
     station_id = req.GET.get('id')
     
+    # If no id provided, return an error
     if not station_id:
         return JsonResponse({"error": "No station id provided"}, status=400)
     
@@ -27,11 +29,16 @@ def get_station_data(station_id):
     :param station_id: the id of the station
     :return: the data about the station if found, -1 otherwise
     """
+
+    # Get the velib stations list
+    # Handles exceptions
     try:
         result = requests.get(URL).json()
     except:
         return "An error occurred while fetching the station data"
     
+
+    # Returns station if installed and removes useless data
     for station in result["data"]["stations"]:
 
         if station["station_id"] == station_id and station["is_installed"] == 1:
