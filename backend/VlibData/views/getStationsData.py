@@ -37,8 +37,10 @@ def get_station_data(station_id):
     except:
         return "An error occurred while fetching the station data"
     
+
     # Returns station if installed and removes useless data
     for station in result["data"]["stations"]:
+
         if station["station_id"] == station_id and station["is_installed"] == 1:
             for to_remove in ["num_bikes_available", "num_docks_available", "is_install"]:
                 del station[to_remove]
