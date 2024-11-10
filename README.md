@@ -23,7 +23,7 @@ JSON is central to the application, as all API responses are formatted using it.
 
 The project is split into 3 folders:
 
-`backend` contains the API that interacts with the database and servers data about the Vélib' stations to the web server. 
+`backend` contains the backend server, with the API that interacts with the database and serves data to the web server. 
 
 `rendu` contains all of the reports made when reaching a specific point in the creation of the application.
 
