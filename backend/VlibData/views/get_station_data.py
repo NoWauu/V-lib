@@ -25,7 +25,7 @@ def get_station_data_request(req: HttpRequest) -> JsonResponse:
     
     station_id = int(station_id)
     
-    return JsonResponse({"data": get_station_data(station_id)}, safe=False)
+    return JsonResponse(get_station_data(station_id), safe=False)
 
 
 def get_station_data(station_id):

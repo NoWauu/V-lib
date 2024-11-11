@@ -32,7 +32,7 @@ class TestViews(SimpleTestCase):
             'num_bikes_available_types', 'numDocksAvailable',
             'is_returning', 'is_renting', 'last_reported',
             'last_reported', 'stationCode'
-        ]: self.assertIn(key, response_data['data'])
+        ]: self.assertIn(key, response_data)
 
 
     def test_get_stations_request_valid_data(self):
