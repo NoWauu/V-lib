@@ -1,5 +1,13 @@
+"""
+This file contains the functions which are used to
+retrieve data about all the velib stations
+"""
+
 import requests
 from django.http import HttpRequest, JsonResponse
+
+
+URL = "https://velib-metropole-opendata.smovengo.cloud/opendata/Velib_Metropole/station_information.json"
 
 
 def get_stations_request(req: HttpRequest) -> JsonResponse:
@@ -9,9 +17,8 @@ def get_stations_request(req: HttpRequest) -> JsonResponse:
     :return: a dictionnary containing the list of all velib stations
     """
     
-    return JsonResponse({"stations": get_stations()}, safe=False)
+    return JsonResponse(get_stations()['data'], safe=False)
 
-URL = "https://velib-metropole-opendata.smovengo.cloud/opendata/Velib_Metropole/station_information.json"
 
 def get_stations():
     """

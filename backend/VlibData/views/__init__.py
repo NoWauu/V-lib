@@ -1,2 +1,2 @@
-from .getStations import get_stations_request
-from .getStationsData import get_station_data_request
+from .get_stations import get_stations_request
+from .get_station_data import get_station_data_request

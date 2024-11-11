@@ -1,5 +1,13 @@
+"""
+This file contains the functions which are used to
+retrieve data about a given velib station
+"""
+
 import requests
 from django.http import HttpRequest, JsonResponse
+
+
+URL = "https://velib-metropole-opendata.smovengo.cloud/opendata/Velib_Metropole/station_status.json"
 
 
 def get_station_data_request(req: HttpRequest) -> JsonResponse:
@@ -17,10 +25,7 @@ def get_station_data_request(req: HttpRequest) -> JsonResponse:
     
     station_id = int(station_id)
     
-    return JsonResponse({"data": get_station_data(station_id)}, safe=False)
-
-
-URL = "https://velib-metropole-opendata.smovengo.cloud/opendata/Velib_Metropole/station_status.json"
+    return JsonResponse(get_station_data(station_id), safe=False)
 
 
 def get_station_data(station_id):
@@ -42,7 +47,7 @@ def get_station_data(station_id):
     for station in result["data"]["stations"]:
 
         if station["station_id"] == station_id and station["is_installed"] == 1:
-            for to_remove in ["num_bikes_available", "num_docks_available", "is_install"]:
+            for to_remove in ["num_bikes_available", "num_docks_available", "is_installed"]:
                 del station[to_remove]
             return station
 
