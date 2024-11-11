@@ -33,3 +33,22 @@ class TestViews(SimpleTestCase):
             'is_returning', 'is_renting', 'last_reported',
             'last_reported', 'stationCode'
         ]: self.assertIn(key, response_data['data'])
+
+
+    def test_get_stations_request_valid_data(self):
+        client = Client()
+        response = client.get(reverse('get-stations'))
+
+        self.assertEqual(response.status_code, 200)
+
+        # Parse the response
+        response_data = response.json()
+
+        for station in response_data['stations']:
+        # Check that the response contains the expected keys
+            for key in ['station_id', 'stationCode',
+                    'name', 'lat', 'lon', 'capacity']: 
+                self.assertIn(key, station)
+
+        # Check that the response contains at least one station
+        self.assertGreater(len(response_data['stations']), 0)

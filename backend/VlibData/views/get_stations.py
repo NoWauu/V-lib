@@ -17,7 +17,7 @@ def get_stations_request(req: HttpRequest) -> JsonResponse:
     :return: a dictionnary containing the list of all velib stations
     """
     
-    return JsonResponse({"stations": get_stations()}, safe=False)
+    return JsonResponse(get_stations()['data'], safe=False)
 
 
 def get_stations():
