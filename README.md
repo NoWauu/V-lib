@@ -2,7 +2,7 @@
 
 ## Overview
 
-V-lib is a full-stack application, available on  all platforms.
+V-lib is a full-stack application, available on all platforms.
 
 It includes a lot of features, and allows you to:
 * Look for Vélib' stations close to you in real time
