@@ -23,11 +23,19 @@ This is the structure of the folder:
 
 ## Server setup
 
-It is highly recommended to use a secret key with Django. To do that, create a
-file named `.env`. The structure should look like this:
+You need to use a secret key with Django. 
+You also need to configure the database credentials
+To do that, create a file named `.env`.
+The structure should look like this:
 
 ```
 SECRET_KEY="insert your key here"
+
+DB_NAME="your database name"
+DB_USER="name of the user in the database"
+DB_HOST="address of the database"
+DB_PORT="port used for PostgreSQL"
+DB_PASSWORD="the password of the user"
 ```
 
 You can use a [key generator](https://djecrety.ir/) found on internet.
