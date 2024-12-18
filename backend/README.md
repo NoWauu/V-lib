@@ -33,7 +33,7 @@ SECRET_KEY="insert your key here"
 
 DB_NAME="your database name"
 DB_USER="name of the user in the database"
-DB_HOST="adress of the database"
+DB_HOST="address of the database"
 DB_PORT="port used for PostgreSQL"
 DB_PASSWORD="the password of the user"
 ```
