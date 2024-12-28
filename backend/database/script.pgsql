@@ -1,8 +1,8 @@
 DROP TABLE IF EXISTS bikes CASCADE;
-DROP TABLE IF EXISTS location CASCADE;
+DROP TABLE IF EXISTS locations CASCADE;
+DROP TABLE IF EXISTS rents CASCADE;
 DROP TABLE IF EXISTS stations CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS rents CASCADE;
 
 CREATE TABLE users (
     id_user SERIAL PRIMARY KEY,
@@ -14,17 +14,19 @@ CREATE TABLE users (
     favorites INTEGER ARRAY
 );
 
-CREATE TABLE location (
+CREATE TABLE locations (
     id_location SERIAL PRIMARY KEY,
     latitude FLOAT NOT NULL,
-    longitude FLOAT NOT NULL
+    longitude FLOAT NOT NULL,
+    UNIQUE (latitude, longitude)
 );
 
 CREATE TABLE stations (
     id_station SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     location_id INT NOT NULL,
-    FOREIGN KEY (location_id) REFERENCES location(id_location) ON DELETE CASCADE
+    capacity INT NOT NULL,
+    FOREIGN KEY (location_id) REFERENCES locations(id_location) ON DELETE CASCADE
 );
 
 CREATE TABLE bikes (
