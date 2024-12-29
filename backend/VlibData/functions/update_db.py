@@ -1,25 +1,24 @@
 """ 
-Insert all the stations obtained with the API into the database
+Insert all the stations obtained with the API into the database 
 """
+#encore utile ?
 
 from ..views.get_stations import get_stations
 from ..models import Station, Location
 from .log import log_info, log_error
 
 
-def update_database() -> None:
+def update_database(STATIONS) -> None:
     """
-    Update the database with all the stations fetched from the API.
+    Update the database with all the given velib station.
+
+    Args:
+    STATIONS (dict): a list of velib stations
     
     Returns: None
     """
     
-    STATIONS = get_stations()
-    if isinstance(STATIONS, str):
-        log_error('DB : Error when fetching stations from the API of velib')
-        return
-    
-    # Data from the API
+    # Data from the given velib station
     STATIONS_LIST = STATIONS['data']['stations']
     STATIONS_NAMES_FROM_LIST = [ station['name'] for station in STATIONS_LIST ]
     
@@ -41,20 +40,20 @@ def update_database() -> None:
                     capacity=station['capacity'],
                     id_location = location_objet
                 )
-            log_info('DB : was empty and has been filled with data from the API.')
+            log_info('DB : was empty and has been filled with data from the given velib station.')
         elif set(Station.objects.values_list('name', flat=True)) == set(STATIONS_NAMES_FROM_LIST):
-            # Check if the stations in the database are the same as the ones in the API
+            # Check if the stations in the database are the same as the ones in the given velib station
             # Do nothing if they are the same
             log_info('DB : already up to date')
             return
         else:
-            # Get the stations that are not in the database but in the API
+            # Get the stations that are not in the database but in the given velib station
             stations_to_insert = [ station for station in STATIONS_LIST if station['name'] not in STATIONS_NAMES_FROM_DB ]
             for station in stations_to_insert:
                 location_obj, created = Location.objects.get_or_create(latitude=station['lat'], longitude=station['lon'])
                 Station.objects.get_or_create(name=station['name'], capacity=station['capacity'], id_location=location_obj)
                 
-            # Get the stations that are in the database but not in the API
+            # Get the stations that are in the database but not in the given velib station
             stations_to_delete = [ station for station in STATIONS_IN_DB if station.name not in STATIONS_NAMES_FROM_LIST ]
             for station in stations_to_delete:
                 station.delete()
@@ -63,4 +62,17 @@ def update_database() -> None:
     except Exception as e:
         log_error(f'DB : Error when updating : {str(e)}')
         return
+
+def update_db_with_velib():
+    """
+    Update the database with all the stations fetched from the API.
+    
+    Returns: None
+    """
+
+    STATIONS = get_stations()
+    if isinstance(STATIONS, str):
+        log_error('DB : Error when fetching stations from the API of velib')
+        return
+    update_database(STATIONS)
             
