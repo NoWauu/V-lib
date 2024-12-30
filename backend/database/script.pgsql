@@ -24,9 +24,9 @@ CREATE TABLE locations (
 CREATE TABLE stations (
     id_station SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
-    location_id INT NOT NULL,
+    id_location INT NOT NULL,
     capacity INT NOT NULL,
-    FOREIGN KEY (location_id) REFERENCES locations(id_location) ON DELETE CASCADE
+    FOREIGN KEY (id_location) REFERENCES locations(id_location) ON DELETE CASCADE
 );
 
 CREATE TABLE bikes (
