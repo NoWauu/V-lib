@@ -6,6 +6,6 @@ class VlibdataConfig(AppConfig):
     name = 'VlibData'
     def ready(self):
         # Update database at startup*
-        from .functions.update_db import update_database
-        update_database()
+        from .functions.update_db import update_database_with_velib
+        update_database_with_velib()
     

@@ -24,9 +24,11 @@ This is the structure of the folder:
 ## Server setup
 
 You need to use a secret key with Django. 
-You also need to configure the database credentials
+You can use a [key generator](https://djecrety.ir/) found on internet.
+You also need to configure the database credentials.
+
 To do that, create a file named `.env`.
-The structure should look like this:
+The structure must look like this:
 
 ```
 SECRET_KEY="insert your key here"
@@ -38,7 +40,6 @@ DB_PORT="port used for PostgreSQL"
 DB_PASSWORD="the password of the user"
 ```
 
-You can use a [key generator](https://djecrety.ir/) found on internet.
 
 ## Prerequisites
 
@@ -63,11 +64,7 @@ Finally, you can launch the server with:
 python manage.py runserver
 ``` 
 
-You might need to do:
+You might need to execute, if asked in the terminal:
 ```bash 
 python manage.py migrate
 ```
-
-Do it if it is asked in the terminal.
-
-

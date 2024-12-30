@@ -1,7 +1,7 @@
 """ 
-Insert all the stations obtained with the API into the database 
+Functions to update the tables related to 
+the stations and their location in the DB
 """
-#encore utile ?
 
 from ..views.get_stations import get_stations
 from ..models import Station, Location
@@ -63,7 +63,8 @@ def update_database(STATIONS) -> None:
         log_error(f'DB : Error when updating : {str(e)}')
         return
 
-def update_db_with_velib():
+
+def update_database_with_velib():
     """
     Update the database with all the stations fetched from the API.
     
