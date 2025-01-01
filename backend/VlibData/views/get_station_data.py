@@ -13,25 +13,24 @@ URL = "https://velib-metropole-opendata.smovengo.cloud/opendata/Velib_Metropole/
 def get_station_data_request(req: HttpRequest) -> JsonResponse:
     """ 
     Function called by the API
-    
+    :param req: The request object
     :return: A dictionnary containing the data of a given velib station
     """
     # Get the id of the station in the request parameters
-    station_id = req.GET.get('id')
+    station_code = req.GET.get('code')
     
     # If no id provided, return an error
-    if not station_id:
-        return JsonResponse({"error": "No station id provided"}, status=400)
+    if not station_code:
+        return JsonResponse({"error": "no station code provided"}, status=400)
     
-    station_id = int(station_id)
-    
-    return JsonResponse(get_station_data(station_id), safe=False)
+    station_data, status = get_station_data(station_code)
+    return JsonResponse(station_data, status=status, safe=False)
 
 
-def get_station_data(station_id):
+def get_station_data(station_code) -> tuple[dict, int]:
     """
     Retrieve data about a given velib station
-    :param station_id: the id of the station
+    :param station_code: the code of the station
     :return: the data about the station if found, -1 otherwise
     """
 
@@ -40,15 +39,13 @@ def get_station_data(station_id):
     try:
         result = requests.get(URL).json()
     except:
-        return "An error occurred while fetching the station data"
+        return {"error": "could not fetch data from the API"}, 500
     
-
     # Returns station if installed and removes useless data
     for station in result["data"]["stations"]:
-
-        if station["station_id"] == station_id and station["is_installed"] == 1:
+        if station["stationCode"] == str(station_code) and station["is_installed"] == 1:
             for to_remove in ["num_bikes_available", "num_docks_available", "is_installed"]:
                 del station[to_remove]
-            return station
+            return station, 200
 
-    return -1
+    return {"error": "station not found"}, 404

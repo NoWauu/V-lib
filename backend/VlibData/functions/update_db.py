@@ -3,9 +3,9 @@ Functions to update the tables related to
 the stations and their location in the DB
 """
 
-from ..views.get_stations import get_stations
 from ..models import Station, Location
 from .log import log_info, log_error
+from fetch_vlib import fetch_stations_from_vlib
 
 
 def update_database(STATIONS) -> None:
@@ -35,45 +35,46 @@ def update_database(STATIONS) -> None:
                     longitude=station['lon']
                 )
                 
-                station_obj, created = Station.objects.get_or_create(
+                Station.objects.get_or_create(
                     name=station['name'],
                     capacity=station['capacity'],
-                    id_location = location_objet
+                    id_location = location_objet,
+                    station_code = station['stationCode']
                 )
-            log_info('DB : was empty and has been filled with data from the given velib station.')
+            log_info('DB: was empty and has been filled with data from the given velib station')
         elif set(Station.objects.values_list('name', flat=True)) == set(STATIONS_NAMES_FROM_LIST):
             # Check if the stations in the database are the same as the ones in the given velib station
             # Do nothing if they are the same
-            log_info('DB : already up to date')
+            log_info('DB: already up to date')
             return
         else:
             # Get the stations that are not in the database but in the given velib station
             stations_to_insert = [ station for station in STATIONS_LIST if station['name'] not in STATIONS_NAMES_FROM_DB ]
             for station in stations_to_insert:
                 location_obj, created = Location.objects.get_or_create(latitude=station['lat'], longitude=station['lon'])
-                Station.objects.get_or_create(name=station['name'], capacity=station['capacity'], id_location=location_obj)
+                Station.objects.get_or_create(name=station['name'], capacity=station['capacity'], id_location=location_obj, station_code=station['stationCode'])
                 
             # Get the stations that are in the database but not in the given velib station
             stations_to_delete = [ station for station in STATIONS_IN_DB if station.name not in STATIONS_NAMES_FROM_LIST ]
             for station in stations_to_delete:
                 station.delete()
                 
-        log_info('DB : updated')
+        log_info('DB: updated')
     except Exception as e:
-        log_error(f'DB : Error when updating : {str(e)}')
+        log_error(f'DB: Error when updating : {str(e)}')
         return
 
 
-def update_database_with_velib():
+def update_database_with_velib() -> None:
     """
     Update the database with all the stations fetched from the API.
     
     Returns: None
     """
 
-    STATIONS = get_stations()
+    STATIONS = fetch_stations_from_vlib()
     if isinstance(STATIONS, str):
-        log_error('DB : Error when fetching stations from the API of velib')
+        log_error('DB: Could not update the database')
         return
     update_database(STATIONS)
             
