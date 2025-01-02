@@ -5,7 +5,7 @@ the stations and their location in the DB
 
 from ..models import Station, Location
 from .log import log_info, log_error
-from fetch_vlib import fetch_stations_from_vlib
+from .fetch_vlib import fetch_stations_from_vlib
 
 
 def update_database(STATIONS) -> None:

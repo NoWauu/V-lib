@@ -4,7 +4,7 @@ their API
 """
 
 import requests
-from log import log_error
+from .log import log_error
 
 
 URL = 'https://velib-metropole-opendata.smovengo.cloud/opendata/Velib_Metropole/station_information.json'
