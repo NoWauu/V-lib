@@ -28,10 +28,10 @@ def get_stations() -> dict:
     STATIONS_LIST = []
 
     for station in STATIONS_OBJ_LIST:
-        location = Location.objects.get(id_location=station.id_location)
+        location: Location = station.id_location
         if not location: continue
         STATIONS_LIST.append({
-            "code": station.station_code,
+            "station_code": station.station_code,
             "name": station.name,
             "capacity": station.capacity,
             "latitude": location.latitude,

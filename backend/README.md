@@ -66,5 +66,6 @@ python manage.py runserver
 
 You might need to execute, if asked in the terminal:
 ```bash 
+python manage.py makemigrations
 python manage.py migrate
 ```
