@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS bikes CASCADE;
 DROP TABLE IF EXISTS locations CASCADE;
 DROP TABLE IF EXISTS rents CASCADE;
 DROP TABLE IF EXISTS stations CASCADE;
@@ -25,8 +26,14 @@ CREATE TABLE stations (
     name TEXT NOT NULL,
     id_location INT NOT NULL,
     capacity INT NOT NULL,
-    station_code INT NOT NULL,
     FOREIGN KEY (id_location) REFERENCES locations(id_location) ON DELETE CASCADE
+);
+
+CREATE TABLE bikes (
+    id_station INT REFERENCES stations(id_station) ON DELETE CASCADE,
+    nb_electric INT NOT NULL,
+    nb_mechanic INT NOT NULL,
+    PRIMARY KEY (id_station)
 );
 
 CREATE TABLE rents (
