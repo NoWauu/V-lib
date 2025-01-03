@@ -2,12 +2,14 @@
 This file contains the test cases for the views in the VlibData app.
 """
 
-from django.test import SimpleTestCase, Client
+from django.test import SimpleTestCase, Client, TransactionTestCase
 from django.urls import reverse
 from VlibData.views import get_stations_request, get_station_data_request
+from .constants import STATIONS_LIST
+from VlibData.functions.update_db import update_database
 
 
-class TestViews(SimpleTestCase):
+class TestViews(TransactionTestCase):
 
     # Test if the get_station_data view returns an error when no parameters are provided
     def test_get_station_data_request_no_parameters(self):
@@ -18,7 +20,7 @@ class TestViews(SimpleTestCase):
     # Test the data returned by the get_station_data view
     def test_get_station_data_request_valid_data(self):
         client = Client()
-        response = client.get(reverse('get-station-data'), {'id': 213688169})
+        response = client.get(reverse('get-station-data'), {'code': 16107})
 
         # Check that the response status code is 200 (OK)
         self.assertEqual(response.status_code, 200)
@@ -36,6 +38,9 @@ class TestViews(SimpleTestCase):
 
 
     def test_get_stations_request_valid_data(self):
+        # Fill database with data
+        update_database(STATIONS_LIST)
+        
         client = Client()
         response = client.get(reverse('get-stations'))
 
@@ -46,8 +51,8 @@ class TestViews(SimpleTestCase):
 
         for station in response_data['stations']:
         # Check that the response contains the expected keys
-            for key in ['station_id', 'stationCode',
-                    'name', 'lat', 'lon', 'capacity']: 
+            for key in ['station_code',
+                    'name', 'latitude', 'longitude', 'capacity']: 
                 self.assertIn(key, station)
 
         # Check that the response contains at least one station

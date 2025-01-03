@@ -10,6 +10,7 @@ class Station(models.Model):
     name = models.CharField(max_length=255)
     capacity = models.IntegerField(db_column='capacity', null=True)
     id_location = models.ForeignKey('Location', models.CASCADE, db_column='id_location', null=True)
+    station_code = models.CharField(max_length=255, db_column='station_code', null=True)
     
     class Meta:
         db_table = 'stations'
