@@ -16,7 +16,7 @@ def get_station_data_request(req: HttpRequest) -> JsonResponse:
     :param req: The request object
     :return: A dictionnary containing the data of a given velib station
     """
-    # Get the id of the station in the request parameters
+    # Get the code of the station in the request parameters
     station_code = req.GET.get('code')
     
     # If no id provided, return an error
