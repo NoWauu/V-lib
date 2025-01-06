@@ -26,6 +26,7 @@ CREATE TABLE stations (
     name TEXT NOT NULL,
     id_location INT NOT NULL,
     capacity INT NOT NULL,
+    station_code INT NOT NULL,
     FOREIGN KEY (id_location) REFERENCES locations(id_location) ON DELETE CASCADE
 );
 
