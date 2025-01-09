@@ -6,7 +6,6 @@ The private key must be placed in the .env of the backend
 """
 
 import rsa
-from rsa import PublicKey
 
 KEYSIZE = 1024
 
