@@ -21,4 +21,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('data/', include('VlibData.urls')),
+    path('users/', include('VlibUsers.urls'))
 ]
