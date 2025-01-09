@@ -2,7 +2,7 @@
 Functions to decrypt and encrypt text with RSA
 """
 
-from constants import PRIVATE_KEY, PUBLIC_KEY
+from .constants import PRIVATE_KEY, PUBLIC_KEY
 import rsa
 
 
@@ -19,7 +19,8 @@ def decrypt_rsa(text: str) -> str | None:
 
     try:
         return rsa.decrypt(text, rsa.PrivateKey.load_pkcs1(PRIVATE_KEY)).decode()
-    except:
+    except Exception as e:
+        print(e)
         return None
 
 
@@ -35,6 +36,7 @@ def encrypt_to_rsa(text: str) -> str | None:
         return None
     
     try:
-        return rsa.encrypt(text.encode(), rsa.PublicKey.load_pkcs1(PUBLIC_KEY)).decode()
-    except:
+        return rsa.encrypt(text.encode(), rsa.PublicKey.load_pkcs1(PUBLIC_KEY))
+    except Exception as e:
+        print(e)
         return None
