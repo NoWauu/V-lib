@@ -8,6 +8,7 @@ django = "*"
 python-dotenv = "*"
 requests = "*"
 psycopg2 = "*"
+rsa = "*"
 
 [dev-packages]
 
