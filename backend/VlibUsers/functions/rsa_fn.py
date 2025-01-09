@@ -15,7 +15,7 @@ def decrypt_rsa(text: str) -> str | None:
     Returns: str if successful, None otherwise
     """
     if PRIVATE_KEY is None:
-        raise ValueError("RSA private key not found in .env file")
+        return None
 
     try:
         return rsa.decrypt(text, rsa.PrivateKey.load_pkcs1(PRIVATE_KEY)).decode()
@@ -32,8 +32,8 @@ def encrypt_to_rsa(text: str) -> str | None:
     Returns: str if successful, None otherwise
     """
     if PUBLIC_KEY is None:
-        raise ValueError("RSA public key not found in .env file")
-
+        return None
+    
     try:
         return rsa.encrypt(text.encode(), rsa.PublicKey.load_pkcs1(PUBLIC_KEY)).decode()
     except:
