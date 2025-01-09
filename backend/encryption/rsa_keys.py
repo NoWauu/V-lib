@@ -1,7 +1,7 @@
 """
 This script generates RSA keys.
 
-The public key must be placed in the .env of the webapp
+The public key must be placed in the .env of the webapp and the webapp
 The private key must be placed in the .env of the backend
 """
 
