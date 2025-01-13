@@ -1,8 +1,10 @@
 """ 
 Functions for registering a new user
 """
+
 import re
 from ..models import User 
+
 
 def email_valid(email):
     """Check if the email is valid"""
@@ -12,7 +14,8 @@ def email_valid(email):
         return False
     else:
         return True
-    
+
+
 def password_valid(password):
     """Check if the password is valid"""
     if password == "" or re.match(r"^ +$", password):
@@ -20,6 +23,7 @@ def password_valid(password):
     if len(password) < 8:
         return False
     return True
+
 
 def name_valid(name):
     """Check if the name is valid"""
@@ -29,6 +33,7 @@ def name_valid(name):
         return False
     return True
 
+
 def phone_number_valid(phone_number):
     """Check if the phone number is valid"""
     if phone_number == "":
@@ -37,6 +42,7 @@ def phone_number_valid(phone_number):
         return True
     return False
     
+
 def check_data_format(email, password, first_name, last_name, phone_number):
     """
     Check if the email and all the data
@@ -54,6 +60,7 @@ def check_data_format(email, password, first_name, last_name, phone_number):
     """
     return all([email_valid(email), password_valid(password), name_valid(first_name), name_valid(last_name), phone_number_valid(phone_number)])
 
+
 def email_already_in_use(email):
     """
     Check if the email is already in use
@@ -65,6 +72,7 @@ def email_already_in_use(email):
     if email in emails:
         return True
     return False
+
 
 def add_user_to_db():
     pass
