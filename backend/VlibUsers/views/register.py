@@ -4,8 +4,7 @@ View for registering a new user
 
 from django.http import JsonResponse, HttpRequest
 from ..functions.rsa_fn import decrypt_rsa
-from ..functions.register import email_already_in_use, add_user_to_db
-
+from ..functions.register import email_already_in_use, add_user_to_db, check_data_format
 
 def get_credentials(req: HttpRequest) -> tuple[str]:
     """Get all the data needed to create an user with the given request
@@ -23,26 +22,9 @@ def get_credentials(req: HttpRequest) -> tuple[str]:
     phone_number = req.POST.get('phone_number')
     
     return email, password, first_name, last_name, phone_number
-
-
-def check_data_format():
-    """
-    Check if the email and all the data
-    given to create a user is in the correct format
     
-    Args:
-        email (str): The email of the user
-        password (str): The password of the user
-        first_name (str): The first name of the user
-        last_name (str): The last name of the user
-        phone_number (str): The phone number of the user
-        
-    Returns : 
-        bool: True if the data is in the correct format, False otherwise
-    """
     if not email_already_in_use():
         pass
-
 
 def register_request(req: HttpRequest) -> JsonResponse:
     """Function used by the view to create a new user in the db
