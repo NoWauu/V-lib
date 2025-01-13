@@ -6,41 +6,30 @@ import re
 from ..models import User 
 
 
+EMAIL_REGEX = r"^[A-Za-z]+@[A-Za-z]+\.[A-Za-z]{2,3}$"
+PASSWORD_REGEX = r"^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}|:<>?~`[\]\\;'\/.,]).{8,}$"
+NAME_REGEX = r"^\s+$"
+PHONE_REGEX = r"^[0-9]{10}$"
+
+
 def email_valid(email):
     """Check if the email is valid"""
-    if email == "":
-        return False
-    if not re.match(r"^[A-Za-z]+@[A-Za-z]+\.[A-Za-z]{2,3}$", email):
-        return False
-    else:
-        return True
+    return bool(re.match(EMAIL_REGEX, email))
 
 
 def password_valid(password):
     """Check if the password is valid"""
-    if password == "" or re.match(r"^ +$", password):
-        return False
-    if len(password) < 8:
-        return False
-    return True
+    return bool(re.match(PASSWORD_REGEX, password))
 
 
 def name_valid(name):
     """Check if the name is valid"""
-    if name == "":
-        return False
-    if re.match(r"^ +$", name):
-        return False
-    return True
+    return bool(re.match(NAME_REGEX, name)) and len(name) >= 2
 
 
 def phone_number_valid(phone_number):
     """Check if the phone number is valid"""
-    if phone_number == "":
-        return False
-    if re.match(r"^[0-9]{10}$", phone_number):
-        return True
-    return False
+    return bool(re.match(PHONE_REGEX, phone_number))
     
 
 def check_data_format(email, password, first_name, last_name, phone_number):
@@ -64,6 +53,9 @@ def check_data_format(email, password, first_name, last_name, phone_number):
 def email_already_in_use(email):
     """
     Check if the email is already in use
+
+    Args:
+        email (str): The email to check
     
     Returns:
         bool: True if the email is already in use, False otherwise
