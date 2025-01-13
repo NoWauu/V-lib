@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS stations CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 
 CREATE TABLE users (
-    username TEXT PRIMARY KEY,
+    id_user SERIAL PRIMARY KEY,
     firstname TEXT NOT NULL,
     lastname TEXT NOT NULL,
     email TEXT NOT NULL,
