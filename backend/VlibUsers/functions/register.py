@@ -66,5 +66,24 @@ def email_already_in_use(email):
     return False
 
 
-def add_user_to_db():
-    pass
+def add_user_to_db(email: str, password: str, first_name: str, last_name: str, phone_number: str) -> bool:
+    """
+    Add a new user to the database
+
+    Args:
+        email (str): The email of the user
+        password (str): The password of the user
+        first_name (str): The first name of the user
+        last_name (str): The last name of the user
+        phone_number (str): The phone number of the user
+
+    Returns: 
+        bool: True if the user has been added to the database, False otherwise
+    """
+    
+    try:
+        user = User(email=email, password=password, first_name=first_name, last_name=last_name, phone_number=phone_number)
+        user.save()
+    except Exception:
+        return False
+    return True

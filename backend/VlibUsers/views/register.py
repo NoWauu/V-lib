@@ -22,9 +22,7 @@ def get_credentials(req: HttpRequest) -> tuple[str]:
     phone_number = req.POST.get('phone_number')
     
     return email, password, first_name, last_name, phone_number
-    
-    if not email_already_in_use():
-        pass
+
 
 def register_request(req: HttpRequest) -> JsonResponse:
     """Function used by the view to create a new user in the db
@@ -57,9 +55,13 @@ def register_request(req: HttpRequest) -> JsonResponse:
     if not check_data_format(email, password, first_name, last_name, phone_number):
         return JsonResponse({'error': 'Invalid data'}, status=400)
     
+    # Check if the email is already in use by another account
+    if email_already_in_use(email):
+        return JsonResponse({'error': 'Email already in use'}, status=400)
+    
     # Add the user to the db
-    if not add_user_to_db(email, password, first_name, last_name, phone_number):
-        return JsonResponse({'error': 'Failed to create user'}, status=500)
-    else:
+    if add_user_to_db(email, password, first_name, last_name, phone_number):
         return JsonResponse({'success': 'User created'}, status=201)
+    else:
+        return JsonResponse({'error': 'Failed to create user'}, status=500)
     
