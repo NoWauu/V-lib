@@ -5,12 +5,12 @@ import RegisterHeader from "@/components/forms/register/RegisterHeader";
 import RegisterForm from "@/components/forms/register/RegisterForm";
 
 export default function RegisterContent() {
-    return (
-        <TabsContent value="register">
-            <Card>
-                <RegisterHeader />
-                <RegisterForm />
-            </Card>
-        </TabsContent>
-    );
+  return (
+    <TabsContent value="register">
+      <Card>
+        <RegisterHeader/>
+        <RegisterForm/>
+      </Card>
+    </TabsContent>
+  );
 }

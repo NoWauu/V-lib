@@ -5,14 +5,14 @@ import LoginForm from "@/components/forms/login/LoginForm";
 
 
 export default function LoginContent() {
-    return (
-        <TabsContent value="login">
-            <Card>
-                <CardHeader>
-                    <CardTitle>Identifiants</CardTitle>
-                </CardHeader>
-                <LoginForm />
-            </Card>
-        </TabsContent>
-    );
+  return (
+    <TabsContent value="login">
+      <Card>
+        <CardHeader>
+          <CardTitle>Identifiants</CardTitle>
+        </CardHeader>
+        <LoginForm/>
+      </Card>
+    </TabsContent>
+  );
 }
