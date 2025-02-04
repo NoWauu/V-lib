@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     default: "Accueil • V-lib",
     template: "%s • V-lib"
   },
-  description: "Poulet"
+  description: "Projet universitaire, application de location de vélib."
 }
 
 export default function RootLayout({
