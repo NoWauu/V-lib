@@ -1,5 +1,5 @@
 import Wrapper from "@/components/wrappers/Wrapper"
-import LoginForm from "@/components/forms/LoginForm";
+import LoginTab from "@/components/forms/LoginTab";
 
 import type { Metadata } from "next";
 
@@ -11,7 +11,7 @@ export default function LoginRegister() {
 
   return (
     <Wrapper className="h-full min-h-screen flex items-center justify-center">
-      <LoginForm />
+      <LoginTab />
     </Wrapper>
   )
 }
