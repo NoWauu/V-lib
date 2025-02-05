@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=255)),
                 ('capacity', models.IntegerField(db_column='capacity', null=True)),
                 ('station_code', models.CharField(db_column='station_code', max_length=255, null=True)),
-                ('id_location', models.ForeignKey(db_column='id_location', null=True, on_delete=django.db.models.deletion.CASCADE, to='VlibData.location')),
+                ('id_location', models.ForeignKey(db_column='id_location', null=True, on_delete=django.db.models.deletion.CASCADE, to='VlibStations.location')),
             ],
             options={
                 'db_table': 'stations',

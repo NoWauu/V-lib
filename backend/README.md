@@ -14,7 +14,7 @@ This is the structure of the folder:
 `VlibBackend` contains the files of the Django project.
 
 
-`VlibData` is the Django application in which all the functions to get the data are stored.
+`VlibStations` is the Django application in which all the functions to get the data are stored.
 
 
 `manage.py` is the file used to manage the [Django](https://www.djangoproject.com/) server.

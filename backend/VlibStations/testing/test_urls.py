@@ -1,10 +1,10 @@
 """
-This file contains the test cases for the URL routing in the VlibData app.
+This file contains the test cases for the URL routing in the VlibStations app.
 """
 
 from django.test import SimpleTestCase
 from django.urls import reverse, resolve
-from VlibData.views import get_station_data_request, get_stations_request
+from VlibStations.views import get_station_data_request
 
 
 class TestUrls(SimpleTestCase):

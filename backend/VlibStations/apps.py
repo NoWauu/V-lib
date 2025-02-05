@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 
-class VlibdataConfig(AppConfig):
+class VlibStationsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'VlibStations'
     def ready(self):

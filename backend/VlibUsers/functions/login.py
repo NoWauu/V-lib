@@ -2,7 +2,7 @@
 
 from django.http import JsonResponse, HttpRequest
 from rsa_fn import decrypt_rsa
-from bcrypt import check_data, hash_data
+from bcrypt import check_data
 from backend.VlibUsers.models import User
 from backend.VlibUsers.functions.user_crud import get_user
 

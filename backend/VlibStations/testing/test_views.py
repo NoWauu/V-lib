@@ -1,12 +1,11 @@
 """
-This file contains the test cases for the views in the VlibData app.
+This file contains the test cases for the views in the VlibStations app.
 """
 
-from django.test import SimpleTestCase, Client, TransactionTestCase
+from django.test import Client, TransactionTestCase
 from django.urls import reverse
-from VlibData.views import get_stations_request, get_station_data_request
 from .constants import STATIONS_LIST
-from VlibData.functions.update_db import update_database
+from VlibStations.functions.update_db import update_database
 
 
 class TestViews(TransactionTestCase):
