@@ -1,7 +1,7 @@
 import Wrapper from "@/components/wrappers/Wrapper"
 import LoginTab from "@/components/forms/LoginTab";
 
-import type { Metadata } from "next";
+import type {Metadata} from "next";
 
 export const metadata: Metadata = {
   title: "Connexion",
@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 export default function LoginRegister() {
 
   return (
-    <Wrapper className="h-full min-h-screen flex items-center justify-center">
-      <LoginTab />
+    <Wrapper className="m-auto flex items-center justify-center">
+      <LoginTab/>
     </Wrapper>
   )
 }
