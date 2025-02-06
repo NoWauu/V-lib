@@ -2,7 +2,7 @@
 Functions to decrypt and encrypt text with RSA
 """
 
-from .constants import PRIVATE_KEY, PUBLIC_KEY
+from VlibUsers.variables.constants import PRIVATE_KEY, PUBLIC_KEY
 import rsa
 
 

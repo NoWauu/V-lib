@@ -1,3 +1,7 @@
+"""
+Functions that perform actions on users in the database
+"""
+
 from ..models import User, AuthToken
 import secrets
 from django.utils.timezone import now, timedelta
