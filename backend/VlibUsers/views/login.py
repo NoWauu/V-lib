@@ -4,7 +4,7 @@ View function for the login request
 
 from django.http import JsonResponse, HttpRequest
 from VlibUsers.functions.rsa_fn import decrypt_rsa
-from bcrypt import check_data
+from ..functions.bcrypt import check_data
 from VlibUsers.models import User
 from VlibUsers.functions.user_crud import get_user
 
