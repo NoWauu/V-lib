@@ -50,3 +50,18 @@ def get_token(user_id: int, refresh: bool = False) -> AuthToken:
         else:
             # Create a new token if the last one has expired
             return create_token(user_id)
+
+
+def check_email_already_exists(email: str) -> bool:
+    return User.objects.filter(email=email).exists()
+
+
+def add_user(first_name: str, last_name: str, email: str, password: str, phone: str) -> str | None:
+    """
+    Add user to the database
+    """
+    if check_email_already_exists(email):
+        return "Email already exists"
+    
+    user = User(first_name=first_name, last_name=last_name, email=email, password=password, phone=phone)
+    user.save()
