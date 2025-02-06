@@ -1,8 +1,52 @@
-from ..models import User
+from ..models import User, AuthToken
+import secrets
+from django.utils.timezone import now, timedelta
 
 
 def get_user(email: str) -> User:
     """
-    Retrieves the user with the given hashed email from the database
+    Retrieves the user with the given encrypted email from the database
     """
     return User.objects.get(email=email)
+
+
+def create_token(user_id: int) -> AuthToken:
+    """
+    Create a new token for an user based on the user's id.
+
+    :param user_id: The id of the user
+    :return: The token created
+    """
+
+    TOKEN = secrets.token_hex(32)
+
+    EXPIRATION_DATE = now() + timedelta(days=1)
+
+    AUTH_TOKEN = AuthToken(id_user=user_id, token=TOKEN, expiration_date=EXPIRATION_DATE)
+    AUTH_TOKEN.save()
+
+    return AUTH_TOKEN
+
+
+def get_token(user_id: int, refresh: bool = False) -> AuthToken:
+    """
+    Get the token for a user.
+    Sends a new token if a valid one does not exist.
+
+    :param user_id: The id of the user
+    :return: The token for the user
+    """
+
+    TOKEN = AuthToken.objects.filter(id_user=user_id).order_by('-expiration_time').first()
+
+    if TOKEN is None:
+        # Create a token if the user does not have one
+        return create_token(user_id)
+    else:
+        if TOKEN.is_valid():
+            if refresh:
+                TOKEN.refresh()
+            return TOKEN
+        else:
+            # Create a new token if the last one has expired
+            return create_token(user_id)
