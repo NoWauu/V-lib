@@ -33,11 +33,11 @@ class AuthToken(models.Model):
         db_table = 'auth_tokens'
 
     def is_valid(self) -> bool:
-        return self.expiration_date > now()
+        return self.expiration_time > now()
     
     def refresh(self):
-        self.expiration_date = now() + timedelta(days=1)
+        self.expiration_time = now() + timedelta(days=1)
         self.save()
 
     def __str__(self):
-        return f"Token {str(self.token)} expires at {str(self.expiration_date)}"
+        return f"Token {str(self.token)} expires at {str(self.expiration_time)}"
