@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import clsx from "clsx";
-import { useState } from "react";
+import {SetStateAction, Dispatch} from "react";
 
 export default function LoginInput({
   id,
@@ -12,6 +12,8 @@ export default function LoginInput({
   type = "text",
   textCase = "none",
   isNumber = false,
+  value,
+  setValue
 }: {
   id: string;
   content: string;
@@ -19,8 +21,9 @@ export default function LoginInput({
   type?: string;
   textCase?: "uppercase" | "lowercase" | "capitalize" | "none";
   isNumber?: boolean;
+  value?: string;
+  setValue: Dispatch<SetStateAction<string>>;
 }) {
-  const [value, setValue] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (isNumber) {
