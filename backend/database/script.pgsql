@@ -16,11 +16,11 @@ CREATE TABLE users (
 );
 
 CREATE TABLE auth_tokens (
+    token TEXT,
     id_user INT NOT NULL,
-    token TEXT NOT NULL,
     expiration TIMESTAMP WITH TIME ZONE,
-    UNIQUE (token),
-    FOREIGN KEY (id_user) REFERENCES users (id_user) ON DELETE CASCADE
+    FOREIGN KEY (id_user) REFERENCES users (id_user) ON DELETE CASCADE,
+    PRIMARY KEY (token)
 );
 
 CREATE TABLE locations (
