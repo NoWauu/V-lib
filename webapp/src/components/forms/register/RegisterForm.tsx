@@ -42,7 +42,7 @@ export default function RegisterForm() {
   }
 
   async function handleSubmit() {
-    //const apiUrl = `https://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/register`;
+    const apiUrl = `https://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/register`;
 
     if(passValue !== passValidValue) {
       console.log(`Passwords are different : "${passValue}" / "${passValidValue}"`);
@@ -50,33 +50,18 @@ export default function RegisterForm() {
     }
 
     try {
-      // const response = await fetch(apiUrl, {
-      //   method: "POST",
-      //   body: JSON.stringify({
-      //     "firstname": firstnameValue,
-      //     "lastname": lastnameValue,
-      //     "email": emailValue,
-      //     "phone": phoneValue,
-      //     "pass": passValue
-      //   })
-      // });
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        body: JSON.stringify({
+          "first_name": firstnameValue,
+          "last_name": lastnameValue,
+          "email": emailValue,
+          "phone_number": phoneValue,
+          "password": passValue
+        })
+      });
 
-      const response = new Response(JSON.stringify({
-        "status": "success",
-        "message": "User created.",
-        "data": {
-          "email": "john@example.com",
-          "first_name": "jean",
-          "last_name": "dupont",
-          "phone_number": "0681386132",
-          "token_data": {
-            "token": "sedghrtflmikjhsdfgloikjhmsqedrygolijhmkesrtdyhg6584wdsf54gqsdr",
-            "expiration_date": "2025-02-10T10:23:53.811Z"
-          }
-        }
-      }));
-
-      if(/*response.status === 201 && */await checkData(response)) {
+      if(response.status === 201 && await checkData(response)) {
         console.log("ok");
       } else {
         console.log("not ok");
