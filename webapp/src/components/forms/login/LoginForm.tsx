@@ -16,8 +16,8 @@ export default function LoginForm() {
 
     const regex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 
-    if (!(regex.test(loginEmail)) && loginPassword == '') {
-      alert("Identifiants de connexion incorrects !")
+    if (!(regex.test(loginEmail)) || loginPassword == '') {
+      alert("Identifiants de connexion incorrects !");
       return;
     }
 
@@ -27,6 +27,31 @@ export default function LoginForm() {
         body: JSON.stringify({
           'email': loginEmail,
           'password': loginPassword,
+        })
+      });
+
+      if (await checkdata(response)) {
+        console.log('ok')
+      } else {
+        console.log('not ok')
+      }
+
+      const result = await response;
+      console.log(result);
+    } catch (error) {
+      alert(`Error submitting form: ${error}`)
+      console.error('Error submitting form:', error);
+    }
+  }
+
+  async function tokenRefresh() {
+    const Url = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/refresh_token`;
+
+    try {
+      const response = await fetch(Url, {
+        method: 'POST',
+        body: JSON.stringify({
+          'email': loginEmail,
         })
       });
 
@@ -54,11 +79,11 @@ export default function LoginForm() {
       throw new Error('email is invalid')
     }
 
-    const tokenExpiration = dataJson.data.token_data.expiration_date;
+    let tokenExpiration = dataJson.data.token_data.expiration_date;
 
     if(new Date(tokenExpiration).valueOf() - Date.now().valueOf() < 0) {
       console.log("Token has expired");
-      throw new Error('Token has expired');
+      tokenExpiration = await tokenRefresh();
     }
 
     return true;
