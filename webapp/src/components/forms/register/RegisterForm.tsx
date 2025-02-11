@@ -84,7 +84,7 @@ export default function RegisterForm() {
         })
       });
 
-      if(/* response.status === 201 && */await checkData(response)) {
+      if(response.status === 201 && await checkData(response)) {
         console.log("ok");
       } else {
         console.log("not ok");
