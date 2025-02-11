@@ -73,31 +73,16 @@ export default function RegisterForm() {
     }
 
     try {
-      // const response = await fetch(apiUrl, {
-      //   method: "POST",
-      //   body: JSON.stringify({
-      //     "first_name": firstnameValue,
-      //     "last_name": lastnameValue,
-      //     "email": emailValue,
-      //     "phone_number": phoneValue,
-      //     "password": passValue
-      //   })
-      // });
-
-      const response = new Response(JSON.stringify({
-        "status": "success",
-        "message": "User created.",
-        "data": {
-          "email": "test@example.com",
-          "first_name": "first name",
-          "last_name": "last name",
-          "phone_number": "0681386132",
-          "token_data": {
-            "token": "f85c473de6cce8dee8c30ea954dedb2d49d2dce24e41f0fa59936f3be016e72f",
-            "expiration_date": "2025-02-12T12:05:48.335Z"
-        }
-      }
-      }));
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        body: JSON.stringify({
+          "first_name": firstnameValue,
+          "last_name": lastnameValue,
+          "email": emailValue,
+          "phone_number": phoneValue,
+          "password": passValue
+        })
+      });
 
       if(/* response.status === 201 && */await checkData(response)) {
         console.log("ok");
@@ -119,6 +104,7 @@ export default function RegisterForm() {
           textCase="uppercase"
           value={lastnameValue}
           setValueAction={lastnameSetValue}
+          maxLength={20}
         />
 
         <LoginInput
@@ -128,6 +114,7 @@ export default function RegisterForm() {
           textCase="capitalize"
           value={firstnameValue}
           setValueAction={firstnameSetValue}
+          maxLength={20}
         />
 
         <LoginInput
@@ -155,6 +142,7 @@ export default function RegisterForm() {
           type="password"
           value={passValue}
           setValueAction={passSetValue}
+          maxLength={32}
         />
 
         <LoginInput
@@ -164,6 +152,7 @@ export default function RegisterForm() {
           type="password"
           value={passValidValue}
           setValueAction={passValidSetValue}
+          maxLength={32}
         />
       </CardContent>
 

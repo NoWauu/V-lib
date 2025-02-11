@@ -12,6 +12,7 @@ export default function LoginInput({
   type = "text",
   textCase = "none",
   isNumber = false,
+  maxLength= 100,
   value,
   setValueAction
 }: {
@@ -21,6 +22,7 @@ export default function LoginInput({
   type?: string;
   textCase?: "uppercase" | "lowercase" | "capitalize" | "none";
   isNumber?: boolean;
+  maxLength?: number;
   value: string;
   setValueAction: Dispatch<SetStateAction<string>>;
 }) {
@@ -51,6 +53,7 @@ export default function LoginInput({
         })}
         onChange={handleChange}
         value={value}
+        maxLength={maxLength}
       />
     </div>
   );
