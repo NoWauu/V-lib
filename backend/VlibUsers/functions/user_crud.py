@@ -7,11 +7,11 @@ import secrets
 from django.utils.timezone import now, timedelta
 
 
-def get_user(email: str) -> User:
+def get_user_with_email_hash(hash: str) -> User:
     """
     Retrieves the user with the given encrypted email from the database
     """
-    return User.objects.get(email=email)
+    return User.objects.get(email_hash=hash)
 
 
 def create_token(user_id: int | User) -> AuthToken:

@@ -52,7 +52,7 @@ def register_request(req: HttpRequest) -> JsonResponse:
     
     # Add the user to the db
     is_added, user_id = add_user_to_db(
-        encrypted_email, email_hash, password_hash, encrypted_first_name, encrypted_last_name, encrypted_phone_number
+        encrypted_email, email_hash, password_hash.hex(), encrypted_first_name, encrypted_last_name, encrypted_phone_number
     )
 
     # Send the response with the token to the client

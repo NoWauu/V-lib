@@ -43,7 +43,7 @@ def check_data_format(email, password, first_name, last_name, phone_number):
     
     Args:
         email (str): The email of the user
-        password (str): The password of the user
+        password (str): The password of the user in hexadecimal
         first_name (str): The first name of the user
         last_name (str): The last name of the user
         phone_number (str): The phone number of the user
