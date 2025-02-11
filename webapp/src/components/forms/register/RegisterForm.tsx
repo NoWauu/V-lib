@@ -6,6 +6,7 @@ import {Button} from "@/components/ui/button";
 import {UserRoundPlus} from "lucide-react";
 import {useState} from "react";
 
+
 export default function RegisterForm() {
   const [lastnameValue, lastnameSetValue] = useState("");
   const [firstnameValue, firstnameSetValue] = useState("");
@@ -14,6 +15,20 @@ export default function RegisterForm() {
   const [passValue, passSetValue] = useState("");
   const [passValidValue, passValidSetValue] = useState("");
 
+  async function refreshToken() {
+    const apiUrl = `https://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/refresh_token`;
+
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      body: JSON.stringify({
+        "email": emailValue,
+      })
+    });
+    const json = await response.json();
+
+    return json.data.token_data.token;
+  }
+
   async function checkData(data: Response): Promise<boolean> {
     const dataJson = await data.json();
 
@@ -21,7 +36,6 @@ export default function RegisterForm() {
     const responseFirstName = dataJson.data.first_name;
     const responseLastName = dataJson.data.last_name;
     const responsePhone = dataJson.data.phone_number;
-
 
     if(responseEmail.toString() !== emailValue) {
       throw new DOMException("Email is invalid");
@@ -38,8 +52,17 @@ export default function RegisterForm() {
       throw new DOMException("Phone number is invalid");
     }
 
+    let token = dataJson.data.token_data.token;
+    const tokenExpire = dataJson.data.token_data.expiration_date;
+    if(new Date(tokenExpire).valueOf() - Date.now() < 0) {
+      token = await refreshToken();
+    }
+
+    sessionStorage.setItem("token", token);
+
     return true;
   }
+
 
   async function handleSubmit() {
     const apiUrl = `https://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/register`;
@@ -50,18 +73,33 @@ export default function RegisterForm() {
     }
 
     try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        body: JSON.stringify({
-          "first_name": firstnameValue,
-          "last_name": lastnameValue,
-          "email": emailValue,
-          "phone_number": phoneValue,
-          "password": passValue
-        })
-      });
+      // const response = await fetch(apiUrl, {
+      //   method: "POST",
+      //   body: JSON.stringify({
+      //     "first_name": firstnameValue,
+      //     "last_name": lastnameValue,
+      //     "email": emailValue,
+      //     "phone_number": phoneValue,
+      //     "password": passValue
+      //   })
+      // });
 
-      if(response.status === 201 && await checkData(response)) {
+      const response = new Response(JSON.stringify({
+        "status": "success",
+        "message": "User created.",
+        "data": {
+          "email": "test@example.com",
+          "first_name": "first name",
+          "last_name": "last name",
+          "phone_number": "0681386132",
+          "token_data": {
+            "token": "f85c473de6cce8dee8c30ea954dedb2d49d2dce24e41f0fa59936f3be016e72f",
+            "expiration_date": "2025-02-12T12:05:48.335Z"
+        }
+      }
+      }));
+
+      if(/* response.status === 201 && */await checkData(response)) {
         console.log("ok");
       } else {
         console.log("not ok");
