@@ -10,9 +10,12 @@ CREATE TABLE users (
     firstname TEXT NOT NULL,
     lastname TEXT NOT NULL,
     email TEXT NOT NULL,
-    user_password TEXT NOT NULL,
-    phone TEXT NOT NULL,
-    favorites INTEGER ARRAY
+    email_hash TEXT NOT NULL,
+    password TEXT NOT NULL,
+    phone_number TEXT NOT NULL,
+    favorites INTEGER ARRAY,
+    UNIQUE (email),
+    UNIQUE (email_hash)
 );
 
 CREATE TABLE auth_tokens (

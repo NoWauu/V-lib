@@ -8,11 +8,12 @@ from django.utils.timezone import now, timedelta
 
 class User(models.Model):
     id_user = models.AutoField(primary_key=True)
-    email = models.TextField(max_length=255)
-    password = models.CharField(max_length=255)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    phone_number = models.CharField(max_length=255)
+    email = models.TextField(max_length=512)
+    email_hash = models.TextField(max_length=512)
+    password = models.CharField(max_length=512)
+    first_name = models.CharField(max_length=512, db_column='firstname')
+    last_name = models.CharField(max_length=512, db_column='lastname')
+    phone_number = models.CharField(max_length=512)
 
     class Meta:
         db_table = 'users'
@@ -20,14 +21,14 @@ class User(models.Model):
     def __str__(self):
         return str(self.email)    
     
-    def get_all_the_emails():
-        return User.objects.values_list('email', flat=True)
+    def get_all_the_emails_hash():
+        return User.objects.values_list('email_hash', flat=True)
     
 
 class AuthToken(models.Model):
-    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
-    token = models.TextField(max_length=255)
-    expiration_time = models.DateTimeField(auto_now_add=True)
+    id_user = models.ForeignKey(User, on_delete=models.CASCADE, db_column='id_user')
+    token = models.CharField(max_length=64, primary_key=True)
+    expiration_time = models.DateTimeField(auto_now_add=True, db_column='expiration')
 
     class Meta:
         db_table = 'auth_tokens'
