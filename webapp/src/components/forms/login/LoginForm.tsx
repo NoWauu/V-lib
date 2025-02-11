@@ -45,10 +45,10 @@ export default function LoginForm() {
   }
 
   async function tokenRefresh() {
-    const Url = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/refresh_token`;
+    const apiUrl = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/refresh_token`;
 
     try {
-      const response = await fetch(Url, {
+      const response = await fetch(apiUrl, {
         method: 'POST',
         body: JSON.stringify({
           'email': loginEmail,
@@ -79,12 +79,15 @@ export default function LoginForm() {
       throw new Error('email is invalid')
     }
 
-    let tokenExpiration = dataJson.data.token_data.expiration_date;
+    const tokenExpiration = dataJson.data.token_data.expiration_date;
+    let tokenValue = dataJson.data.token_data.token;
 
     if(new Date(tokenExpiration).valueOf() - Date.now().valueOf() < 0) {
       console.log("Token has expired");
-      tokenExpiration = await tokenRefresh();
+      tokenValue = await tokenRefresh();
     }
+
+    sessionStorage.setItem('token',tokenValue);
 
     return true;
   }
@@ -108,6 +111,7 @@ export default function LoginForm() {
           type="password"
           value={loginPassword}
           setValue={setLoginPassword}
+          maxLength={28}
         />
 
         <ForgotPassword/>
