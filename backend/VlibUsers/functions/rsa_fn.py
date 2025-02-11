@@ -18,7 +18,7 @@ def decrypt_rsa(text: str) -> str | None:
         return None
 
     try:
-        return rsa.decrypt(text, rsa.PrivateKey.load_pkcs1(PRIVATE_KEY)).decode()
+        return rsa.decrypt(bytes.fromhex(text), rsa.PrivateKey.load_pkcs1(PRIVATE_KEY)).decode()
     except Exception as e:
         print(e)
         return None
@@ -26,7 +26,7 @@ def decrypt_rsa(text: str) -> str | None:
 
 def encrypt_to_rsa(text: str) -> str | None:
     """
-    Encrypt a string to RSA using the public key
+    Encrypt a string to RSA in hexadecimal using the public key
 
     :param text: The text to encrypt
 
@@ -36,7 +36,7 @@ def encrypt_to_rsa(text: str) -> str | None:
         return None
     
     try:
-        return rsa.encrypt(text.encode(), rsa.PublicKey.load_pkcs1(PUBLIC_KEY))
+        return rsa.encrypt(text.encode(), rsa.PublicKey.load_pkcs1(PUBLIC_KEY)).hex()
     except Exception as e:
         print(e)
         return None

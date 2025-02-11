@@ -14,7 +14,7 @@ def get_user(email: str) -> User:
     return User.objects.get(email=email)
 
 
-def create_token(user_id: int) -> AuthToken:
+def create_token(user_id: int | User) -> AuthToken:
     """
     Create a new token for an user based on the user's id.
 
@@ -22,11 +22,15 @@ def create_token(user_id: int) -> AuthToken:
     :return: The token created
     """
 
+    if isinstance(user_id, int):
+        user_id = User.objects.get(id_user=user_id)
+        if user_id is None: return None
+
     TOKEN = secrets.token_hex(32)
 
     EXPIRATION_DATE = now() + timedelta(days=1)
 
-    AUTH_TOKEN = AuthToken(id_user=user_id, token=TOKEN, expiration_date=EXPIRATION_DATE)
+    AUTH_TOKEN = AuthToken(id_user=user_id, token=TOKEN, expiration_time=EXPIRATION_DATE)
     AUTH_TOKEN.save()
 
     return AUTH_TOKEN
