@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS bikes CASCADE;
 DROP TABLE IF EXISTS locations CASCADE;
 DROP TABLE IF EXISTS rents CASCADE;
 DROP TABLE IF EXISTS stations CASCADE;
+DROP TABLE IF EXISTS auth_tokens CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 
 CREATE TABLE users (
@@ -9,9 +10,21 @@ CREATE TABLE users (
     firstname TEXT NOT NULL,
     lastname TEXT NOT NULL,
     email TEXT NOT NULL,
-    user_password TEXT NOT NULL,
-    phone TEXT NOT NULL,
-    favorites INTEGER ARRAY
+    email_hash TEXT NOT NULL,
+    is_email_verified BOOLEAN NOT NULL DEFAULT FALSE,
+    password TEXT NOT NULL,
+    phone_number TEXT NOT NULL,
+    favorites INTEGER ARRAY,
+    UNIQUE (email),
+    UNIQUE (email_hash)
+);
+
+CREATE TABLE auth_tokens (
+    token TEXT,
+    id_user INT NOT NULL,
+    expiration TIMESTAMP WITH TIME ZONE,
+    FOREIGN KEY (id_user) REFERENCES users (id_user) ON DELETE CASCADE,
+    PRIMARY KEY (token)
 );
 
 CREATE TABLE locations (

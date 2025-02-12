@@ -14,7 +14,7 @@ This is the structure of the folder:
 `VlibBackend` contains the files of the Django project.
 
 
-`VlibData` is the Django application in which all the functions to get the data are stored.
+`VlibStations` is the Django application in which all the functions to get the data are stored.
 
 
 `manage.py` is the file used to manage the [Django](https://www.djangoproject.com/) server.
@@ -38,6 +38,17 @@ DB_USER="name of the user in the database"
 DB_HOST="address of the database"
 DB_PORT="port used for PostgreSQL"
 DB_PASSWORD="the password of the user"
+
+RSA_PUBLIC_KEY="your public RSA key"
+```
+
+In order to get your RSA keys, run the `rsa_keys.py` file inside the `encryption` folder. Copy and paste the whole public key inside of the dedicated field and keep the private key for the webapp.
+
+The public RSA key should look like this :
+```
+-----BEGIN RSA PRIVATE KEY-----
+...
+-----END RSA PRIVATE KEY-----
 ```
 
 

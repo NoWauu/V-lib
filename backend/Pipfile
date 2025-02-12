@@ -8,6 +8,8 @@ django = "*"
 python-dotenv = "*"
 requests = "*"
 psycopg2 = "*"
+rsa = "*"
+bcrypt = "*"
 
 [dev-packages]
 

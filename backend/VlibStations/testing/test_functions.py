@@ -3,8 +3,8 @@ This file contains the test cases for the functions used in the code
 """
 
 from django.test import TransactionTestCase
-from VlibData.functions.update_db import update_database
-from VlibData.models import Station
+from VlibStations.functions.update_db import update_database
+from VlibStations.models import Station
 from .constants import STATIONS_LIST
 
 

@@ -6,3 +6,6 @@ __pycache__/
 
 # Logs
 logs/
+
+# Remove IDE files
+.idea/
