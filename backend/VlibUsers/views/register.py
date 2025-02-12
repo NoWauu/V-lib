@@ -52,8 +52,6 @@ def register_request(req: HttpRequest) -> JsonResponse:
     encrypted_phone_number = encrypt_credentials(
         email, password, first_name, last_name, phone_number
     )
-
-    # Verify if encrypted values are set
     
     # Check if the email is already in use by another account
     if email_already_in_use(email_hash):
