@@ -111,7 +111,7 @@ export default function LoginForm() {
           type="password"
           value={loginPassword}
           setValue={setLoginPassword}
-          maxLength={28}
+          maxLength={40}
         />
 
         <ForgotPassword/>
