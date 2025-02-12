@@ -38,13 +38,13 @@ def register_request(req: HttpRequest) -> JsonResponse:
     # Text formatting
     email: str = email.lower()[:80]
     first_name: str = first_name.title()[:20]
-    last_name: str = last_name.upper()[:24]
+    last_name: str = last_name.upper()[:20]
     
     # Remove spaces for phone number
     phone_number = phone_number.replace(' ', '')[:10]
 
     # Check if the password is too long
-    if len(password) > 28:
+    if len(password) > 40:
         return JsonResponse({'status': 'error', 'message': 'Password too long'}, status=400)
     
     # Get encrypted values
