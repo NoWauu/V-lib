@@ -29,7 +29,7 @@ class User(models.Model):
 class AuthToken(models.Model):
     id_user = models.ForeignKey(User, on_delete=models.CASCADE, db_column='id_user')
     token = models.CharField(max_length=64, primary_key=True)
-    expiration_time = models.DateTimeField(auto_now_add=True, db_column='expiration')
+    expiration_time = models.DateTimeField(db_column='expiration')
 
     class Meta:
         db_table = 'auth_tokens'
