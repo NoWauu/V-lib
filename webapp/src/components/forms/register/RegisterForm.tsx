@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import LoginInput from "@/components/forms/Input";
 import {CardContent, CardFooter} from "@/components/ui/card";
@@ -32,37 +32,37 @@ export default function RegisterForm() {
   async function checkData(data: Response): Promise<boolean> {
     const dataJson = await data.json();
 
-    const responseEmail = dataJson.data.email;
-    const responseFirstName = dataJson.data.first_name;
-    const responseLastName = dataJson.data.last_name;
-    const responsePhone = dataJson.data.phone_number;
-
-    if(responseEmail.toString() !== emailValue) {
-      throw new DOMException("Email is invalid");
+    if (!("data" in dataJson)) {
+      console.log("No data field");
+      return false;
     }
 
-    if(responseFirstName.toString() !== firstnameValue) {
-      throw new DOMException("First name is invalid");
-    }
-    if(responseLastName.toString() !== lastnameValue) {
-      throw new DOMException("Email is invalid");
+    if (!dataJson.data.hasOwnProperty("token_data")) {
+      console.log("Token data field not found");
+      return false;
     }
 
-    if(responsePhone.toString() !== phoneValue) {
-      throw new DOMException("Phone number is invalid");
+    if (!dataJson.data.token_data.hasOwnProperty("token")) {
+      console.log("Token field not found");
+      return false;
     }
 
     let token = dataJson.data.token_data.token;
     const tokenExpire = dataJson.data.token_data.expiration_date;
-    if(new Date(tokenExpire).valueOf() - Date.now() < 0) {
-      token = await refreshToken();
+    if (new Date(tokenExpire).valueOf() - Date.now() < 0) {
+      try {
+        token = await refreshToken();
+      } catch (e) {
+        console.log("An error occured while refreshing the token : " + e);
+      }
+
+      if (token !== undefined) {
+        sessionStorage.setItem("token", token);
+        console.log("Token refreshed.");
+      }
     }
-
-    sessionStorage.setItem("token", token);
-
-    return true;
-  }
-
+      return true;
+    }
 
   async function handleSubmit() {
     const apiUrl = `https://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/register`;
@@ -84,7 +84,7 @@ export default function RegisterForm() {
         })
       });
 
-      if(response.status === 201 && await checkData(response)) {
+      if(/*response.status === 201 && */await checkData(response)) {
         console.log("ok");
       } else {
         console.log("not ok");
@@ -142,7 +142,7 @@ export default function RegisterForm() {
           type="password"
           value={passValue}
           setValueAction={passSetValue}
-          maxLength={32}
+          maxLength={40}
         />
 
         <LoginInput
@@ -152,7 +152,7 @@ export default function RegisterForm() {
           type="password"
           value={passValidValue}
           setValueAction={passValidSetValue}
-          maxLength={32}
+          maxLength={40}
         />
       </CardContent>
 
