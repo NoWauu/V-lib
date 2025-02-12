@@ -35,8 +35,17 @@ def register_request(req: HttpRequest) -> JsonResponse:
     if not check_data_format(email, password, first_name, last_name, phone_number):
         return JsonResponse({'status': 'error', 'message': 'Invalid data'}, status=400)
     
+    # Text formatting
+    email: str = email.lower()[:80]
+    first_name: str = first_name.title()[:20]
+    last_name: str = last_name.upper()[:20]
+    
     # Remove spaces for phone number
-    phone_number = phone_number.replace(' ', '')
+    phone_number = phone_number.replace(' ', '')[:10]
+
+    # Check if the password is too long
+    if len(password) > 40:
+        return JsonResponse({'status': 'error', 'message': 'Password too long'}, status=400)
     
     # Get encrypted values
     encrypted_email, email_hash, password_hash, encrypted_first_name, encrypted_last_name, \

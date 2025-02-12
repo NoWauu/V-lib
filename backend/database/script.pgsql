@@ -11,6 +11,7 @@ CREATE TABLE users (
     lastname TEXT NOT NULL,
     email TEXT NOT NULL,
     email_hash TEXT NOT NULL,
+    is_email_verified BOOLEAN NOT NULL DEFAULT FALSE,
     password TEXT NOT NULL,
     phone_number TEXT NOT NULL,
     favorites INTEGER ARRAY,
