@@ -102,6 +102,7 @@ export default function LoginForm() {
           textCase="lowercase"
           value={loginEmail}
           setValue={setLoginEmail}
+          maxLength={80}
         />
 
         <LoginInput
