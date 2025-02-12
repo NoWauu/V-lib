@@ -26,7 +26,10 @@ def create_token(user_id: int | User) -> AuthToken:
         user_id = User.objects.get(id_user=user_id)
         if user_id is None: return None
 
-    TOKEN = secrets.token_hex(32)
+    # Prevent the token from being the same as another token
+    TOKEN = None
+    while TOKEN is None or AuthToken.objects.filter(token=TOKEN).exists():
+        TOKEN = secrets.token_hex(32)
 
     EXPIRATION_DATE = now() + timedelta(days=1)
 

@@ -10,6 +10,7 @@ class User(models.Model):
     id_user = models.AutoField(primary_key=True)
     email = models.TextField(max_length=512)
     email_hash = models.TextField(max_length=512)
+    is_email_verified = models.BooleanField(default=False)
     password = models.CharField(max_length=512)
     first_name = models.CharField(max_length=512, db_column='firstname')
     last_name = models.CharField(max_length=512, db_column='lastname')
