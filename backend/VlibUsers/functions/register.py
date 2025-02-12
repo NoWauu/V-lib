@@ -10,7 +10,7 @@ from VlibUsers.functions.hmac import hash_hmac_hex
 from django.http import HttpRequest
 
 
-EMAIL_REGEX = r"^[A-Za-z]+@[A-Za-z]+\.[A-Za-z]{2,4}$"
+EMAIL_REGEX = r"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+@[a-z0-9!#$%&'*+/=?^_`{|}~-]+\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+$"
 PASSWORD_REGEX = r"^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}|:<>?~`[\]\\;'\/.,]).{8,}$"
 NAME_REGEX = r"^\s+$"
 PHONE_REGEX = r"^[0-9]{10}$"
