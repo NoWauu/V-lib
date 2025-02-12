@@ -12,7 +12,7 @@ export default function LoginForm() {
   const [loginPassword, setLoginPassword] = useState("");
 
   async function handleSubmit() {
-    const apiUrl = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/login`;
+    const apiUrl = `https://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/login`;
 
     const regexEmail = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 
@@ -45,7 +45,7 @@ export default function LoginForm() {
   }
 
   async function tokenRefresh() {
-    const apiUrl = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/refresh_token`;
+    const apiUrl = `https://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/refresh_token`;
 
     try {
       const response = await fetch(apiUrl, {
@@ -55,10 +55,12 @@ export default function LoginForm() {
         })
       });
 
-      if (await checkdata(response)) {
-        console.log('ok')
-      } else {
-        console.log('not ok')
+      const responseData = await response.json();
+      if(responseData.hasOwnProperty('token')){
+        console.log('ok');
+      }
+      else{
+        console.log('not ok');
       }
 
       const result = await response;
@@ -72,19 +74,16 @@ export default function LoginForm() {
   async function checkdata(data: Response): Promise<boolean> {
     const dataJson = await data.json();
 
-    const responseEmail = await dataJson.data.email;
-
-    if(responseEmail.toString() !== loginEmail) {
-      console.log('email is invalid');
-      throw new Error('email is invalid')
-    }
-
     const tokenExpiration = dataJson.data.token_data.expiration_date;
     let tokenValue = dataJson.data.token_data.token;
 
     if(new Date(tokenExpiration).valueOf() - Date.now().valueOf() < 0) {
       console.log("Token has expired");
-      tokenValue = await tokenRefresh();
+      try{
+        tokenValue = await tokenRefresh();
+      } catch(e){
+        console.log('Error occured while refreshing token : ' + e);
+      }
     }
 
     sessionStorage.setItem('token',tokenValue);
