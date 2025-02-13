@@ -6,7 +6,7 @@ import re
 from VlibUsers.models import User 
 from VlibUsers.functions.rsa_fn import encrypt_to_rsa
 from VlibUsers.functions.bcrypt import hash_data as bcrypt_hash
-from VlibUsers.functions.hmac import hash_hmac_hex
+from VlibUsers.functions.hmac_fn import hash_hmac_hex
 from django.http import HttpRequest
 
 

@@ -7,7 +7,7 @@ from VlibUsers.functions.rsa_fn import decrypt_rsa
 from VlibUsers.functions.bcrypt import check_data, hash_data
 from VlibUsers.models import User
 from VlibUsers.functions.user_crud import get_user_with_email_hash, get_token
-from VlibUsers.functions.hmac import hash_hmac_hex
+from VlibUsers.functions.hmac_fn import hash_hmac_hex
 from django.views.decorators.csrf import csrf_exempt
 
 
