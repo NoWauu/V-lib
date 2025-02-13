@@ -1,9 +1,10 @@
-'use client'
+"use client"
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import clsx from "clsx";
 import {Dispatch, SetStateAction} from "react";
+
 
 export default function LoginInput({
   id,
@@ -12,6 +13,7 @@ export default function LoginInput({
   type = "text",
   textCase = "none",
   isNumber = false,
+
   maxLength= 100,
   value,
   setValueAction
