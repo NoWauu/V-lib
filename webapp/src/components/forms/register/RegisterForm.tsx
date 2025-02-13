@@ -16,7 +16,7 @@ export default function RegisterForm() {
   const [passValidValue, passValidSetValue] = useState("");
 
   async function refreshToken() {
-    const apiUrl = `https://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/refresh_token`;
+    const apiUrl = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/refresh_token/`;
 
     const response = await fetch(apiUrl, {
       method: "POST",
@@ -69,7 +69,7 @@ export default function RegisterForm() {
     }
 
   async function handleSubmit() {
-    const apiUrl = `https://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/register`;
+    const apiUrl = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/register/`;
 
     if(passValue !== passValidValue) {
       console.log(`Passwords are different : "${passValue}" / "${passValidValue}"`);
@@ -77,18 +77,23 @@ export default function RegisterForm() {
     }
 
     try {
+      const formData = new FormData();
+      formData.append("email", emailValue);
+      formData.append("first_name", firstnameValue);
+      formData.append("last_name", lastnameValue);
+      formData.append("phone_number", phoneValue);
+      formData.append("password", passValue);
+
       const response = await fetch(apiUrl, {
         method: "POST",
-        body: JSON.stringify({
-          "first_name": firstnameValue,
-          "last_name": lastnameValue,
-          "email": emailValue,
-          "phone_number": phoneValue,
-          "password": passValue
-        })
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: formData,
+        mode: "no-cors"
       });
 
-      if(/*response.status === 201 && */await checkData(response)) {
+      if(response.status === 201 && await checkData(response)) {
         console.log("ok");
       } else {
         console.log("not ok");

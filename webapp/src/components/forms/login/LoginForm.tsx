@@ -12,7 +12,7 @@ export default function LoginForm() {
   const [loginPassword, setLoginPassword] = useState("");
 
   async function handleSubmit() {
-    const apiUrl = `https://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/login`;
+    const apiUrl = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/login/`;
 
     const regexEmail = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)])/;
 
@@ -22,13 +22,18 @@ export default function LoginForm() {
     }
 
     try {
+
+      const formData = new FormData();
+      formData.append("email", loginEmail);
+      formData.append("password", loginPassword);
+
       const response = await fetch(apiUrl, {
         method: 'POST',
-        body: JSON.stringify({
-          'email': loginEmail,
-          'password': loginPassword,
-        })
+        body: formData,
+        mode: "no-cors"
       });
+
+      console.log(response);
 
       if (await checkdata(response)) {
         console.log('ok')
@@ -45,7 +50,7 @@ export default function LoginForm() {
   }
 
   async function tokenRefresh() {
-    const apiUrl = `https://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/refresh_token`;
+    const apiUrl = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/refresh_token/`;
 
     try {
       const response = await fetch(apiUrl, {
@@ -116,7 +121,7 @@ export default function LoginForm() {
           placeholder="exemple@vlib.com"
           textCase="lowercase"
           value={loginEmail}
-          setValue={setLoginEmail}
+          setValueAction={setLoginEmail}
           maxLength={80}
         />
 
@@ -126,7 +131,7 @@ export default function LoginForm() {
           placeholder="******"
           type="password"
           value={loginPassword}
-          setValue={setLoginPassword}
+          setValueAction={setLoginPassword}
           maxLength={40}
         />
 

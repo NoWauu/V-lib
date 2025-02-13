@@ -13,7 +13,6 @@ export default function LoginInput({
   type = "text",
   textCase = "none",
   isNumber = false,
-
   maxLength= 100,
   value,
   setValueAction
