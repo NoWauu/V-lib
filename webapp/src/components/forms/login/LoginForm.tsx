@@ -56,15 +56,15 @@ export default function LoginForm() {
       });
 
       const responseData = await response.json();
-      if(responseData.hasOwnProperty('token')){
-        console.log('ok');
-      }
-      else{
+      if (!await checkdata(responseData)) {
         console.log('not ok');
+      } else {
+        console.log('ok');
       }
 
       const result = await response;
       console.log(result);
+      return responseData.data.token_data.token;
     } catch (error) {
       alert(`Error submitting form: ${error}`)
       console.error('Error submitting form:', error);
@@ -73,6 +73,22 @@ export default function LoginForm() {
 
   async function checkdata(data: Response): Promise<boolean> {
     const dataJson = await data.json();
+
+    if(!dataJson.hasOwnProperty('data')){
+      return false;
+    }
+
+    if(!dataJson.data.hasOwnProperty('token_data')){
+      return false;
+    }
+
+    if(!dataJson.data.token_data.hasOwnProperty('token')){
+      return false;
+    }
+
+    if(!dataJson.data.token_data.hasOwnProperty('expiration_date')){
+      return false;
+    }
 
     const tokenExpiration = dataJson.data.token_data.expiration_date;
     let tokenValue = dataJson.data.token_data.token;
@@ -86,7 +102,7 @@ export default function LoginForm() {
       }
     }
 
-    sessionStorage.setItem('token',tokenValue);
+    sessionStorage.setItem('token', tokenValue);
 
     return true;
   }
