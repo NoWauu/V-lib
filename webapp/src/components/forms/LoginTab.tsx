@@ -8,7 +8,7 @@ export default function LoginTab() {
   return (
     <Tabs defaultValue="login" className="max-w-md w-full">
       <TopBar />
-      
+
       <LoginContent />
       <RegisterContent />
 
