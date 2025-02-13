@@ -32,8 +32,8 @@ export default function RegisterForm() {
   async function checkData(data: Response): Promise<boolean> {
     const dataJson = await data.json();
 
-    if (!("data" in dataJson)) {
-      console.log("No data field");
+    if (!dataJson.hasOwnProperty("data")) {
+      console.log("Token data field not found");
       return false;
     }
 
@@ -44,6 +44,10 @@ export default function RegisterForm() {
 
     if (!dataJson.data.token_data.hasOwnProperty("token")) {
       console.log("Token field not found");
+      return false;
+    }
+    if (!dataJson.data.token_data.hasOwnProperty("expiration_date")) {
+      console.log("Token data expiration field not found");
       return false;
     }
 
