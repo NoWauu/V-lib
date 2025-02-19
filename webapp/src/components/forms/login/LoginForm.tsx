@@ -11,8 +11,10 @@ export default function LoginForm() {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
-  async function handleSubmit() {
-    const apiUrl = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/login/`;
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+
+    const apiUrl = `/api/login`;
 
     const regexEmail = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)])/;
 
@@ -22,29 +24,28 @@ export default function LoginForm() {
     }
 
     try {
-
-      const formData = new FormData();
-      formData.append("email", loginEmail);
-      formData.append("password", loginPassword);
-
       const response = await fetch(apiUrl, {
         method: 'POST',
-        body: formData,
-        mode: "no-cors"
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: loginEmail,
+          password: loginPassword,
+        })
       });
 
-      console.log(response);
-
-      if (await checkdata(response)) {
-        console.log('ok')
-      } else {
-        console.log('not ok')
-      }
-
-      const result = await response;
-      console.log(result);
+      // TO DO : Fix checkdata function
+      // if (await checkdata(response)) {
+      //   console.log('ok')
+      // } else {
+      //   console.log('not ok')
+      // }
+      
+      console.log(await response.ok);
+      console.log(await response.json());
     } catch (error) {
-      alert(`Error submitting form: ${error}`)
+      alert(`Error submitting form: ${error}`);
       console.error('Error submitting form:', error);
     }
   }
@@ -139,7 +140,6 @@ export default function LoginForm() {
       </CardContent>
       <CardFooter className="flex justify-center items-center mx-16">
         <Button
-          type="submit"
           className="w-full tracking-wider flex items-center justify-center gap-2"
           effect={"ringHover"}
           onClick={handleSubmit}

@@ -68,8 +68,10 @@ export default function RegisterForm() {
       return true;
     }
 
-  async function handleSubmit() {
-    const apiUrl = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/register/`;
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+
+    const apiUrl = `/api/register`;
 
     if(passValue !== passValidValue) {
       console.log(`Passwords are different : "${passValue}" / "${passValidValue}"`);
@@ -77,34 +79,29 @@ export default function RegisterForm() {
     }
 
     try {
-      const formData = new FormData();
-      formData.append("email", emailValue);
-      formData.append("first_name", firstnameValue);
-      formData.append("last_name", lastnameValue);
-      formData.append("phone_number", phoneValue);
-      formData.append("password", passValue);
-
       const response = await fetch(apiUrl, {
-        method: "POST",
+        method: 'POST',
         headers: {
           "Content-Type": "application/json",
         },
-        body: formData,
-        mode: "no-cors"
+        body: JSON.stringify({
+          email: emailValue,
+          password: passValue,
+          first_name: firstnameValue,
+          last_name: lastnameValue,
+          phone_number: phoneValue,
+        })
       });
 
-      if(response.status === 201 && await checkData(response)) {
-        console.log("ok");
-      } else {
-        console.log("not ok");
-      }
+      console.log(await response.ok);
+      console.log(await response.json());
     } catch (e) {
       console.log(`An error occured while fetching the data : ${e}`);
     }
   }
 
   return (
-    <form action={handleSubmit}>
+    <form>
       <CardContent className="space-y-2">
         <LoginInput
           id="register_lastname"
@@ -170,6 +167,7 @@ export default function RegisterForm() {
           className="w-full tracking-wider flex items-center justify-center gap-2"
           effect={"ringHover"}
           type="submit"
+          onClick={handleSubmit}
         >
           <UserRoundPlus/>
           <span>S&#39;enregistrer</span>

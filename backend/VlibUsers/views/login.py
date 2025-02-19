@@ -66,7 +66,7 @@ def login_request(req: HttpRequest) -> JsonResponse:
                 'phone_number': phone_number,
                 'token_data': {
                     'token': token.token,
-                    'expiration_date': token.expiration_time
+                    'expiration_date': token.expiration_time.timestamp()
                 }
             }
         }, status=200)
