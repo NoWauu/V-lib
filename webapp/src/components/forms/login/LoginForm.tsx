@@ -6,10 +6,14 @@ import {CardFooter, CardContent} from "@/components/ui/card";
 import LoginInput from "@/components/forms/Input";
 import ForgotPassword from "@/components/forms/login/ForgotPassword";
 import {useState} from "react";
+import {responseData} from "@/types/AuthRes";
+import {useRouter} from "next/navigation";
 
 export default function LoginForm() {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+
+  const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -35,82 +39,24 @@ export default function LoginForm() {
         })
       });
 
-      // TO DO : Fix checkdata function
-      // if (await checkdata(response)) {
-      //   console.log('ok')
-      // } else {
-      //   console.log('not ok')
-      // }
-      
-      console.log(await response.ok);
-      console.log(await response.json());
+      const data = await response.json();
+      await handleToken(data);
+
+      if(response.ok){
+        router.push('/');
+      }
     } catch (error) {
-      alert(`Error submitting form: ${error}`);
       console.error('Error submitting form:', error);
     }
   }
 
-  async function tokenRefresh() {
-    const apiUrl = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/refresh_token/`;
-
-    try {
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        body: JSON.stringify({
-          'email': loginEmail,
-        })
-      });
-
-      const responseData = await response.json();
-      if (!await checkdata(responseData)) {
-        console.log('not ok');
-      } else {
-        console.log('ok');
-      }
-
-      const result = await response;
-      console.log(result);
-      return responseData.data.token_data.token;
-    } catch (error) {
-      alert(`Error submitting form: ${error}`)
-      console.error('Error submitting form:', error);
-    }
-  }
-
-  async function checkdata(data: Response): Promise<boolean> {
-    const dataJson = await data.json();
-
-    if(!dataJson.hasOwnProperty('data')){
-      return false;
+  async function handleToken(fromData: responseData): Promise<void>{
+    if(!fromData.data) {
+      return;
     }
 
-    if(!dataJson.data.hasOwnProperty('token_data')){
-      return false;
-    }
-
-    if(!dataJson.data.token_data.hasOwnProperty('token')){
-      return false;
-    }
-
-    if(!dataJson.data.token_data.hasOwnProperty('expiration_date')){
-      return false;
-    }
-
-    const tokenExpiration = dataJson.data.token_data.expiration_date;
-    let tokenValue = dataJson.data.token_data.token;
-
-    if(new Date(tokenExpiration).valueOf() - Date.now().valueOf() < 0) {
-      console.log("Token has expired");
-      try{
-        tokenValue = await tokenRefresh();
-      } catch(e){
-        console.log('Error occured while refreshing token : ' + e);
-      }
-    }
-
+    const tokenValue = fromData.data.token_data.token;
     sessionStorage.setItem('token', tokenValue);
-
-    return true;
   }
 
   return (
@@ -130,7 +76,7 @@ export default function LoginForm() {
           id="login_password"
           content="Mot de passe"
           placeholder="******"
-          type="password"
+          type='password'
           value={loginPassword}
           setValueAction={setLoginPassword}
           maxLength={40}
