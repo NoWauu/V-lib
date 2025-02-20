@@ -31,7 +31,7 @@ To do that, create a file named `.env`.
 The structure must look like this:
 
 ```
-DJANGO_SECRET_KEY="insert your key here"
+SECRET_KEY="insert your key here"
 
 DB_NAME="your database name"
 DB_USER="name of the user in the database"
