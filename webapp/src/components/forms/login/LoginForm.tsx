@@ -5,9 +5,10 @@ import {LogIn} from "lucide-react";
 import {CardFooter, CardContent} from "@/components/ui/card";
 import LoginInput from "@/components/forms/Input";
 import ForgotPassword from "@/components/forms/login/ForgotPassword";
-import {useState} from "react";
-import {responseData} from "@/types/AuthRes";
+import React, {useState} from "react";
 import {useRouter} from "next/navigation";
+import {ApiLoginUrl, RedirectAfterLogin, MailRegex} from "@/lib/constants";
+import {registerToken} from "@/lib/utils";
 
 export default function LoginForm() {
   const [loginEmail, setLoginEmail] = useState("");
@@ -15,20 +16,16 @@ export default function LoginForm() {
 
   const router = useRouter();
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent): Promise<void> {
     e.preventDefault();
 
-    const apiUrl = `/api/login`;
-
-    const regexEmail = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)])/;
-
-    if (!(regexEmail.test(loginEmail)) || loginPassword == '') {
+    if (!(MailRegex.test(loginEmail)) || loginPassword == '') {
       alert("Identifiants de connexion incorrects !");
       return;
     }
 
     try {
-      const response = await fetch(apiUrl, {
+      const response = await fetch(ApiLoginUrl, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
@@ -40,23 +37,14 @@ export default function LoginForm() {
       });
 
       const data = await response.json();
-      await handleToken(data);
+      await registerToken(data);
 
       if(response.ok){
-        router.push('/');
+        router.push(RedirectAfterLogin);
       }
     } catch (error) {
       console.error('Error submitting form:', error);
     }
-  }
-
-  async function handleToken(fromData: responseData): Promise<void>{
-    if(!fromData.data) {
-      return;
-    }
-
-    const tokenValue = fromData.data.token_data.token;
-    sessionStorage.setItem('token', tokenValue);
   }
 
   return (
