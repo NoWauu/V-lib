@@ -35,7 +35,8 @@ export default function RootLayout({
       >
         <main className="relative flex flex-col min-h-screen h-full">
           <Navbar />
-          <div className="flex-grow flex">
+          <div className="flex-grow flex-col flex">
+            <div className="h-20 w-full mb-8"></div>
             {children}
           </div>
           <Footer />

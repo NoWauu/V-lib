@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function LoginRegister() {
   return (
-    <Wrapper className="my-auto flex items-center justify-center">
+    <Wrapper className="my-auto flex flex-col items-center justify-center">
       <LoginTab />
     </Wrapper>
   );

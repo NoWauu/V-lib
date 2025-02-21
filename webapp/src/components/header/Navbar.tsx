@@ -14,7 +14,7 @@ const rubik = Rubik({
 export default function Navbar() {
   return (
     <>
-      <div className="w-full fixed">
+      <div className="w-full fixed z-50">
         <MaxWidthWrapper
           className={`relative bg-background flex items-center justify-between md:px-10 px-4 py-4 border-b-2 border-x-2 md:rounded-b-3xl shadow-sm ${rubik.className}`}
         >
@@ -25,8 +25,6 @@ export default function Navbar() {
           <PhoneMenu />
         </MaxWidthWrapper>
       </div>
-
-      <div className="w-full h-20 mb-8"></div>
     </>
   );
 }
