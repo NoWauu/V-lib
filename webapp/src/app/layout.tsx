@@ -1,8 +1,9 @@
-import type {Metadata} from "next";
-import {Geist, Geist_Mono} from "next/font/google";
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import Footer from "@/components/footer/Footer";
+import Navbar from '@/components/header/Navbar';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,26 +18,29 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: {
     default: "Accueil • V-lib",
-    template: "%s • V-lib"
+    template: "%s • V-lib",
   },
-  description: "Projet universitaire, application de location de vélib."
-}
+  description: "Projet universitaire, application de location de vélib.",
+};
 
 export default function RootLayout({
-                                     children,
-                                   }: Readonly<{
+  children,
+}: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-    <body
-      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-    >
-    <main className="relative flex flex-col min-h-screen h-full">
-      {children}
-      <Footer/>
-    </main>
-    </body>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <main className="relative flex flex-col min-h-screen h-full">
+          <Navbar />
+          <div className="flex-grow flex">
+            {children}
+          </div>
+          <Footer />
+        </main>
+      </body>
     </html>
   );
 }
