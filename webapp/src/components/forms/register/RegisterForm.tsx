@@ -5,6 +5,9 @@ import {CardContent, CardFooter} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import {UserRoundPlus} from "lucide-react";
 import {useState} from "react";
+import {useRouter} from "next/navigation";
+import {ApiRegisterUrl, MailRegex, RedirectAfterLogin} from "@/lib/constants";
+import {registerToken} from "@/lib/utils";
 
 
 export default function RegisterForm() {
@@ -15,88 +18,39 @@ export default function RegisterForm() {
   const [passValue, passSetValue] = useState("");
   const [passValidValue, passValidSetValue] = useState("");
 
-  async function refreshToken() {
-    const apiUrl = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/refresh_token/`;
-
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      body: JSON.stringify({
-        "email": emailValue,
-      })
-    });
-    const json = await response.json();
-
-    return json.data.token_data.token;
-  }
-
-  async function checkData(data: Response): Promise<boolean> {
-    const dataJson = await data.json();
-
-    if (!dataJson.hasOwnProperty("data")) {
-      console.log("Token data field not found");
-      return false;
-    }
-
-    if (!dataJson.data.hasOwnProperty("token_data")) {
-      console.log("Token data field not found");
-      return false;
-    }
-
-    if (!dataJson.data.token_data.hasOwnProperty("token")) {
-      console.log("Token field not found");
-      return false;
-    }
-    if (!dataJson.data.token_data.hasOwnProperty("expiration_date")) {
-      console.log("Token data expiration field not found");
-      return false;
-    }
-
-    let token = dataJson.data.token_data.token;
-    const tokenExpire = dataJson.data.token_data.expiration_date;
-    if (new Date(tokenExpire).valueOf() - Date.now() < 0) {
-      try {
-        token = await refreshToken();
-      } catch (e) {
-        console.log("An error occured while refreshing the token : " + e);
-      }
-
-      if (token !== undefined) {
-        sessionStorage.setItem("token", token);
-        console.log("Token refreshed.");
-      }
-    }
-      return true;
-    }
+  const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    const apiUrl = `/api/register`;
-
-    if(passValue !== passValidValue) {
-      console.log(`Passwords are different : "${passValue}" / "${passValidValue}"`);
+    if (!(MailRegex.test(emailValue)) || passValue === '') {
+      alert("Identifiants de connexion incorrects !");
       return;
     }
 
     try {
-      const response = await fetch(apiUrl, {
+      const response = await fetch(ApiRegisterUrl, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          last_name: lastnameValue,
+          first_name: firstnameValue,
+          phone_number: phoneValue,
           email: emailValue,
           password: passValue,
-          first_name: firstnameValue,
-          last_name: lastnameValue,
-          phone_number: phoneValue,
         })
       });
 
-      console.log(await response.ok);
-      console.log(await response.json());
-    } catch (e) {
-      console.log(`An error occured while fetching the data : ${e}`);
+      const data = await response.json();
+      await registerToken(data);
+
+      if(response.ok){
+        router.push(RedirectAfterLogin);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
     }
   }
 

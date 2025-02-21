@@ -41,6 +41,6 @@ export async function POST (req: NextRequest) {
     console.error("Error submitting form:", error);
     return Response.json({ error: "Error submitting form" }, { status: 500 });
   }
-};
+}
 
 export default POST;

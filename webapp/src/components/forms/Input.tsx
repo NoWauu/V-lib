@@ -3,8 +3,8 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import clsx from "clsx";
-import {Dispatch, SetStateAction} from "react";
-
+import {Dispatch, SetStateAction, useState} from "react";
+import {Eye, EyeOff} from "lucide-react";
 
 export default function LoginInput({
   id,
@@ -27,6 +27,15 @@ export default function LoginInput({
   value: string;
   setValueAction: Dispatch<SetStateAction<string>>;
 }) {
+
+  const [trueType, setTrueType] = useState(type);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+    setTrueType(trueType==='password' ? 'text': 'password');
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (isNumber) {
       const newValue = e.target.value.replace(/[^0-9 ]/g, ""); // Remove non-numeric & non-space characters
@@ -40,10 +49,10 @@ export default function LoginInput({
   };
 
   return (
-    <div className="space-y-1">
+    <div className="space-y-1 relative">
       <Label htmlFor={id}>{content}</Label>
       <Input
-        type={type}
+        type={trueType}
         id={id}
         placeholder={placeholder}
         className={clsx({
@@ -51,11 +60,17 @@ export default function LoginInput({
           lowercase: textCase === "lowercase",
           capitalize: textCase === "capitalize",
           "normal-case": textCase === "none",
-        })}
+        }, 'relative')}
         onChange={handleChange}
         value={value}
         maxLength={maxLength}
       />
+
+      {type === "password" &&
+          <button type="button" className='absolute top-8 right-5' onClick={handleTogglePassword}>
+            {showPassword ? <Eye /> : <EyeOff />}
+          </button>
+      }
     </div>
   );
 }
