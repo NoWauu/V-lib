@@ -4,7 +4,7 @@ import {getIronSession, IronSessionData} from "iron-session";
 
 import {cookies} from "next/headers";
 import IUserData from "@/types/IUserData";
-import sessionOptions from "@/lib/ironSessionOptions";
+import sessionOptions from "@/lib/sessionOptions";
 
 declare module "iron-session" {
 	interface IronSessionData {

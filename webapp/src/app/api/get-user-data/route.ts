@@ -1,7 +1,7 @@
-import { getServerActionSession } from "@/lib/session";
+import { getSession } from "@/lib/session";
 
 export async function GET() {
-  const session = await getServerActionSession();
+  const session = await getSession();
   return Response.json({ userData: session?.userData }, { status: 200 });
 }
 
