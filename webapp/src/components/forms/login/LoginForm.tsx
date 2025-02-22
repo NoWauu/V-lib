@@ -8,7 +8,6 @@ import ForgotPassword from "@/components/forms/login/ForgotPassword";
 import React, {useState} from "react";
 import {useRouter} from "next/navigation";
 import {ApiLoginUrl, RedirectAfterLogin, MailRegex} from "@/lib/constants";
-import {registerToken} from "@/lib/utils";
 
 export default function LoginForm() {
   const [loginEmail, setLoginEmail] = useState("");
@@ -35,9 +34,6 @@ export default function LoginForm() {
           password: loginPassword,
         })
       });
-
-      const data = await response.json();
-      await registerToken(data);
 
       if(response.ok){
         router.push(RedirectAfterLogin);

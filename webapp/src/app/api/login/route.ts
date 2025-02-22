@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { saveUserData } from "@/lib/utils";
 
 export async function POST (req: NextRequest) {
   const apiUrl = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/login/`;
@@ -32,11 +33,8 @@ export async function POST (req: NextRequest) {
       body: formData,
     });
 
-    // Parse the response from Django API
-    const responseData = await response.json();
+    return await saveUserData(response);
 
-    // Send the response data back to the client
-    return Response.json(responseData);
   } catch (error) {
     console.error("Error submitting form:", error);
     return Response.json({ error: "Error submitting form" }, { status: 500 });

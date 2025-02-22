@@ -7,7 +7,6 @@ import {UserRoundPlus} from "lucide-react";
 import {useState} from "react";
 import {useRouter} from "next/navigation";
 import {ApiRegisterUrl, MailRegex, RedirectAfterLogin} from "@/lib/constants";
-import {registerToken} from "@/lib/utils";
 
 
 export default function RegisterForm() {
@@ -43,8 +42,7 @@ export default function RegisterForm() {
         })
       });
 
-      const data = await response.json();
-      await registerToken(data);
+      console.log(response.json());
 
       if(response.ok){
         router.push(RedirectAfterLogin);
