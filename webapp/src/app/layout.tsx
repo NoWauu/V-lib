@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+
+import { Toaster } from "sonner";
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import Footer from "@/components/footer/Footer";
-import Navbar from '@/components/header/Navbar';
+import Navbar from "@/components/header/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,12 +38,15 @@ export default function RootLayout({
       >
         <main className="relative flex flex-col min-h-screen h-full">
           <Navbar />
-          <div className="flex-grow flex-col flex">
-            <div className="h-20 w-full mb-8"></div>
-            {children}
-          </div>
+          <div className="flex-grow flex-col flex">{children}</div>
           <Footer />
         </main>
+        <Toaster
+          richColors={true}
+          visibleToasts={1}
+          offset={100}
+          position="top-center"
+        />
       </body>
     </html>
   );

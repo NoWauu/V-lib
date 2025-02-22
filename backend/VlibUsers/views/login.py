@@ -33,7 +33,7 @@ def login_request(req: HttpRequest) -> JsonResponse:
         # If the user does not exist, return a JSON response with an error message
         return JsonResponse({
             'status': 'error',
-            'message': 'User not found',
+            'message': 'Invalid email or password',
         }, status=404)
     
     # Check if the password is correct
@@ -54,7 +54,7 @@ def login_request(req: HttpRequest) -> JsonResponse:
             return JsonResponse({
                 'status': 'error', 
                 'message': 'Error occured when creating the token'
-            }, status=401)
+            }, status=500)
 
         return JsonResponse({
             'status': 'success', 
@@ -75,4 +75,4 @@ def login_request(req: HttpRequest) -> JsonResponse:
         return JsonResponse({
             'status': 'error', 
             'message': 'Invalid email or password'
-        }, status=401)
+        }, status=404)

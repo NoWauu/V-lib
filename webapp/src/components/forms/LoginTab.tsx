@@ -1,4 +1,4 @@
-import {Tabs} from "@/components/ui/tabs";
+import { Tabs } from "@/components/ui/tabs";
 
 import TopBar from "@/components/forms/TopBar";
 import LoginContent from "@/components/forms/login/LoginContent";
@@ -11,7 +11,6 @@ export default function LoginTab() {
 
       <LoginContent />
       <RegisterContent />
-
     </Tabs>
   );
 }

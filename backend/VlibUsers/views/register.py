@@ -55,7 +55,7 @@ def register_request(req: HttpRequest) -> JsonResponse:
     
     # Check if the email is already in use by another account
     if email_already_in_use(email_hash):
-        return JsonResponse({'status': 'error', 'message': 'Email already in use'}, status=400)
+        return JsonResponse({'status': 'error', 'message': 'Email already in use'}, status=409)
     
     # Add the user to the db
     is_added, user_id = add_user_to_db(

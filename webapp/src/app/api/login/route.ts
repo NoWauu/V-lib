@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { saveUserData } from "@/lib/utils";
+import { responseData } from "@/types/AuthRes";
 
 export async function POST (req: NextRequest) {
   const apiUrl = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/login/`;
@@ -8,7 +9,6 @@ export async function POST (req: NextRequest) {
   let password: string;
 
   try {
-    console.log(req);
     const body = await req.json();
     email = body.email;
     password = body.password;
@@ -32,6 +32,11 @@ export async function POST (req: NextRequest) {
       method: "POST",
       body: formData,
     });
+
+    if (!response.ok) {
+      const resData: responseData = await response.json();
+      return Response.json(resData, { status: response.status });
+    }
 
     return await saveUserData(response);
 

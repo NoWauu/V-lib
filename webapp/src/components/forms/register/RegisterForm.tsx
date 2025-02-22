@@ -1,13 +1,19 @@
 "use client";
 
 import LoginInput from "@/components/forms/Input";
-import {CardContent, CardFooter} from "@/components/ui/card";
-import {Button} from "@/components/ui/button";
-import {UserRoundPlus} from "lucide-react";
-import {useState} from "react";
-import {useRouter} from "next/navigation";
-import {ApiRegisterUrl, MailRegex, RedirectAfterLogin} from "@/lib/constants";
-
+import { CardContent, CardFooter } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { UserRoundPlus } from "lucide-react";
+import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import {
+  ApiRegisterUrl,
+  MailRegex,
+  EmptyRegex,
+  defaultPageLink,
+} from "@/lib/constants";
+import { toast } from "sonner";
+import { responseData } from "@/types/AuthRes";
 
 export default function RegisterForm() {
   const [lastnameValue, lastnameSetValue] = useState("");
@@ -18,18 +24,37 @@ export default function RegisterForm() {
   const [passValidValue, passValidSetValue] = useState("");
 
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    if (!(MailRegex.test(emailValue)) || passValue === '') {
-      alert("Identifiants de connexion incorrects !");
+    for (const input of [
+      lastnameValue,
+      firstnameValue,
+      emailValue,
+      phoneValue,
+      passValue,
+      passValidValue,
+    ]) {
+      if (EmptyRegex.test(input)) {
+        toast.error("Champ(s) vide(s)", {
+          description: "Veuillez remplir tous les champs.",
+        });
+        return;
+      }
+    }
+
+    if (!MailRegex.test(emailValue) || passValue === "") {
+      toast.error("Informations incorrectes", {
+        description: "Veuillez vérifier les données saisies.",
+      });
       return;
     }
 
     try {
       const response = await fetch(ApiRegisterUrl, {
-        method: 'POST',
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -39,16 +64,39 @@ export default function RegisterForm() {
           phone_number: phoneValue,
           email: emailValue,
           password: passValue,
-        })
+        }),
       });
 
-      console.log(response.json());
+      if (response.ok) {
+        const redirectLink = searchParams.get("redirect");
+        if (redirectLink) {
+          router.push(redirectLink);
+        } else {
+          router.push(defaultPageLink);
+        }
+      } else {
+        let errorDescription = "";
 
-      if(response.ok){
-        router.push(RedirectAfterLogin);
+        if (response.status === 409) {
+          errorDescription = "Un compte est déjà associé à cette adresse mail.";
+        } else if (response.status === 400) {
+          const responseData: responseData = await response.json();
+          if (responseData.message === "Missing data") {
+            errorDescription = "Certains champs sont manquants.";
+          } else if (responseData.message === "Invalid data") {
+            errorDescription = "Certains champs sont incorrects.";
+          } else {
+            errorDescription =
+              "Le mot de passe dépasse la limite de caractères autorisée.";
+          }
+        }
+
+        toast.error("Une erreur est survenue", {
+          description: errorDescription,
+        });
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error("Error submitting form:", error);
     }
   }
 
@@ -121,7 +169,7 @@ export default function RegisterForm() {
           type="submit"
           onClick={handleSubmit}
         >
-          <UserRoundPlus/>
+          <UserRoundPlus />
           <span>S&#39;enregistrer</span>
         </Button>
       </CardFooter>
