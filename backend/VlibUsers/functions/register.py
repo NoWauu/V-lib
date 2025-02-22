@@ -9,8 +9,7 @@ from VlibUsers.functions.bcrypt import hash_data as bcrypt_hash
 from VlibUsers.functions.hmac_fn import hash_hmac_hex
 from django.http import HttpRequest
 
-
-EMAIL_REGEX = r"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+@[a-z0-9!#$%&'*+/=?^_`{|}~-]+\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+$"
+EMAIL_REGEX = r"^(?!.*\.\.)[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9.-]+\.[a-z]{2,}$"
 PASSWORD_REGEX = r"^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}|:<>?~`[\]\\;'\/.,]).{8,}$"
 NAME_REGEX = r"^\s+$"
 PHONE_REGEX = r"^[0-9]{10}$"
