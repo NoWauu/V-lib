@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerActionSession } from '@/lib/session';
+import { getSession } from "./lib/session";
 
 // 1. Specify protected and public routes
 const protectedRoutes = ['/connecte'];
@@ -12,7 +12,7 @@ export default async function middleware(req: NextRequest) {
   const isPublicRoute = publicRoutes.includes(path);
 
   // Decrypt the session from the cookie
-  const session = await getServerActionSession();
+  const session = await getSession();
   const token = session?.token;
 
   // Redirect to /login if the user is not authenticated

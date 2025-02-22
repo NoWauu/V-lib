@@ -1,10 +1,10 @@
 "use server";
 
-import {getIronSession, getServerActionIronSession, IronSessionData} from "iron-session";
+import {getIronSession, IronSessionData} from "iron-session";
 
 import {cookies} from "next/headers";
 import IUserData from "@/types/IUserData";
-import {sessionOptions} from "@/lib/sessionConfig";
+import sessionOptions from "@/lib/ironSessionOptions";
 
 declare module "iron-session" {
 	interface IronSessionData {
@@ -13,12 +13,8 @@ declare module "iron-session" {
 	}
 }
 
-const getSession = async (req: Request, res: Response) => {
-	return getIronSession<IronSessionData>(req, res, sessionOptions);
+const getSession = async () => {
+	return await getIronSession<IronSessionData>(await cookies(), sessionOptions);
 }
 
-const getServerActionSession = async () => {
-	return getServerActionIronSession<IronSessionData>(sessionOptions, await cookies());
-}
-
-export { getSession, getServerActionSession };
+export { getSession };
