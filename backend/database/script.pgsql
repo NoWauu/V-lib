@@ -14,7 +14,6 @@ CREATE TABLE users (
     is_email_verified BOOLEAN NOT NULL DEFAULT FALSE,
     password TEXT NOT NULL,
     phone_number TEXT NOT NULL,
-    favorites INTEGER ARRAY,
     UNIQUE (email),
     UNIQUE (email_hash)
 );
@@ -56,6 +55,14 @@ CREATE TABLE rents (
     id_station INT NOT NULL,
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
+    FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE,
+    FOREIGN KEY (id_station) REFERENCES stations(id_station) ON DELETE CASCADE
+);
+
+CREATE TABLE favorites (
+    id_user INT NOT NULL,
+    id_station INT NOT NULL,
+    PRIMARY KEY (id_user, id_station),
     FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE,
     FOREIGN KEY (id_station) REFERENCES stations(id_station) ON DELETE CASCADE
 );

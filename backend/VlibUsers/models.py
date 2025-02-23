@@ -4,6 +4,7 @@ Classes that represents user-related data in the database.
 
 from django.db import models
 from django.utils.timezone import now, timedelta
+from VlibStations.models import Station
 
 
 class User(models.Model):
@@ -43,3 +44,17 @@ class AuthToken(models.Model):
 
     def __str__(self):
         return f"Token {str(self.token)} expires at {str(self.expiration_time)}"
+
+
+class Favorite(models.Model):
+    id_user = models.OneToOneField(User, on_delete=models.CASCADE, db_column='id_user')
+    id_station = models.OneToOneField(Station, on_delete=models.CASCADE, db_column='id_station', primary_key=True)
+
+    class Meta:
+        db_table = 'favorites'
+
+    def get_favorites(id_user: User) -> list[Station]:
+        return Favorite.objects.filter(id_user=id_user).all()
+
+    def __str__(self):
+        return f"User {str(self.id_user)} has {str(self.id_station)} as favorite"
