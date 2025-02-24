@@ -3,7 +3,7 @@ View function for the favorites request
 """
 
 from django.http import JsonResponse, HttpRequest
-from VlibUsers.models import User, Station
+from VlibUsers.models import User, Station, AuthToken
 from VlibUsers.functions.favorites import add_favorite, remove_favorite, user_has_favorite
 from django.views.decorators.csrf import csrf_exempt
 
@@ -16,16 +16,26 @@ def favorites_request(req: HttpRequest) -> JsonResponse:
     :param req: The request object
     :return: A JSON response with the result of the operation
     """
-    # Get the id_user and id_station from the request
-    id_user = req.POST.get('id_user')
+    # Get the token and id_station from the request
+    token = req.POST.get('token')
     id_station = req.POST.get('id_station')
 
     # Check if id_user and id_station are present
-    if not id_user or not id_station:
+    if not (token and id_station):
         return JsonResponse({
             'status': 'error',
             'message': 'Missing data'
         }, status=400)
+
+    # Check if the token is valid
+    id_user = AuthToken.objects.filter(token=token).first().id_user.id_user
+
+    if not id_user:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Invalid token'
+        }, status=400)
+    
 
     # Check if id_user and id_station are valid
     if not User.objects.filter(id_user=id_user).exists():

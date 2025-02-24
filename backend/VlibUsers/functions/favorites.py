@@ -2,7 +2,7 @@
 Functions that perform actions on favorites in the database
 """
 
-from ..models import Favorite, User, Station
+from VlibUsers.models import Favorite, User, Station
 
 def add_favorite(id_user: int, id_station: int) -> str | None:
 
