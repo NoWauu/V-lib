@@ -73,6 +73,12 @@ def add_user(first_name: str, last_name: str, email: str, password: str, phone: 
     """
     if check_email_already_exists(email):
         return "Email already exists"
-    
+
     user = User(first_name=first_name, last_name=last_name, email=email, password=password, phone=phone)
     user.save()
+
+def delete_user(user_id: int) -> None:
+    """
+    Delete user from the database
+    """
+    User.objects.filter(id_user=user_id).delete()
