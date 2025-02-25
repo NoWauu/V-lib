@@ -43,7 +43,26 @@ class AuthToken(models.Model):
         self.save()
 
     def __str__(self):
-        return f"Token {str(self.token)} expires at {str(self.expiration_time)}"
+        return f"Email token {str(self.token)} expires at {str(self.expiration_time)}"
+
+
+class EmailToken(models.Model):
+    id_user = models.ForeignKey(User, on_delete=models.CASCADE, db_column='id_user')
+    token = models.CharField(max_length=64, primary_key=True)
+    expiration_time = models.DateTimeField(db_column='expiration')
+
+    class Meta:
+        db_table = 'email_tokens'
+
+    def is_valid(self) -> bool:
+        return self.expiration_time > now()
+    
+    def refresh(self):
+        self.expiration_time = now() + timedelta(hours=1)
+        self.save()
+
+    def __str__(self):
+        return f"Email token {str(self.token)} expires at {str(self.expiration_time)}"
 
 
 class Favorite(models.Model):

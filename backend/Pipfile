@@ -10,6 +10,7 @@ requests = "*"
 psycopg2 = "*"
 rsa = "*"
 bcrypt = "*"
+resend = "*"
 
 [dev-packages]
 
