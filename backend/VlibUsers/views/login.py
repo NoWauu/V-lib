@@ -23,6 +23,12 @@ def login_request(req: HttpRequest) -> JsonResponse:
     get_email = req.POST.get('email')
     get_password = req.POST.get('password')
 
+    if get_email is None or get_password is None:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Missing data'
+        }, status=400)
+
     # Encrypt the email
     email_hash = hash_hmac_hex(get_email)
 

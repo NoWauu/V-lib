@@ -2,9 +2,40 @@
 Functions that perform actions on users in the database
 """
 
-from ..models import User, AuthToken
+from ..models import User, AuthToken, EmailToken
 import secrets
 from django.utils.timezone import now, timedelta
+
+
+def get_email_token(user_id: int | User) -> AuthToken:
+    """
+    Create or get the token of email verification for a user
+
+    :param user_id: The id of the user
+    :return: The token created or retrieved, or null if the user does not exist
+    """
+
+    if isinstance(user_id, int):
+        user_id = User.objects.get(id_user=user_id)
+        if user_id is None: return None
+
+    try:
+        EMAIL_TOKEN = EmailToken.objects.get(id_user=user_id)
+    except EmailToken.DoesNotExist:
+        EMAIL_TOKEN = None
+
+    if EMAIL_TOKEN is None:
+        token = None
+        while token is None or EmailToken.objects.filter(token=token).exists():
+            token = secrets.token_hex(32)
+        
+        EMAIL_TOKEN = EmailToken(id_user=user_id, token=token, expiration_time=now() + timedelta(hours=1))
+        EMAIL_TOKEN.save()
+
+    if not EMAIL_TOKEN.is_valid():
+        EMAIL_TOKEN.refresh()
+
+    return EMAIL_TOKEN
 
 
 def get_user_with_email_hash(hash: str) -> User:
@@ -73,12 +104,6 @@ def add_user(first_name: str, last_name: str, email: str, password: str, phone: 
     """
     if check_email_already_exists(email):
         return "Email already exists"
-
+    
     user = User(first_name=first_name, last_name=last_name, email=email, password=password, phone=phone)
     user.save()
-
-def delete_user(user_id: int) -> None:
-    """
-    Delete user from the database
-    """
-    User.objects.filter(id_user=user_id).delete()
