@@ -11,6 +11,7 @@ psycopg2 = "*"
 rsa = "*"
 bcrypt = "*"
 resend = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 

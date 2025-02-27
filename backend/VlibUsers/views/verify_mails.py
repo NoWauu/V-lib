@@ -2,6 +2,7 @@
 View for verifying the email of a new user
 """
 
+from django.urls import reverse
 from django.http import JsonResponse, HttpRequest
 from django.views.decorators.csrf import csrf_exempt
 from VlibStations.functions.log import log_info, log_error
@@ -72,7 +73,7 @@ def verify_mail_request(req: HttpRequest) -> JsonResponse:
             "from": "V-lib <no-reply@resend.dev>",
             "to": email,
             "subject": "Vérification d'email",
-            "html": "<p>Bonjour, </p> <p>Vous avez demandé à vérifier votre email. Pour cela, veuillez cliquer <a href='http://localhost:8000/users/verify-email/?email_token=" + str(email_token.token) + "'>ici</a></p><p>Cordialement, </p><p>L'équipe V-Lib</p>"
+            "html": f"<p>Bonjour, </p> <p>Vous avez demandé à vérifier votre email. Pour cela, veuillez cliquer <a href='{req.build_absolute_uri(reverse("verify-email"))}?email_token={email_token.token}'>ici</a>.</p><p>Cordialement, </p><p>L'équipe V-Lib</p>"
         }
 
         try:

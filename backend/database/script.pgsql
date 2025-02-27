@@ -1,8 +1,10 @@
 DROP TABLE IF EXISTS bikes CASCADE;
 DROP TABLE IF EXISTS locations CASCADE;
 DROP TABLE IF EXISTS rents CASCADE;
+DROP TABLE IF EXISTS favorites CASCADE;
 DROP TABLE IF EXISTS stations CASCADE;
 DROP TABLE IF EXISTS auth_tokens CASCADE;
+DROP TABLE IF EXISTS email_tokens;
 DROP TABLE IF EXISTS users CASCADE;
 
 CREATE TABLE users (
@@ -35,19 +37,21 @@ CREATE TABLE email_tokens (
 );
 
 CREATE TABLE locations (
-    id_location SERIAL PRIMARY KEY,
+    id_location SERIAL,
     latitude FLOAT NOT NULL,
     longitude FLOAT NOT NULL,
-    UNIQUE (latitude, longitude)
+    UNIQUE (latitude, longitude),
+    PRIMARY KEY (id_location)
 );
 
 CREATE TABLE stations (
-    id_station SERIAL PRIMARY KEY,
+    id_station SERIAL,
     name TEXT NOT NULL,
     id_location INT NOT NULL,
     capacity INT NOT NULL,
     station_code INT NOT NULL,
-    FOREIGN KEY (id_location) REFERENCES locations(id_location) ON DELETE CASCADE
+    FOREIGN KEY (id_location) REFERENCES locations(id_location) ON DELETE CASCADE,
+    PRIMARY KEY (id_station)
 );
 
 CREATE TABLE bikes (
@@ -58,13 +62,14 @@ CREATE TABLE bikes (
 );
 
 CREATE TABLE rents (
-    id_rent SERIAL PRIMARY KEY,
+    id_rent SERIAL,
     id_user INT NOT NULL,
     id_station INT NOT NULL,
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
     FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE,
-    FOREIGN KEY (id_station) REFERENCES stations(id_station) ON DELETE CASCADE
+    FOREIGN KEY (id_station) REFERENCES stations(id_station) ON DELETE CASCADE,
+    PRIMARY KEY (id_rent)
 );
 
 CREATE TABLE favorites (
