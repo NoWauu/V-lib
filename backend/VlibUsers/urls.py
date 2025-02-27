@@ -7,5 +7,6 @@ urlpatterns = [
     path('register/', register_request, name='register'),
     path('refresh-token/', refresh_token_request, name='refresh-token'),
     path('favorites/', favorites_request, name='favorites'),
+    path('verify-email/', verify_mail_request, name='verify-email'),
     path('delete-account/', delete_account_request, name='delete-account'),
 ]
