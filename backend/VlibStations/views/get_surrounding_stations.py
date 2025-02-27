@@ -16,13 +16,17 @@ def get_surrounding_stations_request(req: HttpRequest) -> JsonResponse:
     radius = float(req.POST.get('radius'))
 
     if not long or not lat or not radius:
-        return JsonResponse({"error": "missing parameters"}, status=400)
+        return JsonResponse({
+            "status": "error",
+            "message": "missing parameters"
+        }, status=400)
 
     stations = get_surrounding_stations(lat, long, radius)
 
     if stations == None:
         return JsonResponse({
-            "error": "no stations found"
+            "status": "error",
+            "message": "No stations found"
         }, status=404)
 
 
@@ -40,5 +44,6 @@ def get_surrounding_stations_request(req: HttpRequest) -> JsonResponse:
 
     return JsonResponse({
         "status": "success",
+        "message": "Stations found",
         "stations": response
     }, status=200)
