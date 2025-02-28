@@ -1,8 +1,8 @@
 import { getSession } from "@/lib/session";
 
-export async function GET() {
+async function handler(): Promise<Response> {
   const session = await getSession();
   return Response.json({ userData: session?.userData }, { status: 200 });
 }
 
-export default GET;
+export {handler as GET};
