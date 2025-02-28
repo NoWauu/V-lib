@@ -36,4 +36,4 @@ The SESSION_SECRET_PASSWORD can be generated with the python script ``keys.py`` 
 
 ## Launching the server
 
-You can start the server with `npm run dev`.
+You can start the server with `npm start` after running `npm run build`.
