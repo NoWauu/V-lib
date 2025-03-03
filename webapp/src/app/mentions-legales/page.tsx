@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "Connexion",
 };
 
-export default function MentionsLegals() {
+export default function MentionsLegales() {
   return (
     <Wrapper className="flex-grow mx-0 px-0 max-w-full w-full h-full flex flex-col items-center justify-center bg-cover bg-center border-b-2 border-primary">
       <div className="max-w-5xl mx-auto mt-24 md:mt-36 lg:mt-44 px-6 flex flex-col items-start justify-center mb-12">
