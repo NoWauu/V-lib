@@ -6,14 +6,14 @@ export default function Credits(){
       <h1 className="text-2xl md:text-4xl text-foreground font-semibold">
         5. Crédits photographiques
       </h1>
-      <p className="mt-6 text-lg text-muted-foreground">
-        Certaines photographies et illustrations utilisées ont été trouvées sur des sites libres de droits dont voici les liens:
+      <p className="mt-6 text-muted-foreground text-lg">
+        <span> Certaines photographies et illustrations utilisées ont été trouvées sur des sites libres de droits dont voici les liens: </span>
 
         <br/><br/>
 
         <Link
           href="https://www.sorbonne.fr"
-          className="text-emerald-800 text-[20px]"
+          className="text-emerald-800"
         >
           www.sorbonne.fr
         </Link>
@@ -22,14 +22,14 @@ export default function Credits(){
 
         <Link
           href="https://www.istockphoto.com"
-          className="text-emerald-800 text-[20px]"
+          className="text-emerald-800"
         >
           www.istockphoto.com
         </Link>
 
         <br/><br/>
 
-        Toute autre utilisation des images présentes sur ce site doit faire l'objet d'une autorisation préalable des détenteurs des droits.
+        <span>Toute autre utilisation des images présentes sur ce site doit faire l'objet d'une autorisation préalable des détenteurs des droits.</span>
       </p>
     </div>
   );

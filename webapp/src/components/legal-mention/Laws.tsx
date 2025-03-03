@@ -11,7 +11,7 @@ export default function Laws(){
 
         <Link
           href="/politique-de-confidentialité"
-          className="text-emerald-800 text-[20px]"
+          className="text-emerald-800"
         >
           politique de confidentialité
         </Link>

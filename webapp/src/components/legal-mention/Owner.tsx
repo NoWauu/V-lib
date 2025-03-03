@@ -12,7 +12,7 @@ export default function Owner(){
 
         <Link
           href="/contact"
-          className="text-emerald-800 text-[20px]"
+          className="text-emerald-800"
         >
           Nous contacter
 

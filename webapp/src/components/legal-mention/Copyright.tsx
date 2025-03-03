@@ -24,7 +24,7 @@ export default function Copyright(){
 
       <Link
         href="/contact"
-        className="text-emerald-800 text-[20px]"
+        className="text-emerald-800"
       >
         Nous contacter
       </Link>
