@@ -4,7 +4,6 @@ import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import clsx from "clsx";
-import Logo from "@/components/header/Logo";
 
 const pagesLinks = [
   { name: "Accueil", path: "/" },

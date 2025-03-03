@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import {saveUserData} from "@/lib/utils";
 
-export async function POST (req: NextRequest) {
+async function handler (req: NextRequest) {
   const apiUrl = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/register/`;
 
   let email: string;
@@ -50,4 +50,4 @@ export async function POST (req: NextRequest) {
   }
 }
 
-export default POST;
+export {handler as POST};
