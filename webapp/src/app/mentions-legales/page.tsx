@@ -9,7 +9,7 @@ import Credits from "@/components/legal-mention/Credits"
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Connexion",
+  title: "Mentions Légales",
 };
 
 export default function MentionsLegales() {
