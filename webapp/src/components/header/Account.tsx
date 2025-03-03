@@ -1,8 +1,8 @@
 "use client";
 
-import IUserData from "@/types/IUserData";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import IResType from "@/types/IResType";
 
 import {
   DropdownMenu,
@@ -16,10 +16,6 @@ import {
 import { ChevronDown, LogOut, UserRoundPen } from "lucide-react";
 
 import { usePathname, useRouter } from "next/navigation";
-
-interface IResType {
-  userData?: IUserData;
-}
 
 export default function Account() {
   const [userFirstName, setUserFirstName] = useState<string | null>(null);
@@ -37,6 +33,12 @@ export default function Account() {
       setLoggedIn(false);
       router.push("/");
     }
+  }
+
+  let redirectLink: string = "/connexion";
+  if (pathname !== "/connexion") 
+  {
+    redirectLink += "?redirect=" + encodeURIComponent(pathname);
   }
 
   useEffect(() => {
@@ -58,7 +60,7 @@ export default function Account() {
   }, [pathname]);
 
   return (
-    <>
+    <div className="hidden md:block">
       {isLoggedIn ? (
         <DropdownMenu>
           <DropdownMenuTrigger className="flex items-center justify-center gap-2 text-lg focus:outline-none text-foreground">
@@ -82,12 +84,12 @@ export default function Account() {
         </DropdownMenu>
       ) : (
         <Link
-          href="/connexion"
+          href={redirectLink}
           className="text-lg bg-primary rounded-lg text-background px-3 py-1 hover:bg-primary/85 transition duration-300 hidden md:block"
         >
           Connexion
         </Link>
       )}
-    </>
+    </div>
   );
 }
