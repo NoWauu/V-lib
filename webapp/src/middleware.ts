@@ -18,6 +18,11 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/connexion', req.nextUrl));
   }
 
+  // Redirect to the home page  if the user is authenticated and tries to login
+  if (path === '/connexion' && token) {
+    return NextResponse.redirect(new URL('/', req.nextUrl))
+  }
+
   return NextResponse.next();
 }
 
