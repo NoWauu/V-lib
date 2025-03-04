@@ -47,6 +47,7 @@ export default function RootLayout({
           offset={100}
           position="top-center"
         />
+
       </body>
     </html>
   );
