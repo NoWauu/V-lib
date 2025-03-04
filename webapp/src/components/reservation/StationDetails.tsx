@@ -2,8 +2,9 @@ import {InfoWindow} from "@vis.gl/react-google-maps";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {Station} from "@/types/Station";
+import {StationData} from "@/types/StationData";
 
-export default function StationDetails({selectedStation, onClose}: {selectedStation: Station | null, onClose: (() => void)}) {
+export default function StationDetails({selectedStation, stationData, onClose}: {selectedStation: Station | null, stationData: StationData, onClose: (() => void)}) {
 
 	return (
 		<>
@@ -14,7 +15,8 @@ export default function StationDetails({selectedStation, onClose}: {selectedStat
 				>
 					<div>
 						<h2 className={"text-lg"}>{selectedStation.name}</h2>
-						<p>Capacité : {selectedStation.capacity}</p>
+						<p className={"text-md"}>Capacité : {stationData.numDocksAvailable + stationData.numBikesAvailable}</p>
+						<p className={"text-md"}>Nombre de vélos disponibles : {stationData.numBikesAvailable}</p>
 
 						<div className={"flex justify-between"}>
 							<Button>

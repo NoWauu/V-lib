@@ -5,11 +5,12 @@ retrieve data about a given velib station
 
 import requests
 from django.http import HttpRequest, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 URL = "https://velib-metropole-opendata.smovengo.cloud/opendata/Velib_Metropole/station_status.json"
 
-
+@csrf_exempt
 def get_station_data_request(req: HttpRequest) -> JsonResponse:
     """ 
     Function called by the API
