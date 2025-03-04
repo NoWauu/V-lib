@@ -67,13 +67,14 @@ def login_request(req: HttpRequest) -> JsonResponse:
             'message': 'Login successful',
             'data': {
                 'email': email,
+                'is_email_verified': user.is_email_verified,
                 'first_name': first_name,
                 'last_name': last_name,
                 'phone_number': phone_number,
                 'token_data': {
                     'token': token.token,
                     'expiration_date': token.expiration_time.timestamp()
-                }
+                },
             }
         }, status=200)
     

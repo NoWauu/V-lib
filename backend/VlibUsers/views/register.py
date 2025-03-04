@@ -76,6 +76,7 @@ def register_request(req: HttpRequest) -> JsonResponse:
             'message': 'User created.',
             'data': {
                 'email': email,
+                'is_email_verified': False,
                 'first_name': first_name,
                 'last_name': last_name,
                 'phone_number': phone_number,
