@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import IUserData from "@/types/IUserData";
 import saveUserSession from "@/lib/saveUserData";
+import {Station} from "@/types/Station";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -25,6 +26,16 @@ async function saveUserData(response: Response) {
   return Response.json(responseData, { status : response.status });
 }
 
+async function fetch_stations(position: { lat: number; lng: number }, radius: number): Promise<Station[]> {
+  const response = await fetch("/api/get-surrounding-stations/", {
+    method: "POST",
+    cache: "no-store",
+    body: JSON.stringify({ "lat": position.lat, "long": position.lng, "radius": radius })
+  });
+  const data = await response.json();
+  return data.stations;
+}
 
-export { cn, saveUserData };
+
+export { cn, saveUserData, fetch_stations };
 
