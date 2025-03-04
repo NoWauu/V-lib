@@ -8,8 +8,8 @@ export default function StorageData(){
         Vos informations personnelles sont conservées aussi longtemps que nécessaire pour fournir nos services et
         répondre à nos obligations légales.
 
-        <br/>
-
+      </p>
+      <p className="mt-6 text-lg text-muted-foreground">
         Lorsque les données ne sont plus nécessaires, nous les supprimons de manière sécurisée.
       </p>
     </div>

@@ -7,8 +7,8 @@ export default function ShareData(){
       <p className="mt-6 text-lg text-muted-foreground">
         Nous ne partageons, ne vendons ni ne louons vos informations personnelles à des tiers.
 
-        <br/>
-
+      </p>
+      <p className="mt-6 text-lg text-muted-foreground">
         Les données collectées sont strictement utilisées en interne pour fournir et améliorer notre service.
       </p>
     </div>

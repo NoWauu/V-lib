@@ -11,9 +11,9 @@ export default function UseData(){
 
         <br/>
 
-        <ul>
-          <li>• Création et gestion de votre compte utilisateur</li>
-          <li>• Fourniture de nos services de réservation de vélib</li>
+        <ul className="list-disc ml-6">
+          <li>Création et gestion de votre compte utilisateur</li>
+          <li>Fourniture de nos services de réservation de vélib</li>
         </ul>
 
         <br/>

@@ -13,12 +13,12 @@ export default function UserRight(){
 
         <br/>
 
-        <ul>
-          <li>• Droit d'accès : vous pouvez demander à consulter les informations que nous détenons sur vous.</li>
-          <li>• Droit de rectification : vous pouvez demander la correction de vos informations personnelles si elles sont inexactes ou incomplètes.</li>
-          <li>• Droit à l'effacement : vous pouvez demander la suppression de vos informations personnelles dans certaines circonstances.</li>
-          <li>• Droit d'opposition : vous pouvez vous opposer à l'utilisation de vos données personnelles dans certaines situations.</li>
-          <li>• Droit à la portabilité des données : vous pouvez demander à recevoir une copie de vos informations personnelles dans un format structuré et lisible par machine.</li>
+        <ul className="list-disc ml-6">
+          <li>Droit d'accès : vous pouvez demander à consulter les informations que nous détenons sur vous.</li>
+          <li>Droit de rectification : vous pouvez demander la correction de vos informations personnelles si elles sont inexactes ou incomplètes.</li>
+          <li>Droit à l'effacement : vous pouvez demander la suppression de vos informations personnelles dans certaines circonstances.</li>
+          <li>Droit d'opposition : vous pouvez vous opposer à l'utilisation de vos données personnelles dans certaines situations.</li>
+          <li>Droit à la portabilité des données : vous pouvez demander à recevoir une copie de vos informations personnelles dans un format structuré et lisible par machine.</li>
         </ul>
 
         <br/>

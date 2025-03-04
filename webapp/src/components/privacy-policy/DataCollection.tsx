@@ -11,14 +11,14 @@ export default function DataCollection(){
 
           <br/>
 
-          <ul>
-            <li>• Adresse e-mail</li>
-            <li>• Mot de passe</li>
-            <li>• Nom</li>
-            <li>• Prénom</li>
-            <li>• Numéro de téléphone</li>
-            <li>• Historique des stations</li>
-            <li>• Stations favorites</li>
+          <ul className="list-disc ml-6">
+            <li>Adresse e-mail</li>
+            <li>Mot de passe</li>
+            <li>Nom</li>
+            <li>Prénom</li>
+            <li>Numéro de téléphone</li>
+            <li>Historique des stations</li>
+            <li>Stations favorites</li>
           </ul>
 
           <br/>
