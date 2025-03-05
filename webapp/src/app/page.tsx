@@ -1,5 +1,3 @@
-"use client"
-
 import Wrapper from "@/components/wrappers/Wrapper";
 import Animation from "@/components/home/Animation";
 import Introduction from "@/components/home/Introduction";
@@ -7,7 +5,11 @@ import FirstParagraph from "@/components/home/FirstParagraph";
 import SecondParagraph from "@/components/home/SecondParagraph";
 import Outro from "@/components/home/Outro";
 import ReservationButton from "@/components/home/ReservationButton";
+import type { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Accueil",
+};
 
 export default function HomePage() {
   return (
