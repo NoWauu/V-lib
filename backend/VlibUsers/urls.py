@@ -9,4 +9,6 @@ urlpatterns = [
     path('favorites/', favorites_request, name='favorites'),
     path('verify-email/', verify_mail_request, name='verify-email'),
     path('delete-account/', delete_account_request, name='delete-account'),
+    path('add-rent/', add_rent_request, name='add-rent'),
+    path('remove-rent/', remove_rent_request, name='remove-rent'),
 ]

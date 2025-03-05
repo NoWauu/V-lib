@@ -77,3 +77,17 @@ class Favorite(models.Model):
 
     def __str__(self):
         return f"User {str(self.id_user)} has {str(self.id_station)} as favorite"
+
+
+class Rent(models.Model):
+    id_rent = models.AutoField(primary_key=True)
+    id_user = models.ForeignKey(User, on_delete=models.CASCADE, db_column='id_user')
+    id_station = models.ForeignKey(Station, on_delete=models.CASCADE, db_column='id_station')
+    start_time = models.DateTimeField(db_column='start_time')
+    end_time = models.DateTimeField(db_column='end_time')
+    
+    class Meta:
+        db_table = 'rents'
+        
+    def __str__(self):
+        return f"User {str(self.id_user)} rented a bike at {str(self.id_station)} from {str(self.start_time)} to {str(self.end_time)}"
