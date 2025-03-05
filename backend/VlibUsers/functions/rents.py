@@ -26,7 +26,6 @@ def add_rent(id_station: int, id_user: int) -> str | None:
 
 def remove_rent(id_user: int, id_station: int) -> str | None:
     try:
-        print(id_user, id_station)
         rental = Rent.objects.filter(id_user=id_user, id_station=id_station).first()
         if rental is None:
             return "Rent does not exist"

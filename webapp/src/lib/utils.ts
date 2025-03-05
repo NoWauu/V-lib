@@ -30,7 +30,7 @@ async function saveUserData(response: Response) {
 async function fetch_stations(position: LatLngLiteral, radius: number): Promise<Station[]> {
   const response = await fetch("/api/get-surrounding-stations/", {
     method: "POST",
-    cache: "no-store",
+    cache: "force-cache",
     body: JSON.stringify({ "lat": position.lat, "long": position.lng, "radius": radius })
   });
   const data = await response.json();
@@ -40,7 +40,7 @@ async function fetch_stations(position: LatLngLiteral, radius: number): Promise<
 async function fetch_station_data(station_code: number) {
   const response = await fetch(`/api/get-station-data/?code=${station_code}`, {
     method: "GET",
-    cache: "no-store",
+    cache: "force-cache"
   });
 
   const data = await response.json();

@@ -15,6 +15,7 @@ export default function Reservation() {
 	const [selectedStation, setSelectedStation] = useState<Station | null>(null);
 	const [stationData, setStationData] = useState<StationData | null>(null);
 	const [location, setLocation] = useState<LatLngLiteral | null>(null);
+	const radius = 3;
 
 
 	useEffect(() => {
@@ -29,23 +30,17 @@ export default function Reservation() {
 		if (!location) {
 			return;
 		}
-		fetch_stations(location, 15).then((fetched) => setStations(fetched))
-	}, [location]);
+		fetch_stations(location, radius).then((fetched) => setStations(fetched))
+	}, [location, radius]);
 
 	async function openWindow(station: Station) {
 		const data = await fetch_station_data(station.station_code);
-
 		const stationData = await data.json() as StationData;
 
 		setStationData(stationData);
 		setSelectedStation(station);
 
 	}
-
-	if (!location) {
-		return <p className={"w-full "}>Activez votre localisation pour utiliser notre application !</p>
-	}
-
 
 	return (
 		<div className={"w-full h-[calc(100vh-4rem)]"}>
@@ -59,19 +54,25 @@ export default function Reservation() {
 							minZoom={14}
 							maxZoom={20}
 							defaultCenter={{lat: location.lat as number, lng: location.lng as number}}
-							gestureHandling={'greedy'}
+							gestureHandling={'passive'}
 							disableDefaultUI={true}
+							onCameraChanged={(e) => {
+								setLocation(e.detail.center);
+								}}
+							reuseMaps={true}
 						>
 
 							<Markers stations={stations} openWindow={openWindow}/>
-							<StationDetails selectedStation={selectedStation} stationData={stationData as StationData}
-							                onClose={() => setSelectedStation(null)}/>
+							<StationDetails
+								selectedStation={selectedStation}
+								stationData={stationData as StationData}
+								onClose={() => setSelectedStation(null)}
+							/>
 
 						</Map>
 					</APIProvider>
 
 			}
 		</div>
-
 	);
 }
