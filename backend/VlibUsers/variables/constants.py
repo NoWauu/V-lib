@@ -20,3 +20,6 @@ HMAC_KEY = os.getenv("HMAC_SECRET_KEY")
 
 # Load the Resend key from the .env file
 RESEND_KEY = os.getenv("RESEND_KEY")
+
+
+WEBAPP_URL = os.getenv("WEBAPP_URL")
