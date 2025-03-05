@@ -3,6 +3,12 @@ import Title from '@/components/atoms/Title';
 import Paragraph from '@/components/atoms/Paragraph';
 import Container from '@/components/atoms/Container';
 import Wrapper from '@/components/wrappers/Wrapper';
+import type { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+  title: "À propos de nous",
+};
 
 export default function AProposPage() {
   return (
