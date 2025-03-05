@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import IUserData from "@/types/IUserData";
-import saveUserSession from "@/lib/saveUserData";
+import { saveUserSession } from "@/lib/saveUserData";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -9,12 +9,14 @@ function cn(...inputs: ClassValue[]) {
 
 async function saveUserData(response: Response) {
   const responseData = await response.json();
+
   if(response.ok && responseData.data) {
     const userData: IUserData = {
       email: responseData.data?.email,
       first_name: responseData.data?.first_name,
       last_name: responseData.data?.last_name,
-      phone_number: responseData.data?.phone_number
+      phone_number: responseData.data?.phone_number,
+      is_email_verified: responseData.data?.is_email_verified,
     }
 
     await saveUserSession(responseData.data?.token_data.token, userData);
