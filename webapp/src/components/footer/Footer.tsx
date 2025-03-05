@@ -11,7 +11,7 @@ export default function Footer() {
         style={{ textDecoration: "none", fontFamily: "Arial, sans-serif" }}
       >
         <Link
-          href="/politique-de-confidentialité"
+          href="/politique-de-confidentialite"
           className="hover:text-gray-800 transition duration-300"
         >
           Politique de confidentialité
