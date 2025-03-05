@@ -5,7 +5,6 @@ View to update user data such as name, email, password, etc.
 from django.http import HttpRequest, JsonResponse
 from VlibUsers.models import AuthToken
 from django.views.decorators.csrf import csrf_exempt
-from VlibUsers.functions.user_crud import delete_user
 from VlibUsers.functions.register import email_already_in_use, email_valid, password_valid, phone_number_valid, name_valid
 from VlibUsers.functions.rsa_fn import encrypt_to_rsa, decrypt_rsa
 from VlibUsers.functions.hmac_fn import hash_hmac_hex
