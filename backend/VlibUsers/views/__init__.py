@@ -4,3 +4,4 @@ from .refresh_token import *
 from .favorites import *
 from .verify_mails import *
 from .delete_account import *
+from .update_user import *
