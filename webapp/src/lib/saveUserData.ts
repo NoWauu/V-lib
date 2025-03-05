@@ -1,14 +1,24 @@
 import { getSession } from "@/lib/session";
 import IUserData from "@/types/IUserData";
 
-const saveUserSession = async (token: string, userData: IUserData) : Promise<void> => {
+const saveUserSession = async (
+  token: string,
+  userData: IUserData
+): Promise<void> => {
+  const session = await getSession();
 
-	const session = await getSession();
+  session.token = token;
+  session.userData = userData;
 
-	session.token = token;
-	session.userData = userData;
+  await session.save();
+};
 
-	await session.save();
+const updateUserSession = async (newSession: IUserData) => {
+  const session = await getSession();
+
+  session.userData = newSession;
+
+  await session.save();
 }
 
-export default saveUserSession;
+export {saveUserSession, updateUserSession};

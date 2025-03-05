@@ -2,8 +2,8 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <div className="p-6 mt-8 md:px-10 gap-4 lg:mt-8 flex flex-wrap md:justify-center justify-center w-full bg-gray-100 rounded-lg shadow-lg text-center">
-      <p className="font-bold text-md text-center w-full">
+    <div className="p-6 md:px-10 gap-4 flex flex-wrap md:justify-center justify-center w-full bg-gray-100 shadow-lg text-center">
+      <p className="font-bold text-md text-center w-full text-foreground">
         Équipe V-lib © 2025 - Tous droits réservés
       </p>
       <div
@@ -11,7 +11,7 @@ export default function Footer() {
         style={{ textDecoration: "none", fontFamily: "Arial, sans-serif" }}
       >
         <Link
-          href="/politique-de-confidentialité"
+          href="/politique-de-confidentialite"
           className="hover:text-gray-800 transition duration-300"
         >
           Politique de confidentialité
