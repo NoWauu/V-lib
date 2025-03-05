@@ -1,7 +1,7 @@
 import {type ClassValue, clsx} from "clsx"
 import {twMerge} from "tailwind-merge"
 import IUserData from "@/types/IUserData";
-import saveUserSession from "@/lib/saveUserData";
+import {saveUserSession} from "@/lib/saveUserData";
 import {Station} from "@/types/Station";
 import LatLngLiteral = google.maps.LatLngLiteral;
 
