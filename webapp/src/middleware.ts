@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from "@/lib/session";
 
 // 1. Specify protected and public routes
-const protectedRoutes = ['/compte'];
+
+const protectedRoutes = ['/compte', "/reservation"];
 
 export default async function middleware(req: NextRequest) {
   // Check if the current route is protected or public

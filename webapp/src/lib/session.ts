@@ -14,7 +14,11 @@ declare module "iron-session" {
 }
 
 const getSession = async () => {
-	return await getIronSession<IronSessionData>(await cookies(), sessionOptions);
+	const session = await getIronSession<IronSessionData>(await cookies(), sessionOptions);
+	return {
+		token: session.token,
+		userData: session.userData
+	};
 }
 
 export { getSession };

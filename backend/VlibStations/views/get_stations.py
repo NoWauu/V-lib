@@ -5,8 +5,10 @@ retrieve data about all the velib stations
 
 from django.http import HttpRequest, JsonResponse
 from ..models import Station, Location
+from django.views.decorators.csrf import csrf_exempt
 
 
+@csrf_exempt
 def get_stations_request(req: HttpRequest) -> JsonResponse:
     """ 
     Function called by the API

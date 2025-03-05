@@ -4,3 +4,5 @@ from .refresh_token import *
 from .favorites import *
 from .verify_mails import *
 from .delete_account import *
+from .add_rent import *
+from .remove_rent import *

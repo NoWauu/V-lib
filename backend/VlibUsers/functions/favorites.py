@@ -21,7 +21,7 @@ def add_favorite(id_user: int, id_station: int) -> str | None:
     except Exception as e:
         return str(e)
 
-def remove_favorite(id_user: int, id_station: int) -> bool:
+def remove_favorite(id_user: int, id_station: int) -> str | None:
     try:
         Favorite.objects.filter(id_user=id_user, id_station=id_station).delete()
     except Exception as e:

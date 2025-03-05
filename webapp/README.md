@@ -30,6 +30,8 @@ Then, create a file named `.env` in the root folder of the webapp. The structure
 NEXT_PUBLIC_DJANGO_API_ROOT="localhost:8000"
 
 SESSION_SECRET_PASSWORD = "randomly generated 64 characters"
+
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY = "API key from Google Maps"
 ```
 
 The SESSION_SECRET_PASSWORD can be generated with the python script ``keys.py`` located in ``backend/encryption``.
