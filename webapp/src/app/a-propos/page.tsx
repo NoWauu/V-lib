@@ -14,8 +14,7 @@ export default function AProposPage() {
             <Title text="Qui sommes-nous ?" />
             <Paragraph text="Nous sommes cinq étudiants passionnés par le développement et l'innovation." />
             <Paragraph text="Notre équipe est composée de Mathis, Ryan, Téo, Maxime et Mathew." />
-            <Paragraph text="Actuellement en 2e année de BUT Informatique." />
-            <Paragraph text="Nous avons créé ce projet universitaire pour faciliter la location de vélos en libre-service." />
+            <Paragraph text="Actuellement en 2e année de BUT Informatique, nous avons créé ce projet universitaire pour faciliter la location de vélos en libre-service." />
           </div>
           <div className="md:w-1/2 p-4">
             <img src="/univ.jpg" alt="Image de l'équipe" className="w-3/4 h-auto mx-auto rounded-lg" />
