@@ -13,7 +13,6 @@ export default function StationDetails({selectedStation, stationData, onClose}: 
 	async function reserve(station: Station) {
 		const session = await getSession();
 		const token = session.token;
-		console.log("token: " + token);
 
 		const result = await fetch("/api/reserve/", {
 			method: "POST",
