@@ -1,5 +1,7 @@
 import Wrapper from "@/components/wrappers/Wrapper";
 import {Mail} from "lucide-react";
+import GridAddress from "@/components/about_us/GridAddress";
+import MailCard from "@/components/about_us/MailCard";
 
 import type { Metadata } from "next";
 
@@ -16,17 +18,10 @@ export default function LoginRegister() {
               <Mail className="size-5" strokeWidth={3}/>
               <span className="text-2xl font-semibold leading-none tracking-tight">Nous contacter</span>
           </div>
-          <div className="border border-emerald-800 p-4 rounded-md w-fit m-auto">Email de l'équipe<br/>equipevlib@gmail.com</div>
+          <MailCard Email="equipevlib@gmail.com" NomPrenom="Email de l'équipe"/>
           
           <div>
-            <p className="mb-3">Email des membres :</p>
-            <div className="grid w-full grid-cols-2 grid-row-3">
-              <div className="border border-emerald-800 p-4 rounded-md m-2 grow">Maxime STEPKOWSKI<br/>maxime.stepkowski@edu.univ-paris13.fr</div>
-              <div className="border border-emerald-800 p-4 rounded-md m-2 grow">Téo LEMESLE<br/>teo.lemesle@edu.univ-paris13.fr</div>
-              <div className="border border-emerald-800 p-4 rounded-md m-2">Mathew PRADES<br/>mathew.prades@edu.univ-paris13.fr</div>
-              <div className="border border-emerald-800 p-4 rounded-md m-2 grow">Ryan MARIA PAUL<br/>ryan.mariapaul@edu.univ-paris13.fr</div>
-            </div>
-          <div className="border border-emerald-800 p-4 rounded-md m-2 grow">Mathis SAMAT<br/>mathis.samat@edu.univ-paris13.fr</div>
+            <GridAddress/>
         </div>
       </div>
     </Wrapper>
