@@ -41,7 +41,6 @@ export default function LoginForm() {
 
       if (response.ok) {
         const redirectLink = searchParams.get("redirect");
-        console.log(redirectLink)
         if (redirectLink) {
           router.push(redirectLink);
         } else {
