@@ -46,4 +46,4 @@ def add_rent_request(req: HttpRequest) -> JsonResponse:
     return JsonResponse({
         'status': 'error',
         'message': result
-    }, status=403)
+    }, status=501)

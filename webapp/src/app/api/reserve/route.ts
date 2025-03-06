@@ -1,4 +1,4 @@
-import { NextRequest} from "next/server";
+import {NextRequest} from "next/server";
 
 async function handler(req: NextRequest): Promise<Response> {
 	const apiUrl = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/users/add-rent/`;
@@ -18,7 +18,7 @@ async function handler(req: NextRequest): Promise<Response> {
 			body: formData,
 		});
 
-		return Response.json(response, { status: 200 });
+		return Response.json(response, {status: response.status});
 
 
 	} catch {
@@ -26,4 +26,4 @@ async function handler(req: NextRequest): Promise<Response> {
 	}
 }
 
-export { handler as POST };
+export {handler as POST};

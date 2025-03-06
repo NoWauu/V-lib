@@ -1,28 +1,32 @@
 "use client";
 
-import {InfoWindow} from "@vis.gl/react-google-maps";
-import {Button} from "@/components/ui/button";
+import {type Station} from "@/types/Station";
+import {type StationData} from "@/types/StationData";
 import Link from "next/link";
-import {Station} from "@/types/Station";
-import {StationData} from "@/types/StationData";
 import {toast} from "sonner";
-import { getSession } from "@/lib/session";
+import {Button} from "@/components/ui/button";
+import {getSessionData} from "@/lib/session";
+import {InfoWindow} from "@vis.gl/react-google-maps";
 
-export default function StationDetails({selectedStation, stationData, onClose}: {selectedStation: Station | null, stationData: StationData, onClose: (() => void)}) {
+export default function StationDetails({selectedStation, stationData, onClose}: {
+	selectedStation: Station | null,
+	stationData: StationData,
+	onClose: (() => void)
+}) {
 
 	async function reserve(station: Station) {
-		const session = await getSession();
+		const session = await getSessionData();
 		const token = session.token;
 
 		const result = await fetch("/api/reserve/", {
 			method: "POST",
 			body: JSON.stringify({
-				"token": token,
-				"id_station": station.id_station
+				token: token,
+				id_station: station.id_station
 			})
 		});
 
-		if(result.ok) {
+		if (result.ok) {
 			toast.success("Réservation enregistrée !");
 		} else {
 			toast.error("Une erreur est survenue durant l'enregistrement");
@@ -33,7 +37,7 @@ export default function StationDetails({selectedStation, stationData, onClose}: 
 		<>
 			{selectedStation && (
 				<InfoWindow
-					position={{ lat: selectedStation.latitude, lng: selectedStation.longitude }}
+					position={{lat: selectedStation.latitude, lng: selectedStation.longitude}}
 					onCloseClick={onClose}
 					headerContent={<span className={"underline font-semibold"}>{selectedStation.name}</span>}
 				>
@@ -51,7 +55,9 @@ export default function StationDetails({selectedStation, stationData, onClose}: 
 							</Button>
 
 							<Button>
-								<Link target={"_blank"} href={`https://www.google.com/maps/dir/?api=1&destination=${selectedStation.latitude},${selectedStation.longitude}`}>Y aller</Link>
+								<Link target={"_blank"}
+								      href={`https://www.google.com/maps/dir/?api=1&destination=${selectedStation.latitude},${selectedStation.longitude}`}>Y
+									aller</Link>
 							</Button>
 						</div>
 					</div>

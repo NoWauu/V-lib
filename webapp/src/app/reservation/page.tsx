@@ -17,11 +17,10 @@ export default function Reservation() {
 	const [location, setLocation] = useState<LatLngLiteral | null>(null);
 	const radius = 3;
 
-
 	useEffect(() => {
-		if("geolocation" in navigator) {
+		if ("geolocation" in navigator) {
 			navigator.geolocation.getCurrentPosition((position) => {
-				setLocation({ lat: position.coords.latitude, lng: position.coords.longitude });
+				setLocation({lat: position.coords.latitude, lng: position.coords.longitude});
 			});
 		}
 	}, []);
@@ -45,32 +44,33 @@ export default function Reservation() {
 	return (
 		<div className={"w-full h-[calc(100vh-4rem)]"}>
 			{!location
-				? <p className={"flex justify-center items-center w-full h-[calc(100vh-4rem)]"}>Activez votre localisation pour utiliser nos services !</p>
+				? <p className={"flex justify-center items-center w-full h-[calc(100vh-4rem)]"}>Activez votre localisation pour
+					utiliser nos services !</p>
 				:
-					<APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string} libraries={['marker']}>
-						<Map
-							mapId={'bf51a910020fa25a'}
-							defaultZoom={15}
-							minZoom={14}
-							maxZoom={20}
-							defaultCenter={{lat: location.lat as number, lng: location.lng as number}}
-							gestureHandling={'passive'}
-							disableDefaultUI={true}
-							onCameraChanged={(e) => {
-								setLocation(e.detail.center);
-								}}
-							reuseMaps={true}
-						>
+				<APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string} libraries={['marker']}>
+					<Map
+						mapId={'bf51a910020fa25a'}
+						defaultZoom={15}
+						minZoom={14}
+						maxZoom={20}
+						defaultCenter={{lat: location.lat as number, lng: location.lng as number}}
+						gestureHandling={'passive'}
+						disableDefaultUI={true}
+						onCameraChanged={(e) => {
+							setLocation(e.detail.center);
+						}}
+						reuseMaps={true}
+					>
 
-							<Markers stations={stations} openWindow={openWindow}/>
-							<StationDetails
-								selectedStation={selectedStation}
-								stationData={stationData as StationData}
-								onClose={() => setSelectedStation(null)}
-							/>
+						<Markers stations={stations} openWindow={openWindow}/>
+						<StationDetails
+							selectedStation={selectedStation}
+							stationData={stationData as StationData}
+							onClose={() => setSelectedStation(null)}
+						/>
 
-						</Map>
-					</APIProvider>
+					</Map>
+				</APIProvider>
 
 			}
 		</div>
