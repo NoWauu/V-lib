@@ -6,3 +6,4 @@ from .verify_mails import *
 from .delete_account import *
 from .add_rent import *
 from .remove_rent import *
+from .update_user import *

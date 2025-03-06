@@ -1,8 +1,10 @@
+"""
+View made to delete an user account if his token is given.
+"""
 
 from django.http import HttpRequest, JsonResponse
 from VlibUsers.models import AuthToken
 from django.views.decorators.csrf import csrf_exempt
-from VlibUsers.functions.user_crud import delete_user
 
 
 @csrf_exempt
@@ -22,7 +24,13 @@ def delete_account_request(req: HttpRequest) -> JsonResponse:
             'status': 'error', 'message': 'Invalid token'
         }, status=400)
     
-    delete_user(user.id_user)
+    try:
+        user.delete()
+    except Exception as e:
+        print(str(e))
+        return JsonResponse({
+            'status': 'error', 'message': 'Error deleting account'
+        }, status=500)
     
     return JsonResponse({
         'status': 'success', 'message': 'Account deleted'

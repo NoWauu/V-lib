@@ -9,7 +9,7 @@ from VlibStations.functions.log import log_info, log_error
 from VlibUsers.models import EmailToken, AuthToken, User
 from django.core.cache import cache
 from VlibUsers.functions.rsa_fn import decrypt_rsa
-from VlibUsers.variables.constants import RESEND_KEY
+from VlibUsers.variables.constants import RESEND_KEY, WEBAPP_URL
 from VlibUsers.functions.user_crud import get_email_token
 import resend
 
@@ -73,7 +73,7 @@ def verify_mail_request(req: HttpRequest) -> JsonResponse:
             "from": "V-lib <no-reply@resend.dev>",
             "to": email,
             "subject": "Vérification d'email",
-            "html": f"<p>Bonjour, </p> <p>Vous avez demandé à vérifier votre email. Pour cela, veuillez cliquer <a href='{req.build_absolute_uri(reverse("verify-email"))}?email_token={email_token.token}'>ici</a>.</p><p>Cordialement, </p><p>L'équipe V-Lib</p>"
+            "html": f"<p>Bonjour, </p> <p>Vous avez demandé à vérifier votre email. Pour cela, veuillez cliquer <a href='{WEBAPP_URL}/verification-mail?email_token={email_token.token}'>ici</a>.</p><p>Cordialement, </p><p>L'équipe V-Lib</p>"
         }
 
         try:
@@ -102,3 +102,4 @@ def verify_mail_request(req: HttpRequest) -> JsonResponse:
         email_token.delete()
 
         return JsonResponse({'status': 'success', 'message': 'Email verified'})
+    

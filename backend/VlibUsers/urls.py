@@ -11,4 +11,6 @@ urlpatterns = [
     path('delete-account/', delete_account_request, name='delete-account'),
     path('add-rent/', add_rent_request, name='add-rent'),
     path('remove-rent/', remove_rent_request, name='remove-rent'),
+    path('delete/', delete_account_request, name='delete-account'),
+    path('update/', update_user_request, name='update-account'),
 ]

@@ -31,17 +31,17 @@ def register_request(req: HttpRequest) -> JsonResponse:
     if not all([email, password, first_name, last_name, phone_number]):
         return JsonResponse({'status': 'error', 'message': 'Missing data'}, status=400)
     
-    # Check if the data has the correct format
-    if not check_data_format(email, password, first_name, last_name, phone_number):
-        return JsonResponse({'status': 'error', 'message': 'Invalid data'}, status=400)
-    
     # Text formatting
     email: str = email.lower()[:80]
     first_name: str = first_name.title()[:20]
     last_name: str = last_name.upper()[:20]
-    
+
     # Remove spaces for phone number
     phone_number = phone_number.replace(' ', '')[:10]
+    
+    # Check if the data has the correct format
+    if not check_data_format(email, password, first_name, last_name, phone_number):
+        return JsonResponse({'status': 'error', 'message': 'Invalid data'}, status=400)
 
     # Check if the password is too long
     if len(password) > 40:
@@ -76,6 +76,7 @@ def register_request(req: HttpRequest) -> JsonResponse:
             'message': 'User created.',
             'data': {
                 'email': email,
+                'is_email_verified': False,
                 'first_name': first_name,
                 'last_name': last_name,
                 'phone_number': phone_number,
