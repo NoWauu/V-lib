@@ -6,7 +6,7 @@ V-lib is a full-stack application, available on all platforms.
 
 It includes a lot of features, and allows you to:
 * Look for Vélib' stations close to you in real time
-* View all the informations of station
+* View all the information of station
 * Book a bike in a specific station
 * Obtain a route to follow to go to the station you have selected
 * Access the history of all the stations you visited and the times you booked a bike
@@ -25,7 +25,7 @@ The project is split into 3 folders:
 
 `backend` contains the backend server, with the API that interacts with the database and serves data to the web server. 
 
-`rendu` contains all of the reports made when reaching a specific point in the creation of the application.
+`rendu` contains all the reports made when reaching a specific point in the creation of the application.
 
 `webapp` contains the frontend server that users will interact with.
 

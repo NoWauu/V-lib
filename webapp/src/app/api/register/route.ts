@@ -18,7 +18,6 @@ async function handler (req: NextRequest) {
     lastname = body.last_name;
     phone_number = body.phone_number;
   } catch (error) {
-    console.log("Error parsing request body:", error);
     return Response.json({ error: "Invalid data" }, { status: 401 });
   }
 
