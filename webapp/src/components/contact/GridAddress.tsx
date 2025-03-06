@@ -11,10 +11,10 @@ const members = [
 export default function GridAddress(){
   
   return(
-    <div className="">
+    <>
       <p className="mb-3">email des membres :</p>
       <MembersGrid list={members}/>
-    </div>
+    </>
       
   )
 }
