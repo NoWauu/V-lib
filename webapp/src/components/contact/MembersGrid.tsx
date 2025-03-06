@@ -1,7 +1,7 @@
 import MailCard from "./MailCard";
 
 export default function MembersGrid({list}:{list:Array<{email:string, nomPrenom:string}>}){
-  return(
+  return (
       <div className="grid w-full grid-cols-2 grid-row-3">
     {list.map(member => (
         <MailCard
@@ -12,5 +12,5 @@ export default function MembersGrid({list}:{list:Array<{email:string, nomPrenom:
         />
       ))}
     </div>
-  )
+  );
 }

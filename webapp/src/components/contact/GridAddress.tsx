@@ -1,4 +1,4 @@
-import MembersGrid from "./MembersGrid"
+import MembersGrid from "./MembersGrid";
 
 const members = [
       {email: "maxime.stepkowski@edu.univ-paris13.fr", nomPrenom: "Maxime STEPKOWSKI"},
@@ -9,12 +9,11 @@ const members = [
     ];
 
 export default function GridAddress(){
-  
-  return(
+  return (
     <>
       <p className="mb-3">email des membres :</p>
       <MembersGrid list={members}/>
     </>
       
-  )
+  );
 }

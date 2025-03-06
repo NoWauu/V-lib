@@ -8,7 +8,7 @@ export default function MailCard ({
   email:string, 
   nomPrenom:string, 
   className?: string | undefined}){
-  return(
+  return (
     <div className={cn("border border-emerald-800 p-4 rounded-md m-2 grow", className)}>{nomPrenom}<br/>{email}</div>
-  )
+  );
 }

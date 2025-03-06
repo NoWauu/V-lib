@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Contact",
 };
 
-export default function AboutUs() {
+export default function Contact() {
   return (
     <Wrapper className="flex-grow mx-0 px-0 max-w-full w-full h-full flex flex-col items-center justify-center bg-white bg-cover bg-center border-b-2 border-primary">
       <div className="h-20 w-full mb-8"></div>
