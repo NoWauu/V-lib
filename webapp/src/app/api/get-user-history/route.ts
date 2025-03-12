@@ -22,7 +22,6 @@ async function handler(): Promise<Response> {
 	});
 
 	if (!response.ok) {
-		console.log(response);
 		return Response.json({error: "Error fetching data", status: response.status});
 	}
 
