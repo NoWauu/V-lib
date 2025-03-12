@@ -15,7 +15,13 @@ def get_user_history_request(req: HttpRequest)-> JsonResponse:
             'status': 'error',
             'message': 'Missing data'
         }, status=400)
-        
+
+    if not AuthToken.objects.filter(token=token).first().is_valid():
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Token is expired'
+        }, status=403)
+
     user = AuthToken.objects.filter(token=token).first().id_user
     
     if not user:

@@ -5,6 +5,14 @@ async function handler(): Promise<Response> {
 
 	const session = await getSessionData();
 
+	if (!session) {
+		return Response.json({error: "User is not connected", status: 403})
+	}
+
+	if (!session.token) {
+		return Response.json({error: "Token was not found", status: 404})
+	}
+
 	const formData = new FormData();
 	formData.append("token", session.token as string);
 
