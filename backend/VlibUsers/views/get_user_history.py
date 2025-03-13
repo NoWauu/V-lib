@@ -33,8 +33,7 @@ def get_user_history_request(req: HttpRequest)-> JsonResponse:
     history = Rent.objects.filter(id_user=user).order_by("-start_time").values()
     
     response_history = []
-    print(history)
-    
+
     for rent in history:
         
         station_name = Station.objects.filter(id_station=rent["id_station_id"]).first().name
