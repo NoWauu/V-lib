@@ -1,8 +1,11 @@
-import Link from "next/link";
+import MentionLegal from "@/components/footer/MentionLegal";
+import PolitiqueDeConfidentialite from "@/components/footer/PolitiqueDeConfidentialite";
+import APropos from "@/components/footer/APropos";
+import Contact from "@/components/footer/Contact"
 
 export default function Footer() {
   return (
-    <div className="p-6 md:px-10 gap-4 flex flex-wrap md:justify-center justify-center w-full bg-gray-100 shadow-lg text-center">
+    <div className="p-6 md:px-10 gap-4 flex flex-wrap justify-center w-full bg-gray-100 shadow-lg text-center">
       <p className="font-bold text-md text-center w-full text-foreground">
         Équipe V-lib © 2025 - Tous droits réservés
       </p>
@@ -10,33 +13,13 @@ export default function Footer() {
         className="flex items-center gap-4 text-gray-600 justify-center w-full"
         style={{ textDecoration: "none", fontFamily: "Arial, sans-serif" }}
       >
-        <Link
-          href="/politique-de-confidentialite"
-          className="hover:text-gray-800 transition duration-300"
-        >
-          Politique de confidentialité
-        </Link>
+        <PolitiqueDeConfidentialite/>
         |
-        <Link
-          href="/mentions-legales"
-          className="hover:text-gray-800 transition duration-300"
-        >
-          Mentions légales
-        </Link>
+        <MentionLegal/>
         |
-        <Link
-          href="/a-propos"
-          className="hover:text-gray-800 transition duration-300"
-        >
-          À propos de nous
-        </Link>
+        <APropos/>
         |
-        <Link
-          href="/contact"
-          className="hover:text-gray-800 transition duration-300"
-        >
-          Contact
-        </Link>
+        <Contact/>
       </div>
     </div>
   );
