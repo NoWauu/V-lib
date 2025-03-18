@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Pencil, Save } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 import {
   Dialog,
@@ -38,6 +39,9 @@ export default function ModifyValue({
     });
 
     if (response.ok) window.location.reload();
+    else toast.error("Une erreur est survenue.", {
+      description: "Les données entrées sont peut-être invalides. Vos informations n'ont pas été modifiées.",
+    });
   };
 
   return (
