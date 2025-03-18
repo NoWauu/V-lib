@@ -1,3 +1,6 @@
 from .get_stations import get_stations_request
 from .get_station_data import get_station_data_request
 from .get_surrounding_stations import get_surrounding_stations_request
+from .station_favorite import station_favorite_request
+from .get_favorites import list_favorite_stations_request
+from .is_favorite import is_station_fav_request

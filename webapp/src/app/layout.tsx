@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Accueil • V-lib",
+    default: "V-lib",
     template: "%s • V-lib",
   },
   description: "Projet universitaire, application de location de vélib.",

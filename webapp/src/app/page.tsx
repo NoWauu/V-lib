@@ -8,7 +8,7 @@ import ReservationButton from "@/components/home/ReservationButton";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Accueil",
+  title: "Accueil • V-lib",
 };
 
 export default function HomePage() {

@@ -2,13 +2,11 @@ import { NextRequest } from "next/server";
 import { getSession } from "@/lib/session";
 
 async function handler(req: NextRequest): Promise<Response> {
-  const apiUrl = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/stations/get-surrounding-stations/`;
+  const apiUrl = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/stations/is-favorite/`;
 
   try {
     const body = await req.json();
-    const lat = body.lat;
-    const long = body.long;
-    const radius = body.radius;
+    const station_code = body.station_code;
 
     const session = await getSession();
     const token = session?.token;
@@ -19,9 +17,7 @@ async function handler(req: NextRequest): Promise<Response> {
 
     const formData = new FormData();
     formData.append("token", token);
-    formData.append("lat", lat);
-    formData.append("long", long);
-    formData.append("radius", radius);
+    formData.append("station_code", station_code);
 
     const response = await fetch(apiUrl, {
       method: "POST",
