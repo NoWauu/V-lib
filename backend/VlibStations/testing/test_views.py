@@ -56,3 +56,33 @@ class TestViews(TransactionTestCase):
 
         # Check that the response contains at least one station
         self.assertGreater(len(response_data['stations']), 0)
+
+
+    def test_get_surrounding_stations_request_valid_data(self):
+        # Fill database with data
+        update_database(STATIONS_LIST)
+
+        client = Client()
+        # Send a GET request with valid parameters (latitude, longitude, radius)
+        response = client.get(reverse('get-surrounding-stations'), {
+            'latitude': 48.8566,
+            'longitude': 2.3522,
+            'radius': 1000
+        })
+
+        # Check that the response status code is 200 (OK)
+        self.assertEqual(response.status_code, 200)
+
+        # Parse the response
+        response_data = response.json()
+
+        # Check that the response contains the expected keys
+        self.assertIn('stations', response_data)
+
+        # Check that the response contains at least one station
+        self.assertGreater(len(response_data['stations']), 0)
+
+        for station in response_data['stations']:
+            # Check that each station contains the expected keys
+            for key in ['station_code', 'name', 'latitude', 'longitude', 'capacity']:
+                self.assertIn(key, station)
