@@ -51,14 +51,15 @@ export default function StationDetails({
   }, []);
 
   return (
-    <div className="mt-2 py-2 px-6 flex items-center justify-between w-full rounded-lg border-gray-100 border-[1px] shadow-md">
-      <p className="flex items-center gap-4 w-full">
+    <div className="mt-2 py-2 px-6 flex flex-col md:flex-row gap-4 items-center justify-between w-full rounded-lg border-gray-100 border-[1px] shadow-md">
+      <p className="flex items-center gap-4 w-full mt-2 md:mt-0">
         <Bike />
         <span>{stationDetails.name}</span>
       </p>
 
-      <p className="w-full text-center">
+      <p className="w-full md:text-center mt-2">
         Capacité / Vélos disponibles :{" "}
+        <br className="block md:hidden" />
         <span>
           {(stationData?.numDocksAvailable ?? 0) +
             (stationData?.numBikesAvailable ?? 0) || ""} {" "}
@@ -68,7 +69,7 @@ export default function StationDetails({
 
       <div className="w-full flex items-center justify-end">
         <DropdownMenu>
-          <DropdownMenuTrigger className="flex items-center gap-2 rounded-md hover:bg-gray-200 p-2">
+          <DropdownMenuTrigger className="flex items-center gap-2 rounded-md md:hover:bg-gray-200 ps-3 p-2 bg-primary md:bg-transparent text-background md:text-primary mb-2 md:mb-0">
             <span>Actions</span>
             <ChevronDown />
           </DropdownMenuTrigger>
