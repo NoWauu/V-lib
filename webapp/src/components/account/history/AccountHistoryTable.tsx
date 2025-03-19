@@ -15,9 +15,8 @@ export default function AccountHistoryTable({history}: { history: RentInfos[] })
 					<HistoryTableDetail history={history}/>
 					</tbody>
 				</table>
-				: <p>Aucune réservation pour le moment</p>
+				: <p className="px-4">Aucune réservation pour le moment</p>
 			}
-
 		</>
 	);
 }

@@ -7,6 +7,7 @@ import clsx from "clsx";
 import AccountDetails from "@/components/account/AccountDetails";
 import DeleteAccount from "./DeleteAccount";
 import AccountHistory from "@/components/account/AccountHistory";
+import AccountFavorites from "@/components/account/AccountFavorites";
 
 import {
   Select,

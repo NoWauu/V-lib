@@ -5,4 +5,5 @@
 	capacity: number;
 	latitude: number;
 	longitude: number;
+	is_favorite: boolean;
  }

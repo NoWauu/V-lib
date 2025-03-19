@@ -4,6 +4,13 @@ import Introduction from "@/components/home/Introduction";
 import FirstParagraph from "@/components/home/FirstParagraph";
 import SecondParagraph from "@/components/home/SecondParagraph";
 import ReservationButton from "@/components/home/ReservationButton";
+
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Accueil • V-lib",
+};
+
 import Outro from "@/components/home/Outro";
 
 export default function HomePage() {
