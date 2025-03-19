@@ -9,4 +9,5 @@ urlpatterns = [
     path('manage-favorites/', station_favorite_request, name='manage-favorites'),
     path('list-favorites/', list_favorite_stations_request, name='list-favorites'),
     path('is-favorite/', is_station_fav_request, name='is-favorite'),
+    path('search/', search_request, name='search'),
 ]
