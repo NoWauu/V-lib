@@ -32,7 +32,7 @@ export default function AccountTabs() {
           <SelectGroup>
             <SelectItem value="information">Informations</SelectItem>
             <SelectItem value="history">Historique</SelectItem>
-            <SelectItem value="favorites">Favoris</SelectItem>
+            <SelectItem value="favorite">Favoris</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>
