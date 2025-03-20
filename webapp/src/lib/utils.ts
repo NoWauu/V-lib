@@ -3,7 +3,9 @@ import {twMerge} from "tailwind-merge"
 import IUserData from "@/types/IUserData";
 import {saveUserSession} from "@/lib/saveUserData";
 import {Station} from "@/types/Station";
+import IFavoriteRes from "@/types/IFavoriteRes";
 import LatLngLiteral = google.maps.LatLngLiteral;
+import { toast } from "sonner";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -35,8 +37,16 @@ async function fetch_stations(position: LatLngLiteral, radius: number): Promise<
     cache: "force-cache",
     body: JSON.stringify({ "lat": position.lat, "long": position.lng, "radius": radius })
   });
+
   const data = await response.json();
-  return data.stations;
+
+  if (response.ok) {
+    return data.stations;
+  }
+  else {
+    toast.error("Une erreur est survenue lors de la récupération des stations.");
+    return [];
+  }
 }
 
 async function fetch_station_data(station_code: number) {
@@ -50,4 +60,25 @@ async function fetch_station_data(station_code: number) {
   return Response.json(data);
 }
 
-export { cn, saveUserData, fetch_stations, fetch_station_data };
+async function is_station_favorite(station_code: number | undefined) {
+  if (!station_code) {
+    return false
+  }
+
+  const response = await fetch(`/api/is-station-favorite`, {
+    method: "POST",
+    cache: "force-cache",
+    body: JSON.stringify({ station_code: station_code })
+  });
+
+  const data: IFavoriteRes = await response.json();
+
+  if (data.is_favorite) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+export { cn, saveUserData, fetch_stations, fetch_station_data, is_station_favorite };

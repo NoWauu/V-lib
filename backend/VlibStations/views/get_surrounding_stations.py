@@ -2,6 +2,7 @@
 from VlibStations.functions.get_surrounding_stations import get_surrounding_stations
 from django.http import HttpRequest, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from VlibUsers.models import AuthToken, User, Favorite
 
 @csrf_exempt
 def get_surrounding_stations_request(req: HttpRequest) -> JsonResponse:
@@ -10,6 +11,22 @@ def get_surrounding_stations_request(req: HttpRequest) -> JsonResponse:
     :param req: the request
     :return: the response
     """
+
+    token = req.POST.get("token")
+    
+    if not token:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Missing data'
+        }, status=400)
+
+    if not AuthToken.objects.filter(token=token).first().is_valid():
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Token is expired'
+        }, status=403)
+
+    user = AuthToken.objects.filter(token=token).first().id_user
 
     long = float(req.POST.get('long'))
     lat = float(req.POST.get('lat'))
@@ -39,7 +56,8 @@ def get_surrounding_stations_request(req: HttpRequest) -> JsonResponse:
             "capacity": station.capacity,
             "latitude": station.id_location.latitude,
             "longitude": station.id_location.longitude,
-            "station_code": station.station_code
+            "station_code": station.station_code,
+            "is_favorite": bool(Favorite.objects.filter(id_user=user, id_station=station).first())
         })
 
     return JsonResponse({

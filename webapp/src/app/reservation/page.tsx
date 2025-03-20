@@ -7,6 +7,7 @@ import StationDetails from "@/components/reservation/StationDetails";
 import Markers from "@/components/reservation/Markers";
 import {fetch_station_data, fetch_stations} from "@/lib/utils";
 import {StationData} from "@/types/StationData";
+import SearchBar from "@/components/reservation/recherche/SearchBar";
 import LatLngLiteral = google.maps.LatLngLiteral;
 
 export default function Reservation() {
@@ -38,6 +39,7 @@ export default function Reservation() {
 
 		setStationData(stationData);
 		setSelectedStation(station);
+		setLocation({lat: station.latitude, lng: station.longitude});
 
 	}
 
@@ -48,13 +50,14 @@ export default function Reservation() {
 					utiliser nos services !</p>
 				:
 				<APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string} libraries={['marker']}>
+
 					<Map
 						mapId={'bf51a910020fa25a'}
 						defaultZoom={15}
 						minZoom={14}
 						maxZoom={20}
 						defaultCenter={{lat: location.lat as number, lng: location.lng as number}}
-						gestureHandling={'passive'}
+						gestureHandling={'greedy'}
 						disableDefaultUI={true}
 						onCameraChanged={(e) => {
 							setLocation(e.detail.center);
@@ -70,6 +73,7 @@ export default function Reservation() {
 						/>
 
 					</Map>
+					<SearchBar openWindow={openWindow}/>
 				</APIProvider>
 
 			}

@@ -2,14 +2,9 @@ import { NextRequest } from "next/server";
 import { getSession } from "@/lib/session";
 
 async function handler(req: NextRequest): Promise<Response> {
-  const apiUrl = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/stations/get-surrounding-stations/`;
+  const apiUrl = `http://${process.env.NEXT_PUBLIC_DJANGO_API_ROOT}/stations/list-favorites/`;
 
   try {
-    const body = await req.json();
-    const lat = body.lat;
-    const long = body.long;
-    const radius = body.radius;
-
     const session = await getSession();
     const token = session?.token;
 
@@ -19,9 +14,6 @@ async function handler(req: NextRequest): Promise<Response> {
 
     const formData = new FormData();
     formData.append("token", token);
-    formData.append("lat", lat);
-    formData.append("long", long);
-    formData.append("radius", radius);
 
     const response = await fetch(apiUrl, {
       method: "POST",
@@ -36,7 +28,6 @@ async function handler(req: NextRequest): Promise<Response> {
     }
 
     const data = await response.json();
-
     return Response.json(data, { status: 200 });
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -44,4 +35,4 @@ async function handler(req: NextRequest): Promise<Response> {
   }
 }
 
-export { handler as POST };
+export { handler as GET };
