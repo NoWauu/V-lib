@@ -32,15 +32,15 @@ class TestFunction(TransactionTestCase):
     
 
     def test_password_valid(self):
-        self.assertTrue(password_valid("TestPassword"))
+        self.assertTrue(password_valid("Testtest123!"))
         self.assertFalse(password_valid("Test"))
         self.assertFalse(password_valid("testpassword"))
     
 
     def test_name_valid(self):
-        self.assertTrue(name_valid("Testtest123!"))
-        self.assertFalse(name_valid("T"))
-        self.assertFalse(name_valid("test"))
+        self.assertTrue(name_valid("Test"))
+        self.assertFalse(name_valid("."))
+        self.assertFalse(name_valid("  "))
     
 
     def test_phone_number_valid(self):
