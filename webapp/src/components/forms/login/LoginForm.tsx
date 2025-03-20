@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { LogIn } from "lucide-react";
 import { CardFooter, CardContent } from "@/components/ui/card";
 import LoginInput from "@/components/forms/Input";
-import ForgotPassword from "@/components/forms/login/ForgotPassword";
 import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ApiLoginUrl, defaultPageLink, MailRegex } from "@/lib/constants";
