@@ -27,7 +27,7 @@ The project is split into 3 folders:
 
 `webapp` contains the frontend server that users will interact with.
 
-`resources` contains all the diagrams made for the application.
+`Ressources` contains all the diagrams made for the application.
 
 ## Installation and startup
 
