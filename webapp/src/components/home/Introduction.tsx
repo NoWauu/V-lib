@@ -1,6 +1,6 @@
 export default function Introduction(){
   return(
-    <div>
+    <div className="mx-8">
       <p>
         Vous cherchez une solution rapide, pratique et écologique pour vos déplacements en ville ?
       </p>
