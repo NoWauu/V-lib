@@ -84,8 +84,6 @@ export default function LoginForm() {
           setValueAction={setLoginPassword}
           maxLength={40}
         />
-
-        <ForgotPassword />
       </CardContent>
       <CardFooter className="flex justify-center items-center mx-16">
         <Button
