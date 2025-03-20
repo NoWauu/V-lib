@@ -50,8 +50,7 @@ class TestViews(TransactionTestCase):
 
         for station in response_data['stations']:
         # Check that the response contains the expected keys
-            for key in ['station_code',
-                    'name', 'latitude', 'longitude', 'capacity']: 
+            for key in ['station_code', 'name', 'latitude', 'longitude', 'capacity']: 
                 self.assertIn(key, station)
 
         # Check that the response contains at least one station

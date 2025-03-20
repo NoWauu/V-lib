@@ -11,7 +11,7 @@ class TestViews(TransactionTestCase):
     client = Client()
 
     # Test if we can create an account using the register view
-    def test_create_account(self):
+    def test_account(self):
         response = self.client.post(reverse('register'), {
             'email': TEST_CREDENTIALS["email"],
             'password': TEST_CREDENTIALS["password"],
@@ -22,11 +22,17 @@ class TestViews(TransactionTestCase):
         
         self.assertEqual(response.status_code, 201)
 
-    # Test if we can login to the account previously created using the login view
-    def test_connect_to_account(self):
         response = self.client.post(reverse('login'), {
             'email': TEST_CREDENTIALS["email"],
             'password': TEST_CREDENTIALS["password"]
         })
 
         self.assertEqual(response.status_code, 200)
+
+        token = response.json()["data"]["token_data"]["token"]
+
+        response = self.client.post(reverse('delete-account'), {
+            'token': token
+        })     
+
+        self.assertEqual(response.status_code, 200)   

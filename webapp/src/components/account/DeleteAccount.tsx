@@ -34,7 +34,7 @@ export default function DeleteAccount() {
       <Dialog>
         <DialogTrigger asChild>
           <button
-            className="w-full py-2 px-4 rounded-sm transition-all duration-200 text-red-600 hover:bg-red-600 hover:text-background"
+            className="w-full max-w-64 py-2 px-4 rounded-sm transition-all duration-200 text-red-600 hover:bg-red-600 hover:text-background"
           >
             Supprimer
           </button>

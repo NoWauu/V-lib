@@ -1,18 +1,43 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { Suspense, useState } from "react";
 
 import clsx from "clsx";
 
 import AccountDetails from "@/components/account/AccountDetails";
-import DeleteAccount from './DeleteAccount';
+import DeleteAccount from "./DeleteAccount";
+import AccountHistory from "@/components/account/AccountHistory";
+import AccountFavorites from "@/components/account/AccountFavorites";
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 
 export default function AccountTabs() {
   const [tab, setTab] = useState("information");
 
   return (
-    <div className="mt-8 px-4 flex flex-row gap-10">
-      <div className="flex-col flex items-center justify-center border-e-2 border-primary py-4 px-6 h-40 gap-2">
+    <div className="mt-8 px-4 flex flex-col md:flex-row gap-10">
+      <Select value={tab} onValueChange={(value) => setTab(value)}>
+        <SelectTrigger className="max-w-[300px] md:hidden mx-auto">
+          <SelectValue placeholder="Select a fruit" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectItem value="information">Informations</SelectItem>
+            <SelectItem value="history">Historique</SelectItem>
+            <SelectItem value="favorite">Favoris</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+
+      <div className="flex-col hidden md:flex items-center justify-center border-e-2 border-primary py-4 px-6 h-48 gap-2">
         <button
           className={clsx(
             `w-full py-2 px-4 rounded-sm transition-all duration-100`,
@@ -37,13 +62,32 @@ export default function AccountTabs() {
         >
           Historique
         </button>
+        <button
+          className={clsx(
+            `w-full py-2 px-4 rounded-sm transition-all duration-200`,
+            {
+              "bg-primary text-background": tab === "favorite",
+              "text-primary hover:bg-gray-100": tab !== "favorite",
+            }
+          )}
+          onClick={() => setTab("favorite")}
+        >
+          Favoris
+        </button>
         <DeleteAccount />
       </div>
       <div className="w-full">
         <Suspense>
           {tab === "information" && <AccountDetails />}
+          {tab === "history" && <AccountHistory />}
+          {tab === "favorite" && <AccountFavorites />}
         </Suspense>
       </div>
+      {tab === "information" && (
+        <div className="md:hidden flex flex-col items-center justify-center mb-12">
+          <DeleteAccount />
+        </div>
+      )}
     </div>
   );
 }
