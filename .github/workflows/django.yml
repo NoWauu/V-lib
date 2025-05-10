@@ -16,9 +16,11 @@ jobs:
         ports:
           - 5432:5432
         env:
-          POSTGRES_DB: vlib
-          POSTGRES_USER: test_user
-          POSTGRES_PASSWORD: test_password
+          DB_NAME: vlib
+          DB_USER: test_user
+          DB_PASSWORD: test_password
+          DB_HOST: localhost
+          
         options: >-
           --health-cmd="pg_isready -U test_user -d test_db"
           --health-interval=10s
