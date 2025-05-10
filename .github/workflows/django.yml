@@ -75,6 +75,30 @@ jobs:
         DB_PASSWORD: test_password
         DB_HOST: localhost
         DB_PORT: 5432
+        DJANGO_SECRET_KEY: ^z(a9toj_te8uiw9gry_me=-w=t$433d=03npga9-(xz))c#+v
+        RSA_PRIVATE_KEY: |
+          -----BEGIN RSA PRIVATE KEY-----
+          MIICYAIBAAKBgQCX09/KKaXjU25N8WsoAwzUnFupByKXh4QiJHVce9edbK4rMBN9
+          IsmF7IplrDNxHrnoufFEZZNY+f6XBYrlmKkat39It73RSdm+6GWCpB/y50i9S0ca
+          OKR7PMkHoc6sTRGNDxdW6DQ3NDpEdMda6YWxkQMFXA/nUY+ACUfvHJBvzQIDAQAB
+          AoGAIf19DHVmfg4fk7OImdyU8sROgPjn9aSRIFOpMptHGidKlsCcnFc9Zo4eLcTv
+          f1Oxqzh1mypiYnkVVhoXYn/6lRerLkEa5OGkMhm2WdReZMB5B5vAXYQdt5e5zWLV
+          j7f5DX2S9XDC2DoFM2wgHGgUl4tAGt0+Ii5P26Fg5Uf5xAECRQDEPxj2qhebsYEC
+          Rv4LxANFTDVsQOjEMu90COib+JEOF+Rod1CHbAvn/WWt89pr6tW1So2Ms1/vBZgg
+          gthFaPeDhe8TsQI9AMYOcYfiFFLSysqKk/0BYwVpP7rUkCD+V+Rbm4iIu1MgrzLh
+          hjZLQUw6jjOdMPnNhTYucShmJ8XVzD9w3QJEWncHx/WC6oe6A9W8GKpkI5bM7blC
+          U+dzENdmezfrjkafSTTvT24UUv4x2C2YW7UmjOrwM5MgvyuiBCKtFdocd2nPWxEC
+          PQCCn04DN3j98uYqVOErcTm0fOi6OKziBb1D76MRllQtjBXgcdsJffKP6uKUaey+
+          I+zighjBczZyBQKTKMUCRCDdAHSdkExxPdkZ+KlQ160m1L29aGvOSKoaXCMPwiHZ
+          YRCSNAzGjoA/pU8iOs9z891tfsI2iduuFjtTv9TVXo40FAGW
+          -----END RSA PRIVATE KEY-----
+        RSA_PUBLIC_KEY: |
+          -----BEGIN RSA PUBLIC KEY-----
+          MIGJAoGBAJfT38oppeNTbk3xaygDDNScW6kHIpeHhCIkdVx7151sriswE30iyYXs
+          imWsM3Eeuei58URlk1j5/pcFiuWYqRq3f0i3vdFJ2b7oZYKkH/LnSL1LRxo4pHs8
+          yQehzqxNEY0PF1boNDc0OkR0x1rphbGRAwVcD+dRj4AJR+8ckG/NAgMBAAE=
+          -----END RSA PUBLIC KEY-----
+        HMAC_SECRET_KEY: b7b21a9b8818766786b7e2e7ddc241266e4b108248b6c30eefe287db3d9a5a3734a25cc280914265fabd454c203b1eadfbe32bdf6b105148aacc206a7a30b5ed
       run: |
         echo "Running Django tests..."
         pipenv run python manage.py test
