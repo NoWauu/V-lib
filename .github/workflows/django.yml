@@ -67,4 +67,5 @@ jobs:
           sleep 1
         done
 
+        echo "Running tests"
         pipenv run python manage.py test
