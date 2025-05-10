@@ -66,6 +66,12 @@ jobs:
         export PGPASSWORD=test_password
         psql -h localhost -U test_user -d vlib -f database/script.pgsql
 
+    - name: Run Django migrations
+      working-directory: backend
+      run: |
+        echo "Running Django migrations..."
+        pipenv run python manage.py migrate
+
     - name: Run Django tests
       working-directory: backend
       env:
