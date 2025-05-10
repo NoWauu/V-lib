@@ -45,6 +45,7 @@ jobs:
         pipenv install
 
     - name: Check environment
+      working-directory: backend/
       run: |
         pipenv --venv
         pipenv run pip list
