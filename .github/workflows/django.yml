@@ -79,7 +79,7 @@ jobs:
         DB_NAME: vlib
         DB_USER: test_user
         DB_PASSWORD: test_password
-        DB_HOST: localhost
+        DB_HOST: postgres
         DB_PORT: 5432
         DJANGO_SECRET_KEY: ^z(a9toj_te8uiw9gry_me=-w=t$433d=03npga9-(xz))c#+v
         RSA_PRIVATE_KEY: |
