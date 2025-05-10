@@ -1,43 +1,46 @@
-FROM python:3.12-slim AS builder
+FROM python:3.12.10-alpine
 
-RUN mkdir /app
+ENV FRONT_URL=http://localhost:3000
 
-WORKDIR /app 
+ENV RESEND_KEY=
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONNUNBUFFERED=1
+ENV DB_HOST=localhost
+ENV DB_PORT=28152
+ENV DB_USER=sae_vlib
+ENV DB_PASSWORD=1234
+ENV DB_NAME=vlib
 
-RUN apt-get update && apt-get install -y \
-    gcc \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
-RUN pip install --upgrade pip
-RUN pip install pipenv
+# Copy the folders from the host to the container
+COPY ./database /app/
+COPY ./encryption /app/
+COPY ./VlibBackend /app/
+COPY ./VlibStations /app/
+COPY ./VlibUsers /app/
 
-COPY Pipfile* /app/
-RUN pipenv install
+# Requirements files to install the dependencies
+COPY ./Pipfile /app/
+COPY ./Pipfile.lock /app/
+COPY ./manage.py /app/
 
-FROM python:3.12-slim
+COPY ./env_sample.txt /app/.env
 
-RUN useradd -m -r appuser && \
-    mkdir /app && \
-    chown -R appuser /app
+# Script to generate and write the keys
+COPY ./setup.py /app/
 
-COPY --from=builder /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/site-packages/
-COPY --from=builder /usr/local/bin/ /usr/local/bin/
+# Script to launch the Django server
+COPY ./launch.sh /app/
 
 WORKDIR /app
 
-COPY --chown=appuser:appuser . .
+RUN chmod +x ./launch.sh
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONNUNBUFFERED=1
+# Install necessary packages
+RUN apk add --no-cache postgresql-dev gcc musl-dev
 
-USER appuser
+# Install pipenv and the dependencies
+RUN pip install --upgrade pip && pip install pipenv
 
-ENV PORT=8000
+# Expose the port the app runs on
 EXPOSE 8000
 
-RUN chmod +x /app/entrypoint.sh
-
-CMD ["/app/entrypoint.sh"]
+ENTRYPOINT [ "./launch.sh" ]

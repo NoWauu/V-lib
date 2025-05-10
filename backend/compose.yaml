@@ -1,0 +1,29 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: linux/amd64
+    ports:
+      - "8000:8000"
+    environment:
+      - RESEND_KEY=cle_resend_ici
+    depends_on:
+      - db
+    volumes:
+      - api_files:/app
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: "sae_vlib"
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: "vlib"
+    ports:
+      - "28152:28152"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  api_files:
+  db_data:
