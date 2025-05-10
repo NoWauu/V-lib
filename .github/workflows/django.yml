@@ -52,6 +52,7 @@ jobs:
         pipenv run pip list
   
     - name: Wait for PostgreSQL and set up database schema
+      working-directory: backend
       run: |
         # Wait for PostgreSQL to be ready
         echo "Waiting for PostgreSQL to be ready..."
@@ -62,7 +63,8 @@ jobs:
         
         # Run the SQL script to set up the database schema
         echo "Setting up the database..."
-        psql -h localhost -U test_user -d vlib -f backend/database/script.pgsql
+        export PGPASSWORD=test_password
+        psql -h localhost -U test_user -d vlib -f database/script.pgsql
 
     - name: Run Django tests
       working-directory: backend
