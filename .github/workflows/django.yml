@@ -17,7 +17,7 @@ jobs:
           - 5432:5432
         env:
           POSTGRES_DB: vlib
-          POSTGRES_USER: tset_user
+          POSTGRES_USER: test_user
           POSTGRES_PASSWORD: test_password
           
         options: >-
