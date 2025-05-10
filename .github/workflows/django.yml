@@ -51,8 +51,21 @@ jobs:
         pipenv --venv
         pipenv run pip list
   
-    - name: Run Tests
-      working-directory: ./backend
+    - name: Wait for PostgreSQL and set up database schema
+      run: |
+        # Wait for PostgreSQL to be ready
+        echo "Waiting for PostgreSQL to be ready..."
+        until pg_isready -h localhost -U test_user -d vlib; do
+          sleep 1
+        done
+        echo "PostgreSQL is ready."
+        
+        # Run the SQL script to set up the database schema
+        echo "Setting up the database..."
+        psql -h localhost -U test_user -d vlib -f backend/database/script.pgsql
+
+    - name: Run Django tests
+      working-directory: backend
       env:
         DJANGO_SETTINGS_MODULE: VlibBackend.settings
         DB_NAME: vlib
@@ -61,11 +74,5 @@ jobs:
         DB_HOST: localhost
         DB_PORT: 5432
       run: |
-        # Wait for PostgreSQL to be ready
-        until pg_isready -h localhost -U test_user -d test_db; do
-          echo "Waiting for PostgreSQL..."
-          sleep 1
-        done
-
-        echo "Running tests"
+        echo "Running Django tests..."
         pipenv run python manage.py test
