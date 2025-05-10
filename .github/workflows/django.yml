@@ -60,27 +60,18 @@ jobs:
           sleep 1
         done
         echo "PostgreSQL is ready."
-        
-        # Run the SQL script to set up the database schema
-        echo "Setting up the database..."
-        export PGPASSWORD=test_password
-        psql -h localhost -U test_user -d vlib -f database/script.pgsql
+
 
     - name: Run Django migrations
       working-directory: backend
       run: |
         echo "Running Django migrations..."
-        pipenv run python manage.py migrate
+        pipenv run python manage.py migrate --fake
 
     - name: Run Django tests
       working-directory: backend
       env:
         DJANGO_SETTINGS_MODULE: VlibBackend.settings
-        DB_NAME: vlib
-        DB_USER: test_user
-        DB_PASSWORD: test_password
-        DB_HOST: postgres
-        DB_PORT: 5432
         DJANGO_SECRET_KEY: ^z(a9toj_te8uiw9gry_me=-w=t$433d=03npga9-(xz))c#+v
         RSA_PRIVATE_KEY: |
           -----BEGIN RSA PRIVATE KEY-----
