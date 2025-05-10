@@ -57,7 +57,7 @@ jobs:
         DJANGO_SETTINGS_MODULE: VlibBackend.settings
         DB_NAME: vlib
         DB_USER: test_user
-        DB_PASSWORD: test_pw
+        DB_PASSWORD: test_password
         DB_HOST: localhost
         DB_PORT: 5432
       run: |
