@@ -64,7 +64,7 @@ jobs:
         # Run the SQL script to set up the database schema
         echo "Setting up the database..."
         export PGPASSWORD=test_password
-        psql -h localhost -U test_user -d vlib -f database/script.pgsql
+        psql -h localhost -U test_user -d test_vlib -f database/script.pgsql
 
     - name: Run Django migrations
       working-directory: backend
