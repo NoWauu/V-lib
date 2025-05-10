@@ -53,7 +53,7 @@ jobs:
     - name: Run Tests
       working-directory: ./backend
       env:
-        DJANGO_SETTINGS_MODULE: VlibBackend/settings
+        DJANGO_SETTINGS_MODULE: VlibBackend.settings
         DATABASE_URL: postgres://test_user:test_password@localhost:5432/vlib
       run: |
         # Wait for PostgreSQL to be ready
