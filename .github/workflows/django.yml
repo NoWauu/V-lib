@@ -16,10 +16,9 @@ jobs:
         ports:
           - 5432:5432
         env:
-          DB_NAME: vlib
-          DB_USER: test_user
-          DB_PASSWORD: test_password
-          DB_HOST: localhost
+          POSTGRES_DB: vlib
+          POSTGRES_USER: tset_user
+          POSTGRES_PASSWORD: test_password
           
         options: >-
           --health-cmd="pg_isready -U test_user -d test_db"
@@ -56,7 +55,11 @@ jobs:
       working-directory: ./backend
       env:
         DJANGO_SETTINGS_MODULE: VlibBackend.settings
-        DATABASE_URL: postgres://test_user:test_password@localhost:5432/vlib
+        DB_NAME: vlib
+        DB_USER: test_user
+        DB_PASSWORD: test_pw
+        DB_HOST: localhost
+        DB_PORT: 5432
       run: |
         # Wait for PostgreSQL to be ready
         until pg_isready -h localhost -U test_user -d test_db; do
