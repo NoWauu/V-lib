@@ -10,8 +10,7 @@ services:
       - RESEND_KEY=cle_resend_ici
     depends_on:
       - db
-    volumes:
-      - api_files:/app
+
 
   db:
     image: postgres:latest
@@ -20,10 +19,9 @@ services:
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: "vlib"
     ports:
-      - "28152:28152"
+      - "5432:28152"
     volumes:
       - db_data:/var/lib/postgresql/data
 
 volumes:
-  api_files:
   db_data:

@@ -1,46 +1,55 @@
-FROM python:3.12.10-alpine
+# syntax=docker.io/docker/dockerfile:1.7-labs
+FROM python:3.12.10-slim AS builder
 
-ENV FRONT_URL=http://localhost:3000
+# Install system dependencies
+RUN apt update && apt install -y --no-install-recommends \
+    build-essential \
+    gcc \
+    libpq-dev \
+    dos2unix \
+ && apt clean \
+ && rm -rf /var/lib/apt/lists/*
 
-ENV RESEND_KEY=
+# Install pipenv temporarily
+RUN pip install --upgrade pip && pip install pipenv
 
-ENV DB_HOST=localhost
-ENV DB_PORT=28152
-ENV DB_USER=sae_vlib
-ENV DB_PASSWORD=1234
-ENV DB_NAME=vlib
-
-# Copy the folders from the host to the container
-COPY ./database /app/
-COPY ./encryption /app/
-COPY ./VlibBackend /app/
-COPY ./VlibStations /app/
-COPY ./VlibUsers /app/
-
-# Requirements files to install the dependencies
-COPY ./Pipfile /app/
-COPY ./Pipfile.lock /app/
-COPY ./manage.py /app/
-
-COPY ./env_sample.txt /app/.env
-
-# Script to generate and write the keys
-COPY ./setup.py /app/
-
-# Script to launch the Django server
-COPY ./launch.sh /app/
+# Copy Pipfile files
+COPY . /app
 
 WORKDIR /app
 
-RUN chmod +x ./launch.sh
+# Install dependencies directly to /install
+RUN mkdir /install && \
+    pipenv requirements > requirements.txt
 
-# Install necessary packages
-RUN apk add --no-cache postgresql-dev gcc musl-dev
+# Install dependencies
+RUN pip install --no-deps -r requirements.txt -t /install
 
-# Install pipenv and the dependencies
-RUN pip install --upgrade pip && pip install pipenv
 
-# Expose the port the app runs on
+
+# Final slim image
+FROM python:3.12.10-slim AS final
+
+WORKDIR /app
+
+RUN apt update && apt install -y --no-install-recommends \
+    libpq5 \
+    postgresql-client \
+ && apt clean \
+ && rm -rf /var/lib/apt/lists/*
+
+# Copy installed site-packages
+COPY --from=builder /install /usr/local/lib/python3.12/site-packages
+COPY --exclude=Pipfile* --from=builder /app /app
+
+# Set environment variables
+ENV FRONT_URL=http://localhost:3000 \
+    RESEND_KEY= \
+    DB_HOST=db \
+    DB_PORT=5432 \
+    DB_USER=sae_vlib \
+    DB_PASSWORD=1234 \
+    DB_NAME=vlib
+
 EXPOSE 8000
-
-ENTRYPOINT [ "./launch.sh" ]
+ENTRYPOINT ["/app/launch.sh"]
