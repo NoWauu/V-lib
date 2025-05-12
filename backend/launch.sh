@@ -32,15 +32,21 @@ done
 echo "Postgres is ready"
 
 # Setup the database
+python manage.py migrate --fake-initial
+python manage.py makemigrations
+
+sleep 5
+
 export PGPASSWORD="$DB_PASSWORD"
 psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" -f database/script.pgsql
-python manage.py migrate --fake
+
 echo "Database setup complete"
+
 
 # Check setup success
 if echo "$OUTPUT" | grep -q "success"; then
     echo "Launching server..."
-    python manage.py runserver
+    python -m gunicorn VlibBackend.wsgi:application --bind 0.0.0.0:8000 --timeout 300
 else
     echo "Missing or invalid key(s). Are you sure you have a valid RESEND_KEY?"
     echo "Shutting down the container..."

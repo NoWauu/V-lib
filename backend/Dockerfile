@@ -13,7 +13,7 @@ RUN apt update && apt install -y --no-install-recommends \
 # Install pipenv temporarily
 RUN pip install --upgrade pip && pip install pipenv
 
-# Copy Pipfile files
+# Copy all application
 COPY . /app
 
 WORKDIR /app
@@ -27,7 +27,7 @@ RUN pip install --no-deps -r requirements.txt -t /install
 
 
 
-# Final slim image
+# Final image
 FROM python:3.12.10-slim AS final
 
 WORKDIR /app
@@ -49,7 +49,8 @@ ENV FRONT_URL=http://localhost:3000 \
     DB_PORT=5432 \
     DB_USER=sae_vlib \
     DB_PASSWORD=1234 \
-    DB_NAME=vlib
+    DB_NAME=vlib \
+    RUN_DB_UPDATE=1
 
-EXPOSE 8000
 ENTRYPOINT ["/app/launch.sh"]
+EXPOSE 8000
