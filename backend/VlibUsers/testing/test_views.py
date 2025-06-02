@@ -5,9 +5,10 @@ Test the views in the VlibUsers app.
 from django.test import Client, TransactionTestCase
 from django.urls import reverse
 from VlibUsers.variables.testing_constants import TEST_CREDENTIALS
+from VlibBackend.test_setup import LoadSQLSchemaMixin
 
 
-class TestViews(TransactionTestCase):
+class TestViews(LoadSQLSchemaMixin, TransactionTestCase):
     client = Client()
 
     # Test if we can create an account using the register view

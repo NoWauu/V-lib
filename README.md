@@ -25,9 +25,9 @@ The project is split into 3 folders:
 
 `backend` contains the backend server, with the API that interacts with the database and serves data to the web server. 
 
-`rendu` contains all the reports made when reaching a specific point in the creation of the application.
-
 `webapp` contains the frontend server that users will interact with.
+
+`Ressources` contains all the diagrams made for the application.
 
 ## Installation and startup
 
