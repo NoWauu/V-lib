@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:phone_app/pages/account.dart';
+import 'package:phone_app/pages/auth.dart';
 import 'package:phone_app/pages/favorites.dart';
 import 'package:phone_app/pages/home.dart';
 import 'package:phone_app/pages/rents.dart';
@@ -13,14 +14,18 @@ class MainLayout extends StatefulWidget {
 }
 
 class _MainLayoutState extends State<MainLayout> {
+  bool isLoggedIn = false;
   int _selectedIndex = 0;
 
-  final List<Widget Function()> _pages = [
-    homePage,      // Home or Rents
-    rentsPage,      // If you want to separate home and rents, change this
-    favoritesPage,
-    accountPage,
-  ];
+  Widget _getPage(int index) {
+    switch (index) {
+      case 0: return HomePage();
+      case 1: return RentsPage();
+      case 2: return FavoritesPage();
+      case 3: return AccountPage();
+      default: return HomePage();
+    }
+  }
 
   void _onTabTapped(int index) {
     setState(() {
@@ -37,8 +42,12 @@ class _MainLayoutState extends State<MainLayout> {
 
   @override
   Widget build(BuildContext context) {
+    if (!isLoggedIn) {
+      return const AuthPage();
+    }
+
     return Scaffold(
-      body: _pages[_selectedIndex](),
+      body: _getPage(_selectedIndex),
       bottomNavigationBar: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
         padding: const EdgeInsets.only(left: 24, right:24, bottom: 18, top: 6), // Exterior margins

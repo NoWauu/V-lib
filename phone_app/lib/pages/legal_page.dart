@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
-Widget legalPage() {
-  return Center(child: Text('Legal Page content'));
+class LegalPage extends StatelessWidget {
+  const LegalPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
 }
+

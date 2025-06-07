@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
-Widget historyPage() {
-  return Center(child: Text('History Page content'));
+class HistoryPage extends StatelessWidget {
+  const HistoryPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
 }
+
