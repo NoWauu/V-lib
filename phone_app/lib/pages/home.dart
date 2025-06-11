@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phone_app/layouts/home_layout.dart';
 
 // ATOM: Titre principal
 class HomeTitle extends StatelessWidget {
