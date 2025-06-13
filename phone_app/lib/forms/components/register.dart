@@ -35,6 +35,7 @@ class _RegisterFormState extends State<RegisterForm> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
+      autovalidateMode: AutovalidateMode.onUnfocus,
       child: Column(
         children: <Widget>[
           Row(
