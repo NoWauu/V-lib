@@ -111,82 +111,91 @@ class RentsPage extends State<MapSample> {
         ? []
         : _stations.where((s) => s.name.toLowerCase().contains(_searchQuery.toLowerCase())).toList();
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(120),
-        child: SafeArea(
-          child: Container(
-            color: Colors.transparent,
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: TextField(
-                    decoration: const InputDecoration(
-                      hintText: 'Rechercher une station...',
-                      border: InputBorder.none,
-                      prefixIcon: Icon(Icons.search),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        _searchQuery = value;
-                        _updateMarkers();
-                      });
-                    },
-                  ),
-                ),
-                if (suggestions.isNotEmpty)
-                  Flexible(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxHeight: 150),
-                      child: Material(
-                        color: Colors.white.withValues(alpha: 0.9),
-                        elevation: 2,
+      extendBody: true,
+      extendBodyBehindAppBar: true,
+      body: Stack(
+        children: [
+          GoogleMap(
+            mapType: MapType.normal,
+            initialCameraPosition: _currentCameraPosition!,
+            markers: _markers,
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+            },
+            onCameraMove: (position) {
+              _currentZoom = position.zoom;
+            },
+          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: SafeArea(
+              child: Container(
+                color: Colors.transparent,
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(255, 255, 255, 0.7),
                         borderRadius: BorderRadius.circular(12),
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: suggestions.length,
-                          itemBuilder: (context, index) {
-                            final station = suggestions[index];
-                            return ListTile(
-                              title: Text(station.name),
-                              onTap: () async {
-                                setState(() {
-                                  _selectedStation = station;
-                                  _searchQuery = station.name;
-                                  _updateMarkers();
-                                });
-                                final controller = await _controller.future;
-                                controller.animateCamera(CameraUpdate.newLatLngZoom(
-                                  LatLng(station.latitude, station.longitude),
-                                  18.0,
-                                ));
-                              },
-                            );
-                          },
+                      ),
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          hintText: 'Rechercher une station...',
+                          border: InputBorder.none,
+                          prefixIcon: Icon(Icons.search),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                         ),
+                        onChanged: (value) {
+                          setState(() {
+                            _searchQuery = value;
+                            _updateMarkers();
+                          });
+                        },
                       ),
                     ),
-                  ),
-              ],
+                    if (suggestions.isNotEmpty)
+                      Flexible(
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxHeight: 150),
+                          child: Material(
+                            color: const Color.fromRGBO(255, 255, 255, 0.9),
+                            elevation: 2,
+                            borderRadius: BorderRadius.circular(12),
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: suggestions.length,
+                              itemBuilder: (context, index) {
+                                final station = suggestions[index];
+                                return ListTile(
+                                  title: Text(station.name),
+                                  onTap: () async {
+                                    setState(() {
+                                      _selectedStation = station;
+                                      _searchQuery = station.name;
+                                      _updateMarkers();
+                                    });
+                                    final controller = await _controller.future;
+                                    controller.animateCamera(CameraUpdate.newLatLngZoom(
+                                      LatLng(station.latitude, station.longitude),
+                                      18.0,
+                                    ));
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-      body: GoogleMap(
-        mapType: MapType.normal,
-        initialCameraPosition: _currentCameraPosition!,
-        markers: _markers,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-        onCameraMove: (position) {
-          _currentZoom = position.zoom;
-        },
+        ],
       ),
     );
   }
