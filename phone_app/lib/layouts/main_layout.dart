@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:phone_app/pages/account.dart';
-import 'package:phone_app/pages/auth.dart';
 import 'package:phone_app/pages/favorites.dart';
 import 'package:phone_app/pages/home.dart';
 import 'package:phone_app/pages/rents.dart';
@@ -14,7 +13,6 @@ class MainLayout extends StatefulWidget {
 }
 
 class _MainLayoutState extends State<MainLayout> {
-  bool isLoggedIn = false;
   int _selectedIndex = 0;
 
   Widget _getPage(int index) {
@@ -42,10 +40,6 @@ class _MainLayoutState extends State<MainLayout> {
 
   @override
   Widget build(BuildContext context) {
-    if (!isLoggedIn) {
-      return const AuthPage();
-    }
-
     return Scaffold(
       body: _getPage(_selectedIndex),
       bottomNavigationBar: Container(

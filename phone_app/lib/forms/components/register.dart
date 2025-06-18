@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:phone_app/forms/validation/auth_validations.dart';
 import 'package:phone_app/inputs/password_input.dart';
 import 'package:phone_app/inputs/simple_input.dart';
 import 'package:phone_app/buttons/btn_with_icon.dart';
+
+import 'package:phone_app/forms/validation/auth_validations.dart';
+import 'package:phone_app/auth/providers/auth_provider.dart';
+import 'package:phone_app/auth/classes/register_credentials.dart';
+import 'package:provider/provider.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -63,9 +67,19 @@ class _RegisterFormState extends State<RegisterForm> {
             return null;
           },),
           SizedBox(height: 16,),
-          ButtonWithIcon(text: "Créer", icon: Icons.person_add, onPressed: () {
+          ButtonWithIcon(text: "Créer", icon: Icons.person_add, onPressed: () async {
             if (_formKey.currentState!.validate()) {
-              // TO DO
+              RegisterCredentials rc = RegisterCredentials(
+                  email: _emailController.text,
+                  password: _passwordController.text,
+                  firstName: _firstNameController.text,
+                  lastName: _lastNameController.text,
+                  phoneNumber: _phoneNumberController.text
+              );
+
+              if (await context.read<AuthProvider>().register(rc)) {
+                Navigator.of(context).pop();
+              }
             }
           }),
         ],

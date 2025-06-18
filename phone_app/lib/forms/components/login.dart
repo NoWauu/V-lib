@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:phone_app/forms/validation/auth_validations.dart';
 import 'package:phone_app/inputs/password_input.dart';
 import 'package:phone_app/inputs/simple_input.dart';
 import 'package:phone_app/buttons/btn_with_icon.dart';
+
+import 'package:phone_app/auth/classes/login_credentials.dart';
+import 'package:phone_app/auth/providers/auth_provider.dart';
+import 'package:phone_app/forms/validation/auth_validations.dart';
+import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -34,9 +38,16 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(height: 16),
           PasswordInput(icon: Icons.password, label: "Mot de passe", controller: _passwordController, validator: checkPassword,),
           SizedBox(height: 16),
-          ButtonWithIcon(text: "Se connecter", icon: Icons.login,  onPressed: () {
+          ButtonWithIcon(text: "Se connecter", icon: Icons.login,  onPressed: () async {
             if (_formKey.currentState!.validate()) {
-              // TO DO
+              LoginCredentials lc = LoginCredentials(
+                  email: _emailController.text,
+                  password: _passwordController.text
+              );
+
+              if (await context.read<AuthProvider>().login(lc)) {
+                Navigator.of(context).pop();
+              }
             }
           }),
         ],
