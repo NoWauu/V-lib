@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phone_app/text/sectionTitle.dart';
+import 'package:phone_app/text/legalSectionTitle.dart';
 import 'package:phone_app/text/legalDescription.dart';
 import 'package:phone_app/buttons/back.dart';
 
@@ -19,7 +19,7 @@ Widget legalPage() {
                     ),
 
                     SizedBox(height: 24,),
-                    SectionTitle("1. Avis de droits d'auteur"),
+                    LegalSectionTitle("1. Avis de droits d'auteur"),
                     SizedBox(height: 12,),
                     LegalDescription("Les textes, images, et graphiques présents sur ce site sont la propriété de l'équipe V-Lib, sauf mention contraire."),
                     SizedBox(height: 6,),
@@ -32,7 +32,7 @@ Widget legalPage() {
                     LegalDescription("Pour toute demande de reproduction ou d'utilisation de notre contenu, veuillez nous contacter à l'aide des informations fournies via la page «Nous contacter»."),
 
                     SizedBox(height: 24,),
-                    SectionTitle("2. Propriétaire du site Web"),
+                    LegalSectionTitle("2. Propriétaire du site Web"),
                     SizedBox(height: 12,),
                     LegalDescription("Les propriétaires et administrateurs de ce site Web sont l'équipe V-Lib."),
                     SizedBox(height: 6,),
@@ -41,7 +41,7 @@ Widget legalPage() {
                     LegalDescription("Pour toute question ou réclamation concernant le site, n'hésitez pas à nous joindre via les coordonnées trouvées sur cette page."),
 
                     SizedBox(height: 24,),
-                    SectionTitle("3. Liens"),
+                    LegalSectionTitle("3. Liens"),
                     SizedBox(height: 12,),
                     LegalDescription("Ce site Web peut contenir des liens vers des sites externes qui ne sont pas fournis ou maintenus par l'équipe V-Lib."),
                     SizedBox(height: 6,),
@@ -54,21 +54,21 @@ Widget legalPage() {
                     LegalDescription("Nous vous recommandons de vérifier les politiques de confidentialité et les conditions d'utilisation de ces sites externes avant de les utiliser."),
 
                     SizedBox(height: 24,),
-                    SectionTitle("4. Crédits photographiques"),
+                    LegalSectionTitle("4. Crédits photographiques"),
                     SizedBox(height: 12,),
                     LegalDescription("Certaines photographies et illustrations utilisées ont été trouvées sur des sites libres de droits dont voici les sites:"),
                     LegalDescription("www.sorbonne.fr"),
                     LegalDescription("www.istockphoto.com"),
 
                     SizedBox(height: 24,),
-                    SectionTitle("5. Lois et collecte de données"),
+                    LegalSectionTitle("5. Lois et collecte de données"),
                     SizedBox(height: 12,),
                     LegalDescription("Toutes les informations collectées sur ce site Web sont mentionnées dans la «Politique de confidentialité»."),
                     SizedBox(height: 6,),
                     LegalDescription("De plus, les données collectées respectent le Règlement Général sur la Protection des Données (RGPD)."),
 
                     SizedBox(height: 24,),
-                    SectionTitle("6. Modifications de cet avis légal"),
+                    LegalSectionTitle("6. Modifications de cet avis légal"),
                     SizedBox(height: 12,),
                     LegalDescription("L'équipe V-Lib se réserve le droit de mettre à jour ou de modifier cet avis légal à tout moment sans préavis."),
                     SizedBox(height: 6,),
