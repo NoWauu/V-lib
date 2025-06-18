@@ -34,6 +34,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     '0.0.0.0',
     'localhost',
+    '10.0.2.2'
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -94,11 +95,11 @@ WSGI_APPLICATION = 'VlibBackend.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv('DB_NAME'),
-        "USER": os.getenv('DB_USER'),
-        "PASSWORD": os.getenv('DB_PASSWORD'),
-        "HOST": os.getenv('DB_HOST'),
-        "PORT": os.getenv('DB_PORT'),
+        "NAME": os.getenv('DB_NAME', 'vlib'),
+        "USER": os.getenv('DB_USER', 'test_user'),
+        "PASSWORD": os.getenv('DB_PASSWORD', 'test_password'),
+        "HOST": os.getenv('DB_HOST', 'localhost'),
+        "PORT": os.getenv('DB_PORT', '5432'),
     }
 }
 

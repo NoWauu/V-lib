@@ -6,9 +6,10 @@ from django.test import Client, TransactionTestCase
 from django.urls import reverse
 from .constants import STATIONS_LIST
 from VlibStations.functions.update_db import update_database
+from VlibBackend.test_setup import LoadSQLSchemaMixin
 
 
-class TestViews(TransactionTestCase):
+class TestViews(LoadSQLSchemaMixin, TransactionTestCase):
 
     # Test if the get_station_data view returns an error when no parameters are provided
     def test_get_station_data_request_no_parameters(self):
