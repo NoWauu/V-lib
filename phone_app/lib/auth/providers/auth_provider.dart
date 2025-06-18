@@ -31,7 +31,7 @@ class AuthProvider with ChangeNotifier {
   Future<http.Response> callWrapper(
       Future<http.Response> Function() apiCall
   ) async {
-    if (double.parse(_token!.expirationTimestamp) < DateTime.now().millisecondsSinceEpoch) {
+    if (_token!.expirationTimestamp < DateTime.now().millisecondsSinceEpoch) {
       logout();
     }
 

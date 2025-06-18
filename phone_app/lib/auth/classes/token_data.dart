@@ -1,6 +1,6 @@
 class TokenData {
   final String token;
-  final String expirationTimestamp;
+  final double expirationTimestamp;
 
   const TokenData({
     required this.token,
