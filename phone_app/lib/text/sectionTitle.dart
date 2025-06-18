@@ -12,12 +12,14 @@ class SectionTitle extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          color: Colors.green.shade700,
-          fontSize: 22,
+
+          fontSize: 20,
           fontWeight: FontWeight.bold,
+          color: Theme.of(context).colorScheme.onSurface,
         ),
         textAlign: TextAlign.center,
       ),
     );
   }
 }
+

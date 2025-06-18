@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
-Widget privacyPage() {
-  return Center(child: Text('Privacy policy page content'));
+class PrivacyPage extends StatelessWidget {
+  const PrivacyPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
 }
