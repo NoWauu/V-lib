@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
-Widget favoritesPage() {
-  return Center(child: Text('Favorites page content'));
+class FavoritesPage extends StatelessWidget {
+  const FavoritesPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
 }
