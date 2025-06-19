@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../auth/providers/auth_provider.dart';
 import '../config.dart';
 
 import '../models/station.dart';
@@ -160,7 +162,7 @@ class RentsPage extends State<MapSample> {
 
   void _toggleFavorite(Station station) async {
     final prefs = await SharedPreferences.getInstance();
-    final _token = context.watch<AuthProvider>().token.token;
+    final token = context.watch<AuthProvider>().token?.token;
     if (token == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Vous devez être connecté pour gérer les favoris.')),
