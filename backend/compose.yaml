@@ -1,5 +1,8 @@
+name: Vlib
+
 services:
   api:
+    container_name: vlib_api
     build:
       context: .
       dockerfile: Dockerfile
@@ -7,12 +10,13 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - RESEND_KEY=cle_resend_ici
+      - RESEND_KEY=re_ZaRQzbQ8_8zYqakSnTSp16K6PxfYyag4L
     depends_on:
       - db
 
 
   db:
+    container_name: vlib-db
     image: postgres:16
     environment:
       POSTGRES_USER: "sae_vlib"
