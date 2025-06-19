@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 // ATOM: Titre de section
-class SectionTitle extends StatelessWidget {
+class LegalSectionTitle extends StatelessWidget {
   final String text;
-  SectionTitle(this.text);
+  LegalSectionTitle(this.text);
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +12,12 @@ class SectionTitle extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-
-          fontSize: 20,
+          color: Colors.green.shade700,
+          fontSize: 22,
           fontWeight: FontWeight.bold,
-          color: Theme.of(context).colorScheme.onSurface,
         ),
         textAlign: TextAlign.center,
       ),
     );
   }
 }
-
