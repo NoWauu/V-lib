@@ -32,11 +32,13 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 DEBUG = False
 
 ALLOWED_HOSTS = [
+    '0.0.0.0',
     'localhost',
     '10.0.2.2'
 ]
 
 CORS_ALLOWED_ORIGINS = [
+    'https://0.0.0.0:3000',
     'https://localhost:3000',
 ]
 

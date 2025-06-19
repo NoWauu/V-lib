@@ -12,6 +12,7 @@ rsa = "*"
 bcrypt = "*"
 resend = "*"
 django-cors-headers = "*"
+gunicorn = "*"
 
 [dev-packages]
 
