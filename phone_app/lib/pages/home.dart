@@ -7,7 +7,7 @@ import 'package:phone_app/text/sectionTitle.dart';
 import 'package:phone_app/text/bulletList.dart';
 
 
-Widget homePage() {
+Widget HomePage() {
   return SafeArea(
     child: LayoutBuilder(
         builder: (context, constraints) {
@@ -59,3 +59,4 @@ Widget homePage() {
         },
       ),
   );
+}
