@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../config.dart';
 
 import '../models/station.dart';
@@ -96,8 +98,103 @@ class RentsPage extends State<MapSample> {
     _markers = _filteredStations.map((s) => Marker(
       markerId: MarkerId(s.id.toString()),
       position: LatLng(s.latitude, s.longitude),
-      infoWindow: InfoWindow(title: s.name),
+      infoWindow: InfoWindow(
+        title: s.name,
+        snippet: 'Voir les détails',
+        onTap: () {
+          setState(() {
+            _selectedStation = s;
+          });
+          showModalBottomSheet(
+            context: context,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+            ),
+            builder: (context) => _buildStationCard(s),
+          );
+        },
+      ),
     )).toSet();
+  }
+
+  Widget _buildStationCard(Station station) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(station.name, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              IconButton(
+                icon: Icon(_isFavorite(station) ? Icons.favorite : Icons.favorite_border, color: Colors.red),
+                onPressed: () => _toggleFavorite(station),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text('Vélos disponibles : ${station.capacity}', style: const TextStyle(fontSize: 16)),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              icon: const Icon(Icons.directions),
+              label: const Text('Itinéraire Google Maps'),
+              onPressed: () => _openGoogleMaps(station),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _openGoogleMaps(Station station) async {
+    final url = 'https://www.google.com/maps/dir/?api=1&destination=${station.latitude},${station.longitude}&travelmode=walking';
+    await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+  }
+
+  final Set<int> _favoriteStationIds = {};
+  bool _isFavorite(Station station) => _favoriteStationIds.contains(station.id);
+
+  void _toggleFavorite(Station station) async {
+    final prefs = await SharedPreferences.getInstance();
+    final _token = context.watch<AuthProvider>().token.token;
+    if (token == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Vous devez être connecté pour gérer les favoris.')),
+      );
+      return;
+    }
+    final url = Uri.parse('http://$apiUrl/stations/manage-favorites');
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({'id_station': station.id}),
+      );
+      if (response.statusCode == 200) {
+        setState(() {
+          if (_isFavorite(station)) {
+            _favoriteStationIds.remove(station.id);
+          } else {
+            _favoriteStationIds.add(station.id);
+          }
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erreur lors de la gestion du favori : \\${response.body}')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erreur réseau : \\${e.toString()}')),
+      );
+    }
   }
 
   @override
