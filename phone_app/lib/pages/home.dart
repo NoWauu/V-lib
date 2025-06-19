@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:phone_app/image/veloProfilImage.dart';
-import 'package:phone_app/image/veloDerriereImage.dart';
+import 'package:phone_app/image/imageVelo.dart';
 import 'package:phone_app/text/homeDescription.dart';
 import 'package:phone_app/text/homeTitle.dart';
 import 'package:phone_app/text/sectionTitle.dart';
 import 'package:phone_app/text/bulletList.dart';
+import 'package:phone_app/text/textBlock.dart';
 
 
-Widget homePage() {
+Widget HomePage() {
   return SafeArea(
     child: LayoutBuilder(
         builder: (context, constraints) {
@@ -22,7 +22,7 @@ Widget homePage() {
                   SizedBox(height: 16),
                   HomeDescription(),
                   SizedBox(height: 16),
-                  VeloDerriereImage(),
+                  ImageVelo(imagePath: 'assets/images/home/Photo_Velib_derriere.jpg'),
                   SizedBox(height: 32),
                   SectionTitle("Pourquoi nous choisir ?"),
                   SizedBox(height: 12),
@@ -41,16 +41,11 @@ Widget homePage() {
                     "Déplacez-vous librement et rapportez le Vélib’ à une station compatible en toute simplicité.",
                   ]),
                   SizedBox(height: 16),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      "Chez V-LIB, nous croyons que se déplacer en vélo doit être une expérience ludique, économique et respectueuse de l’environnement.\n\nQue vous soyez un habitué des Vélib’ ou un utilisateur occasionnel, notre plateforme est là pour répondre à toutes vos attentes.\n\nRejoignez une communauté d’amateurs engagés !\n\nDes milliers de citadins comme vous nous font déjà confiance pour transformer leurs trajets en expériences uniques.\n\nAvec V-LIB, pédalez vers un avenir plus vert et plus connecté.",
-                      style: TextStyle(fontSize: 15),
-                      textAlign: TextAlign.justify,
-                    ),
+                  TextBlock(
+                    text: "Chez V-LIB, nous croyons que se déplacer en vélo doit être une expérience ludique, économique et respectueuse de l’environnement.\n\nQue vous soyez un habitué des Vélib’ ou un utilisateur occasionnel, notre plateforme est là pour répondre à toutes vos attentes.\n\nRejoignez une communauté d’amateurs engagés !\n\nDes milliers de citadins comme vous nous font déjà confiance pour transformer leurs trajets en expériences uniques.\n\nAvec V-LIB, pédalez vers un avenir plus vert et plus connecté.",
                   ),
                   SizedBox(height: 24),
-                  VeloProfilImage(),
+                  ImageVelo(imagePath: 'assets/images/home/Photo_Velib_profil.jpg'),
                   SizedBox(height: 24),
                 ],
               ),
@@ -59,3 +54,4 @@ Widget homePage() {
         },
       ),
   );
+}
