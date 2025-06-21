@@ -64,7 +64,6 @@ class RentsPage extends State<MapSample> {
     } catch (e) {
       debugPrint('Erreur de connexion: \${e.toString()}');
     }
-    debugPrint(_stations.length.toString());
   }
 
   Future<void> _setInitialLocation() async {
@@ -175,8 +174,6 @@ class RentsPage extends State<MapSample> {
     final url = Uri.parse('http://${apiUrl}/users/add-rent/');
     try {
       final request = http.MultipartRequest('POST', url);
-      debugPrint('Token: $token');
-      debugPrint('Station ID: ${_stations.indexOf(station).toString()}');
       request.fields['id_station'] = _stations.indexOf(station).toString();
       request.fields['token'] = token.toString();
       final streamedResponse = await request.send();
@@ -210,9 +207,6 @@ class RentsPage extends State<MapSample> {
     }
     final url = Uri.parse('http://$apiUrl/stations/manage-favorites/');
     try {
-      debugPrint('Token: $token');
-      debugPrint('Station ID: ${station.id}');
-      debugPrint('id : ${_stations.indexOf(station)}');
       final request = http.MultipartRequest('POST', url);
       request.fields['token'] = token.toString();
       request.fields['id_station'] = _stations.indexOf(station).toString();
