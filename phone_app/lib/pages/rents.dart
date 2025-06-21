@@ -97,7 +97,7 @@ class RentsPage extends State<MapSample> {
 
   void _updateMarkers() {
     _markers = _filteredStations.map((s) => Marker(
-      markerId: MarkerId(s.id.toString()),
+      markerId: MarkerId(s.code.toString()),
       position: LatLng(s.latitude, s.longitude),
       infoWindow: InfoWindow(
         title: s.name,
@@ -140,10 +140,24 @@ class RentsPage extends State<MapSample> {
           const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
-            child: ElevatedButton.icon(
-              icon: const Icon(Icons.directions),
-              label: const Text('Itinéraire Google Maps'),
-              onPressed: () => _openGoogleMaps(station),
+            child: Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    icon: const Icon(Icons.directions),
+                    label: const Text('Itinéraire Google Maps'),
+                    onPressed: () => _openGoogleMaps(station),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ElevatedButton.icon(
+                    icon: const Icon(Icons.lock),
+                    label: const Text('Réserver'),
+                    onPressed: () => _reserveStation(station),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -156,38 +170,80 @@ class RentsPage extends State<MapSample> {
     await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
   }
 
+  Future<void> _reserveStation(Station station) async {
+    final token = Provider.of<AuthProvider>(context, listen: false).token?.token;
+    final url = Uri.parse('http://${apiUrl}/users/add-rent/');
+    try {
+      final request = http.MultipartRequest('POST', url);
+      debugPrint('Token: $token');
+      debugPrint('Station ID: ${_stations.indexOf(station).toString()}');
+      request.fields['id_station'] = _stations.indexOf(station).toString();
+      request.fields['token'] = token.toString();
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Réservation réussie !')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erreur lors de la réservation : {response.body}')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erreur réseau : $e')),
+      );
+    }
+  }
+
   final Set<int> _favoriteStationIds = {};
-  bool _isFavorite(Station station) => _favoriteStationIds.contains(station.id);
+  bool _isFavorite(Station station) => _favoriteStationIds.contains(station.code);
 
   void _toggleFavorite(Station station) async {
-    final token = context.watch<AuthProvider>().token?.token;
+    final token = Provider.of<AuthProvider>(context, listen: false).token?.token;
     if (token == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Vous devez être connecté pour gérer les favoris.')),
       );
       return;
     }
-    final url = Uri.parse('http://$apiUrl/stations/manage-favorites');
+    final url = Uri.parse('http://$apiUrl/stations/manage-favorites/');
     try {
-      final response = await http.post(
-        url,
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({'id_station': station.id}),
-      );
+      debugPrint('Token: $token');
+      debugPrint('Station ID: ${station.id}');
+      debugPrint('id : ${_stations.indexOf(station)}');
+      final request = http.MultipartRequest('POST', url);
+      request.fields['token'] = token.toString();
+      request.fields['id_station'] = _stations.indexOf(station).toString();
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
       if (response.statusCode == 200) {
-        setState(() {
-          if (_isFavorite(station)) {
-            _favoriteStationIds.remove(station.id);
-          } else {
-            _favoriteStationIds.add(station.id);
-          }
-        });
+        if (mounted) {
+          setState(() {
+            if (_isFavorite(station)) {
+              _favoriteStationIds.remove(station.code);
+            } else {
+              _favoriteStationIds.add(station.code);
+            }
+            // On force la reconstruction de la fiche station affichée
+            _selectedStation = _stations.firstWhere((s) => s.code == station.code, orElse: () => station);
+            // Fermer et rouvrir la fiche pour forcer l'actualisation de l'icône
+            Navigator.of(context).pop();
+            Future.delayed(Duration(milliseconds: 100), () {
+              showModalBottomSheet(
+                context: context,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                ),
+                builder: (context) => _buildStationCard(_selectedStation!),
+              );
+            });
+          });
+        }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erreur lors de la gestion du favori : \\${response.body}')),
+          SnackBar(content: Text('Erreur lors de la gestion du favori : ${response.body}')),
         );
       }
     } catch (e) {
@@ -195,6 +251,7 @@ class RentsPage extends State<MapSample> {
         SnackBar(content: Text('Erreur réseau : \\${e.toString()}')),
       );
     }
+
   }
 
   @override
