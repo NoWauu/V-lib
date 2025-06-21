@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 
-// ATOM: Titre de section
-class SectionTitle extends StatelessWidget {
+// ATOM: Description
+class LegalDescription extends StatelessWidget {
   final String text;
-  SectionTitle(this.text);
+  LegalDescription(this.text);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Text(
         text,
         style: TextStyle(
-
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
           color: Theme.of(context).colorScheme.onSurface,
+          fontSize: 15,
         ),
-        textAlign: TextAlign.center,
+        textAlign: TextAlign.justify,
       ),
     );
   }
 }
-

@@ -1,0 +1,31 @@
+name: Vlib
+
+services:
+  api:
+    container_name: vlib_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: linux/amd64
+    ports:
+      - "8000:8000"
+    environment:
+      - RESEND_KEY=re_ZaRQzbQ8_8zYqakSnTSp16K6PxfYyag4L
+    depends_on:
+      - db
+
+
+  db:
+    container_name: vlib-db
+    image: postgres:16
+    environment:
+      POSTGRES_USER: "sae_vlib"
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: "vlib"
+    ports:
+      - "5432:28152"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
