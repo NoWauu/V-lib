@@ -6,6 +6,7 @@ import '../text/sectionTitle.dart';
 import '../text/textBlock.dart';
 import '../organisms/reservation_card.dart';
 import '../atoms/history_api.dart';
+import '../buttons/back.dart';
 
 class HistoryPage extends StatefulWidget {
   @override
@@ -56,6 +57,13 @@ class _HistoryPageState extends State<HistoryPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: CustomBackButton(),
+                    ),
+                  ),
                   SizedBox(height: 16),
                   SectionTitle("Historique des réservations"),
                   SizedBox(height: 16),
