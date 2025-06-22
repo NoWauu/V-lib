@@ -26,6 +26,13 @@ class AuthProvider with ChangeNotifier {
     Auth-related functions
    */
 
+  void setEmailVerified(bool is_verified) {
+    if (_user != null) {
+      _user!.isEmailVerified = is_verified;
+      notifyListeners();
+    }
+  }
+
   /// Wrapper to logout the user if the API
   /// sends that the token has expired
   Future<http.Response> callWrapper(
