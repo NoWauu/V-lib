@@ -51,7 +51,7 @@ class MailVerificationWindow extends StatelessWidget {
     final http.Response res = await authProvider.callWrapper(
           () async =>
       await http.post(
-        Uri.http(apiUrl, "users/is-email-verified/"),
+        Uri.http(apiUrl, "users/check-email-verified/"),
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: {
           "token": authProvider.token?.token,
