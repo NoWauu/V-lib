@@ -34,7 +34,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     '0.0.0.0',
     'localhost',
-    '10.0.2.2'
+    '10.0.2.2',  # For Android emulator
 ]
 
 CORS_ALLOWED_ORIGINS = [

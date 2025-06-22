@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:phone_app/auth/providers/auth_provider.dart';
 import 'package:phone_app/auth/wrappers/auth_wrapper.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+Future<void> main() async {
+  try {
+    await dotenv.load(fileName: ".env").timeout(const Duration(seconds: 5));
+  } catch (e) {
+    debugPrint('Erreur lors du chargement du .env : '
+        '[31m${e.toString()}[0m');
+  }
   runApp(App());
 }
 
