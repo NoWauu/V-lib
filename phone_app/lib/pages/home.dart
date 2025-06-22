@@ -48,7 +48,6 @@ Widget HomePage() {
                   ImageVelo(imagePath: 'assets/images/home/Photo_Velib_profil.jpg'),
                   SizedBox(height: 24),
                 ],
-              ),
             ),
           );
       },
