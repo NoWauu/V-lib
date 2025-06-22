@@ -61,7 +61,7 @@ class _HistoryPageState extends State<HistoryPage> {
                   SizedBox(height: 16),
                   _stations.isEmpty
                       ? TextBlock(
-                          text: "Vous n'avez pas encore réservé de vélib dans une station. Reservez-en pour la retrouver facilement.",
+                          text: "Vous n'avez pas encore réservé de vélib dans une station. Reservez-en pour les retrouver facilement.",
                         )
                       : ListView.builder(
                           shrinkWrap: true,
