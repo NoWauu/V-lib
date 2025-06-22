@@ -178,13 +178,14 @@ class RentsPage extends State<MapSample> {
       request.fields['token'] = token.toString();
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);
+      Navigator.of(context).pop();
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Réservation réussie !')),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erreur lors de la réservation : {response.body}')),
+          SnackBar(content: Text("Votre email n'est pas vérifié. Veuillez vérifier votre email pour réserver un vélo.")),
         );
       }
     } catch (e) {
