@@ -31,7 +31,7 @@ class AuthProvider with ChangeNotifier {
   Future<http.Response> callWrapper(
       Future<http.Response> Function() apiCall
   ) async {
-    if (_token!.expirationTimestamp < DateTime.now().millisecondsSinceEpoch) {
+    if (_token != null && (_token!.expirationTimestamp * 1000) < DateTime.now().millisecondsSinceEpoch) {
       logout();
     }
 
@@ -55,6 +55,20 @@ class AuthProvider with ChangeNotifier {
     return res;
   }
 
+  Future<void> storeUser(String resBody) async {
+    final resData = jsonDecode(resBody);
+
+    _user = User(
+        email: resData["data"]["email"],
+        firstName: resData["data"]["first_name"],
+        lastName: resData["data"]["last_name"],
+        phoneNumber: resData['data']["phone_number"],
+        isEmailVerified: resData["data"]["is_email_verified"]
+    );
+
+    notifyListeners();
+  }
+
   /// Store the user and the auth token
   /// to use it throughout all the application
   Future<void> _storeUserAndToken(String resBody) async {
@@ -68,7 +82,7 @@ class AuthProvider with ChangeNotifier {
     _user = User(
         email: resData["data"]["email"],
         firstName: resData["data"]["first_name"],
-        lastName: resData["data"]["first_name"],
+        lastName: resData["data"]["last_name"],
         phoneNumber: resData['data']["phone_number"],
         isEmailVerified: resData["data"]["is_email_verified"]
     );
@@ -95,12 +109,6 @@ class AuthProvider with ChangeNotifier {
     switch (res.statusCode) {
       case 201:
         _storeUserAndToken(res.body);
-
-        Fluttertoast.showToast(
-          msg: "Bienvenue sur l'application !",
-          backgroundColor: Colors.green.shade700,
-          textColor: Colors.white
-        );
 
         return true;
       case 400:
