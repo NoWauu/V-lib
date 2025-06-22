@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // ATOM: Titre de section
 class LegalSectionTitle extends StatelessWidget {
   final String text;
-  LegalSectionTitle(this.text);
+  const LegalSectionTitle(this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {

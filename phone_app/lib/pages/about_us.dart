@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:phone_app/buttons/back.dart';
 import 'package:phone_app/text/sectionTitle.dart';
 import 'package:phone_app/text/textBlock.dart';
-import 'package:phone_app/image/imageVelo.dart';
+import 'package:phone_app/image/image_velo.dart';
 
 
-Widget AboutUsPage() {
-  return SafeArea(
-    child: LayoutBuilder(
-        builder: (context, constraints) {
-          return SingleChildScrollView(
+Widget aboutUsPage() {
+  return Scaffold(
+      body: SafeArea(
+    child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(top: 30, left: 16, right: 16),
               child: Column(
@@ -41,8 +40,7 @@ Widget AboutUsPage() {
                 ],
               ),
             ),
-          );
-        },
+          ),
       ),
   );
 }

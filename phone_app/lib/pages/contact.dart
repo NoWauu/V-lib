@@ -6,7 +6,7 @@ import 'package:phone_app/text/textContact.dart';
 
 class ContactPage extends StatelessWidget {
 
-  ContactPage({super.key});
+  const ContactPage({super.key});
 
   @override
   Widget build(BuildContext context) {

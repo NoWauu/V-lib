@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // ATOM: Liste à puces
 class BulletList extends StatelessWidget {
   final List<String> items;
-  BulletList(this.items);
+  const BulletList(this.items, {super.key});
 
   @override
   Widget build(BuildContext context) {

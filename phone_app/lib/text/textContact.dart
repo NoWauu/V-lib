@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // ATOM: Description
 class TextContact extends StatelessWidget {
   final String text;
-  TextContact(this.text);
+  const TextContact(this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -6,10 +6,10 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../auth/providers/auth_provider.dart';
 import '../config.dart';
 
+import '../maps/google_maps.dart';
 import '../models/station.dart';
 
 class StationItem {
@@ -38,7 +38,6 @@ class RentsPage extends State<MapSample> {
   List<Station> _stations = [];
   Set<Marker> _markers = {};
   String _searchQuery = '';
-  double _currentZoom = 16;
   Station? _selectedStation;
 
   @override
@@ -145,7 +144,7 @@ class RentsPage extends State<MapSample> {
                   child: ElevatedButton.icon(
                     icon: const Icon(Icons.directions),
                     label: const Text('Itinéraire Google Maps'),
-                    onPressed: () => _openGoogleMaps(station),
+                    onPressed: () => openGoogleMaps(station),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -164,14 +163,10 @@ class RentsPage extends State<MapSample> {
     );
   }
 
-  void _openGoogleMaps(Station station) async {
-    final url = 'https://www.google.com/maps/dir/?api=1&destination=${station.latitude},${station.longitude}&travelmode=walking';
-    await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
-  }
 
   Future<void> _reserveStation(Station station) async {
     final token = Provider.of<AuthProvider>(context, listen: false).token?.token;
-    final url = Uri.parse('http://${apiUrl}/users/add-rent/');
+    final url = Uri.parse('http://$apiUrl/users/add-rent/');
     try {
       final request = http.MultipartRequest('POST', url);
       request.fields['id_station'] = _stations.indexOf(station).toString();
@@ -201,6 +196,7 @@ class RentsPage extends State<MapSample> {
   void _toggleFavorite(Station station) async {
     final token = Provider.of<AuthProvider>(context, listen: false).token?.token;
     if (token == null) {
+      // Utilisation de ScaffoldMessenger sans contextBuilder
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Vous devez être connecté pour gérer les favoris.')),
       );
@@ -270,9 +266,6 @@ class RentsPage extends State<MapSample> {
             markers: _markers,
             onMapCreated: (GoogleMapController controller) {
               _controller.complete(controller);
-            },
-            onCameraMove: (position) {
-              _currentZoom = position.zoom;
             },
           ),
           Positioned(

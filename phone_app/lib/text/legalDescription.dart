@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // ATOM: Description
 class LegalDescription extends StatelessWidget {
   final String text;
-  LegalDescription(this.text);
+  const LegalDescription(this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {

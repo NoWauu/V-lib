@@ -26,9 +26,9 @@ class AuthProvider with ChangeNotifier {
     Auth-related functions
    */
 
-  void setEmailVerified(bool is_verified) {
+  void setEmailVerified(bool isVerified) {
     if (_user != null) {
-      _user!.isEmailVerified = is_verified;
+      _user!.isEmailVerified = isVerified;
       notifyListeners();
     }
   }

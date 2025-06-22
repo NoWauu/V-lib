@@ -9,7 +9,7 @@ Future<void> main() async {
     await dotenv.load(fileName: ".env").timeout(const Duration(seconds: 5));
   } catch (e) {
     debugPrint('Erreur lors du chargement du .env : '
-        '[31m${e.toString()}[0m');
+        '${e.toString()}');
   }
   runApp(App());
 }

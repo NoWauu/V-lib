@@ -24,31 +24,31 @@ class DisplayAllUserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _user = context.watch<AuthProvider>().user;
+    final user = context.watch<AuthProvider>().user;
 
     List<Map<String, dynamic>> userDataStructure = [
       {
         "fieldName": "Nom",
         "field": "last_name",
-        "value": _user!.lastName,
+        "value": user!.lastName,
         "validator": checkName
       },
       {
         "fieldName": "Prénom",
         "field": "first_name",
-        "value": _user.firstName,
+        "value": user.firstName,
         "validator": checkName
       },
       {
         "fieldName": "Adresse mail",
         "field": "email",
-        "value": _user.email,
+        "value": user.email,
         "validator": checkEmail
       },
       {
         "fieldName": "Numéro de téléphone",
         "field": "phone_number",
-        "value": _user.phoneNumber,
+        "value": user.phoneNumber,
         "validator": checkPhoneNumber
       },
     ];

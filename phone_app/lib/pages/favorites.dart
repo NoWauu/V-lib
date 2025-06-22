@@ -6,12 +6,13 @@ import 'dart:convert';
 import '../auth/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 import '../config.dart';
-import '../models/station.dart';
 import 'dart:async';
 import 'package:url_launcher/url_launcher.dart';
 
 
 class FavoritesPage extends StatefulWidget {
+  const FavoritesPage({super.key});
+
   @override
   State<FavoritesPage> createState() => _FavoritesPageState();
 }
@@ -30,7 +31,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Future<void> _fetchFavorites() async {
     try {
       final token = Provider.of<AuthProvider>(context, listen: false).token?.token;
-      final url = Uri.parse('http://${apiUrl}/stations/list-favorites/');
+      final url = Uri.parse('http://$apiUrl/stations/list-favorites/');
       final request = http.MultipartRequest('POST', url);
       request.fields['token'] = token.toString();
       final streamedResponse = await request.send();

@@ -17,11 +17,11 @@ class _MainLayoutState extends State<MainLayout> {
 
   Widget _getPage(int index) {
     switch (index) {
-      case 0: return HomePage();
+      case 0: return homePage();
       case 1: return rentsPage();
       case 2: return FavoritesPage();
       case 3: return AccountPage();
-      default: return HomePage();
+      default: return homePage();
     }
   }
 

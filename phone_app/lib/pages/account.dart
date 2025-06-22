@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phone_app/buttons/btn_tabs_account.dart';
 import 'package:phone_app/buttons/disconnect.dart';
-import 'package:phone_app/pages/about.dart';
+import 'package:phone_app/pages/about_us.dart';
 import 'package:phone_app/pages/account_info.dart';
 import 'package:phone_app/pages/history.dart';
 import 'package:phone_app/pages/legal_page.dart';
@@ -18,8 +18,12 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _user = context.watch<AuthProvider>().user;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final user = context
+        .watch<AuthProvider>()
+        .user;
+    final isDark = Theme
+        .of(context)
+        .brightness == Brightness.dark;
 
     return Scaffold(
       body: SafeArea(
@@ -34,7 +38,7 @@ class AccountPage extends StatelessWidget {
                   SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      "${_user!.firstName} ${_user.lastName}",
+                      "${user!.firstName} ${user.lastName}",
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 28,
@@ -51,7 +55,9 @@ class AccountPage extends StatelessWidget {
               Text(
                 "Modifiez vos informations à partir de cette page. Vous pouvez également accéder à des pages comme la politique de confidentialité, ou les mentions légales.",
                 textAlign: TextAlign.justify,
-                style: TextStyle(color: isDark ? Colors.grey.shade400 : Colors.grey.shade600),
+                style: TextStyle(
+                    color: isDark ? Colors.grey.shade400 : Colors.grey
+                        .shade600),
               ),
 
               Spacer(),
@@ -71,19 +77,19 @@ class AccountPage extends StatelessWidget {
               ButtonTabs(
                 text: "Confidentialité",
                 icon: Icons.policy_rounded,
-                onPressed: () => _goTo(context, PrivacyPage()),
+                onPressed: () => _goTo(context, privacyPolicy()),
               ),
               SizedBox(height: 24),
               ButtonTabs(
                 text: "Mentions légales",
                 icon: Icons.gavel,
-                onPressed: () => _goTo(context, LegalPage()),
+                onPressed: () => _goTo(context, legalPage()),
               ),
               SizedBox(height: 24),
               ButtonTabs(
                 text: "À propos",
                 icon: Icons.info_outline,
-                onPressed: () => _goTo(context, AboutPage()),
+                onPressed: () => _goTo(context, aboutUsPage()),
               ),
               SizedBox(height: 24),
               ButtonDisconnect(

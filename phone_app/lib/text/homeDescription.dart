@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 // ATOM: Description
 class HomeDescription extends StatelessWidget {
+  const HomeDescription({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(

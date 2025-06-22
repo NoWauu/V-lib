@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 // ATOM: Titre principal
 class HomeTitle extends StatelessWidget {
+  const HomeTitle({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(

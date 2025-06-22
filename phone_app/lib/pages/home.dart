@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phone_app/image/imageVelo.dart';
+import 'package:phone_app/image/image_velo.dart';
 import 'package:phone_app/text/homeDescription.dart';
 import 'package:phone_app/text/homeTitle.dart';
 import 'package:phone_app/text/sectionTitle.dart';
@@ -7,7 +7,7 @@ import 'package:phone_app/text/bulletList.dart';
 import 'package:phone_app/text/textBlock.dart';
 
 
-Widget HomePage() {
+Widget homePage() {
   return SafeArea(
     child: LayoutBuilder(
         builder: (context, constraints) {
