@@ -27,9 +27,9 @@ lib/
     │   ├ layouts/
     │   ├ pages/
     │   └ text/
-    ├── pubspec.yaml
-    ├── pubspec.lock
-    ├── .env
+    ├── pubspec.yaml                  # pubspec file containing dependencies and metadata
+    ├── pubspec.lock                  # lock file containing the exact versions of dependencies
+    ├── .env                          # environment variables file
     ├── .gitignore
     └── README.md
 ```
