@@ -30,13 +30,11 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Future<void> _fetchFavorites() async {
     try {
       final token = Provider.of<AuthProvider>(context, listen: false).token?.token;
-      debugPrint('Token: $token');
       final url = Uri.parse('http://${apiUrl}/stations/list-favorites/');
       final request = http.MultipartRequest('POST', url);
       request.fields['token'] = token.toString();
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);
-      debugPrint('Response status: ${response.body}');
       if (response.statusCode == 200) {
         setState(() {
           _stations = json.decode(response.body)["data"];
