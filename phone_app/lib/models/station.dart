@@ -16,7 +16,6 @@ class Station {
   });
 
   factory Station.fromJson(Map<String, dynamic> json) {
-    debugPrint(json.toString());
     return Station(
       code: json['station_code'] != null ? json['station_code'] as int : -1,
       name: json['name']?.toString() ?? 'Inconnu',
