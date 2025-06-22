@@ -22,5 +22,4 @@ class Station {
       capacity: json['capacity'] != null ? json['capacity'] as int : 0,
     );
   }
-
 }
