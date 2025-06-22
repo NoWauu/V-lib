@@ -97,9 +97,9 @@ class MailVerificationWindow extends StatelessWidget {
           ]
         ),
         SizedBox(height: 16,),
-        ButtonWithIcon(text: "Envoyer un mail", icon: Icons.send_rounded, onPressed: () async => { await sendVerificationMail(context)}),
+        ButtonWithIcon(text: "Envoyer un mail", icon: Icons.send_rounded, onPressed: () async => { await sendVerificationMail(context) }),
             SizedBox(height: 16,),
-            ButtonWithIcon(text: "Rafraîchir", icon: Icons.refresh, onPressed: () => {})
+            ButtonWithIcon(text: "Rafraîchir", icon: Icons.refresh, onPressed: () async => { await refreshIsMailVerified(context) })
           ],
         ),
       );
