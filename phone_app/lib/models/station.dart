@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 class Station {
   final int code;
   final String name;
