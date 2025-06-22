@@ -49,8 +49,7 @@ Widget HomePage() {
                   SizedBox(height: 24),
                 ],
             ),
-          ),
-        );
+          );
       },
     ),
   );
