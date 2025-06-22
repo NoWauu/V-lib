@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phone_app/auth/update_info/components/all_user_info.dart';
+import 'package:phone_app/auth/verify_mail/verify_window.dart';
 import 'package:phone_app/buttons/back.dart';
 
 
@@ -18,6 +19,7 @@ class AccountInfoPage extends StatelessWidget {
             children: [
               CustomBackButton(),
               Spacer(flex: 1,),
+              MailVerificationWindow(),
               Text("Informations\npersonnelles",
               style: TextStyle(
                 fontSize: 26,

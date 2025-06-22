@@ -12,4 +12,5 @@ urlpatterns = [
     path('delete/', delete_account_request, name='delete-account'),
     path('update/', update_user_request, name='update-account'),
     path("get-user-history/", get_user_history_request, name="get-user-history"),
+    path("check-email-verified/", check_email_verified, name="check-email-verified"),
 ]
