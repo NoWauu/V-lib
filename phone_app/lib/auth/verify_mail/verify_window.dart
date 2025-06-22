@@ -72,6 +72,7 @@ class MailVerificationWindow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final watchForReload = context.watch<AuthProvider>();
     final User? user = context.read<AuthProvider>().user;
 
     if (user != null && !user.isEmailVerified) {
