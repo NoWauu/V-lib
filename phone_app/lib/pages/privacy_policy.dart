@@ -38,7 +38,7 @@ Widget PrivacyPolicy() {
                     "Prénom",
                     "Numéro de téléphone",
                     "Historique des stations",
-                    "Staions favorites",
+                    "Stations favorites",
                   ]),
                   TextBlock(
                     text: "Ces informations sont collectées via notre formulaire d'inscription et sont stockées dans une base de données sécurisée.",
