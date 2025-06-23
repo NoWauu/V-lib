@@ -43,6 +43,11 @@ phone_app/
 
 In order to launch the app, you must have [Flutter SDK](https://docs.flutter.dev/get-started/install) installed
 
+## API Url
+
+Put the URL of your API in `lib/config.dart`.  
+By default, it is on 10.0.2.2
+
 ## Server setup
 
 Create a `secrets.properties` file in the `android` folder. The file should contain your Google Maps API key following this format:
