@@ -3,6 +3,7 @@ import 'package:phone_app/buttons/btn_tabs_account.dart';
 import 'package:phone_app/buttons/disconnect.dart';
 import 'package:phone_app/pages/about_us.dart';
 import 'package:phone_app/pages/account_info.dart';
+import 'package:phone_app/pages/contact.dart';
 import 'package:phone_app/pages/history.dart';
 import 'package:phone_app/pages/legal_page.dart';
 import 'package:phone_app/pages/privacy_policy.dart';
@@ -64,7 +65,7 @@ class AccountPage extends StatelessWidget {
 
               ButtonTabs(
                 text: "Informations",
-                icon: Icons.person,
+                icon: Icons.person_outline_rounded,
                 onPressed: () => _goTo(context, AccountInfoPage()),
               ),
               SizedBox(height: 24),
@@ -76,13 +77,13 @@ class AccountPage extends StatelessWidget {
               SizedBox(height: 24),
               ButtonTabs(
                 text: "Confidentialité",
-                icon: Icons.policy_rounded,
+                icon: Icons.policy_outlined,
                 onPressed: () => _goTo(context, privacyPolicy()),
               ),
               SizedBox(height: 24),
               ButtonTabs(
                 text: "Mentions légales",
-                icon: Icons.gavel,
+                icon: Icons.gavel_outlined,
                 onPressed: () => _goTo(context, legalPage()),
               ),
               SizedBox(height: 24),
@@ -90,6 +91,12 @@ class AccountPage extends StatelessWidget {
                 text: "À propos",
                 icon: Icons.info_outline,
                 onPressed: () => _goTo(context, aboutUsPage()),
+              ),
+              SizedBox(height: 24,),
+              ButtonTabs(
+                text: "Contact",
+                icon: Icons.mail_outline_rounded,
+                onPressed: () => _goTo(context, ContactPage())
               ),
               SizedBox(height: 24),
               ButtonDisconnect(

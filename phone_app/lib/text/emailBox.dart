@@ -16,7 +16,7 @@ class EmailBox extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          fontSize: 19,
+          fontSize: 17,
           color: Theme.of(context).colorScheme.onSurface,        ),
         textAlign: TextAlign.center,
       ),
