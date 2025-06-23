@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phone_app/models/station.dart';
 import 'package:phone_app/text/sectionTitle.dart';
 import 'package:phone_app/text/textBlock.dart';
 import 'package:http/http.dart' as http;
@@ -7,7 +8,7 @@ import '../auth/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 import '../config.dart';
 import 'dart:async';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:phone_app/maps/google_maps.dart';
 
 
 class FavoritesPage extends StatefulWidget {
@@ -56,11 +57,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
     }
   }
 
-void _openGoogleMaps(Map station) async {
-  final url = 'https://www.google.com/maps/dir/?api=1&destination=${station['latitude']},${station['longitude']}&travelmode=walking';
-  await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
-}
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -91,11 +87,13 @@ void _openGoogleMaps(Map station) async {
                           itemCount: _stations.length,
                           itemBuilder: (context, index) {
                             final station = _stations[index];
+                            final station_map = Station.fromJson(station);
                             return Card(
                               child: ListTile(
-                                title: Text(station['name'] ?? 'Station'),
-                                subtitle: Text('Capacité : ${station['capacity']}'),
-                                onTap: () => _openGoogleMaps(station),
+                                title: Text(station_map.name),
+                                subtitle: Text('Capacité : ${station_map.capacity}'),
+                            
+                                onTap: () => openGoogleMaps(station_map),
                               ),
                             );
                           },
