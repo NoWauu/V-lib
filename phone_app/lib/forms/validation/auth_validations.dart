@@ -18,7 +18,7 @@ FormFieldValidator<String> checkEmail = (value) {
   if (value == null || value.isEmpty) {
     return "Champ vide.";
   } else if (!emailRegex.hasMatch(value)) {
-    return "Format invalide.";
+    return "Format invalide. Attention, les majuscules ne sont pas acceptées.";
   }
 
   return null;
