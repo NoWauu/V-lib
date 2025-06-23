@@ -29,6 +29,8 @@ The project is split into 3 folders:
 
 `Ressources` contains all the diagrams made for the application.
 
+`phone_app` contains the mobile application made with Flutter.
+
 ## Installation and startup
 
 To configure and run the application, you must follow the guides included in the `README.md` files located in the `backend` and `webapp` folders.
