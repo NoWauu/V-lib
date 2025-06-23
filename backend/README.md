@@ -36,6 +36,8 @@ To do that, create a file named `.env`.
 The structure must look like this:
 
 ```
+RUN_DB_UPDATE=1
+
 DJANGO_SECRET_KEY="insert your key here"
 
 WEBAPP_URL="http://localhost:3000"

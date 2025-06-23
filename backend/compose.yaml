@@ -11,9 +11,9 @@ services:
       - "8000:8000"
     environment:
       - RESEND_KEY=re_ZaRQzbQ8_8zYqakSnTSp16K6PxfYyag4L
+      - RUN_DB_UPDATE=1
     depends_on:
       - db
-
 
   db:
     container_name: vlib-db
@@ -23,7 +23,7 @@ services:
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: "vlib"
     ports:
-      - "5432:28152"
+      - "5455:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
 

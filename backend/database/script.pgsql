@@ -1,13 +1,4 @@
-DROP TABLE IF EXISTS bikes CASCADE;
-DROP TABLE IF EXISTS locations CASCADE;
-DROP TABLE IF EXISTS rents CASCADE;
-DROP TABLE IF EXISTS favorites CASCADE;
-DROP TABLE IF EXISTS stations CASCADE;
-DROP TABLE IF EXISTS auth_tokens CASCADE;
-DROP TABLE IF EXISTS email_tokens;
-DROP TABLE IF EXISTS users CASCADE;
-
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id_user SERIAL PRIMARY KEY,
     firstname TEXT NOT NULL,
     lastname TEXT NOT NULL,
@@ -20,7 +11,7 @@ CREATE TABLE users (
     UNIQUE (email_hash)
 );
 
-CREATE TABLE auth_tokens (
+CREATE TABLE IF NOT EXISTS auth_tokens (
     token TEXT,
     id_user INT NOT NULL,
     expiration TIMESTAMP WITH TIME ZONE,
@@ -28,7 +19,7 @@ CREATE TABLE auth_tokens (
     PRIMARY KEY (token)
 );
 
-CREATE TABLE email_tokens (
+CREATE TABLE IF NOT EXISTS email_tokens (
     token TEXT,
     id_user INT NOT NULL,
     expiration TIMESTAMP WITH TIME ZONE,
@@ -36,7 +27,7 @@ CREATE TABLE email_tokens (
     PRIMARY KEY (token)
 );
 
-CREATE TABLE locations (
+CREATE TABLE IF NOT EXISTS locations (
     id_location SERIAL,
     latitude FLOAT NOT NULL,
     longitude FLOAT NOT NULL,
@@ -44,7 +35,7 @@ CREATE TABLE locations (
     PRIMARY KEY (id_location)
 );
 
-CREATE TABLE stations (
+CREATE TABLE IF NOT EXISTS stations (
     id_station SERIAL,
     name TEXT NOT NULL,
     id_location INT NOT NULL,
@@ -54,14 +45,14 @@ CREATE TABLE stations (
     PRIMARY KEY (id_station)
 );
 
-CREATE TABLE bikes (
+CREATE TABLE IF NOT EXISTS bikes (
     id_station INT REFERENCES stations(id_station) ON DELETE CASCADE,
     nb_electric INT NOT NULL,
     nb_mechanic INT NOT NULL,
     PRIMARY KEY (id_station)
 );
 
-CREATE TABLE rents (
+CREATE TABLE IF NOT EXISTS rents (
     id_rent SERIAL,
     id_user INT NOT NULL,
     id_station INT NOT NULL,
@@ -72,7 +63,7 @@ CREATE TABLE rents (
     PRIMARY KEY (id_rent)
 );
 
-CREATE TABLE favorites (
+CREATE TABLE IF NOT EXISTS favorites (
     id_user INT NOT NULL,
     id_station INT NOT NULL,
     PRIMARY KEY (id_user, id_station),
