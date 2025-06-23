@@ -59,7 +59,7 @@ cd phone_app ; flutter pub get ; flutter run
 
 To build an APK ready for production, run this command in a terminal:
 
-```
+```bash
 cd phone_app ; flutter pub get ; flutter build apk
 ```
 
