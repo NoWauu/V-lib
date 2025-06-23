@@ -4,9 +4,9 @@ FROM python:3.12.10-slim AS builder
 # Install system dependencies
 RUN apt update && apt install -y --no-install-recommends \
     build-essential \
+    dos2unix \
     gcc \
     libpq-dev \
-    dos2unix \
  && apt clean \
  && rm -rf /var/lib/apt/lists/*
 
@@ -24,6 +24,9 @@ RUN mkdir /install && \
 
 # Install dependencies
 RUN pip install --no-deps -r requirements.txt -t /install
+
+
+RUN dos2unix /app/launch.sh && chmod +x /app/launch.sh
 
 
 
