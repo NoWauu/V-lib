@@ -45,16 +45,22 @@ In order to launch the app, you must have [Flutter SDK](https://docs.flutter.dev
 
 ## Server setup
 
-Create a `.env` file containing your Google Maps API key following this format :
+Create a `.env` file containing your Google Maps API key following this format:
 ```env
 GOOGLE_MAPS_API_KEY=<your key>
 ```
 if this key is not set or not valid, the app will run but you will not be able to load Google Maps
 
-To start the app, first open a terminal then run this command
+To start the app in development, first open a terminal then run this command:
 
 ```bash
 cd phone_app ; flutter pub get ; flutter run
+```
+
+To build an APK ready for production, run this command in a terminal:
+
+```
+cd phone_app ; flutter pub get ; flutter build apk
 ```
 
 Have fun with our app !
