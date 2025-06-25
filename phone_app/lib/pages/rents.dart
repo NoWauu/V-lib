@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -47,21 +48,123 @@ class RentsPage extends State<MapSample> {
     _setInitialLocation();
   }
 
+
   Future<void> _fetchStations() async {
+    // Try pagination first (requires Django changes), fall back to full request
     try {
-      final response = await http.get(Uri.parse('http://$apiUrl/stations/get-stations/'));
+      await _fetchStationsPaginated();
+    } catch (e) {
+      debugPrint('Pagination failed, trying full request: $e');
+      await _fetchStationsFullRequest();
+    }
+  }
+
+  Future<void> _fetchStationsPaginated() async {
+    List<Station> allStations = [];
+    int page = 1;
+    const pageSize = 100;
+
+    while (true) {
+      debugPrint('Fetching page $page...');
+
+      try {
+        final response = await http.get(
+          Uri.http(apiUrl, 'stations/get-stations/', {
+            'page': page.toString(),
+            'page_size': pageSize.toString(),
+          }),
+        ).timeout(const Duration(seconds: 30));
+
+        if (response.statusCode == 200) {
+          final decoded = jsonDecode(response.body);
+          final List<dynamic> pageData = decoded['stations'] ?? [];
+
+          if (pageData.isEmpty) break; // No more data
+
+          final pageStations = pageData.map((e) => Station.fromJson(e)).toList();
+          allStations.addAll(pageStations);
+
+          debugPrint('Page $page: ${pageStations.length} stations (total: ${allStations.length})');
+
+          // Update UI progressively
+          setState(() {
+            _stations = List.from(allStations);
+          });
+
+          if (pageStations.length < pageSize) break; // Last page
+          page++;
+
+          await Future.delayed(const Duration(milliseconds: 100));
+
+        } else if (response.statusCode == 404) {
+          // Pagination not implemented, throw to fall back
+          throw Exception('Pagination not available');
+        } else {
+          throw Exception('HTTP ${response.statusCode}');
+        }
+      } catch (e) {
+        if (page == 1) rethrow; // If first page fails, try full request
+        debugPrint('Page $page failed: $e');
+        break; // Use what we have so far
+      }
+    }
+
+    if (allStations.isNotEmpty) {
+      setState(() {
+        _stations = allStations;
+        _updateMarkers();
+      });
+      debugPrint('Pagination complete: ${allStations.length} stations loaded');
+    } else {
+      throw Exception('No stations loaded via pagination');
+    }
+  }
+
+  Future<void> _fetchStationsFullRequest() async {
+    debugPrint('Attempting full request with reduced timeout...');
+
+    try {
+      // Single attempt with shorter timeout - if server can't handle it, fail fast
+      final response = await http.get(
+        Uri.http(apiUrl, 'stations/get-stations/'),
+      ).timeout(const Duration(seconds: 45));
+
       if (response.statusCode == 200) {
+        debugPrint("Full response: ${response.body.length} chars");
+
+        if (response.body.length < 50000) {
+          throw Exception('Response too short: ${response.body.length} chars');
+        }
+
         final decoded = jsonDecode(response.body);
         final List<dynamic> data = decoded['stations'] ?? [];
+
         setState(() {
           _stations = data.map((e) => Station.fromJson(e)).toList();
           _updateMarkers();
         });
+
+        debugPrint('Full request success: ${_stations.length} stations');
       } else {
-        debugPrint('Erreur API: \\${response.statusCode} - \\${response.body}');
+        throw Exception('HTTP ${response.statusCode}');
       }
+
     } catch (e) {
-      debugPrint('Erreur de connexion: \${e.toString()}');
+      debugPrint('Full request failed: $e');
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Server cannot handle large request. Please implement pagination on server.'),
+            duration: Duration(seconds: 5),
+            action: SnackBarAction(
+              label: 'Retry',
+              onPressed: _fetchStations,
+            ),
+          ),
+        );
+      }
+      rethrow;
     }
   }
 
@@ -239,7 +342,7 @@ class RentsPage extends State<MapSample> {
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erreur réseau : \\${e.toString()}')),
+        SnackBar(content: Text('Erreur réseau : ${e.toString()}')),
       );
     }
 
