@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -321,7 +320,7 @@ class RentsPage extends State<MapSample> {
     try {
       final request = http.MultipartRequest('POST', url);
       request.fields['token'] = token.toString();
-      request.fields['id_station'] = _stations.indexOf(station).toString();
+      request.fields['station_code'] = station.code.toString();
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);
       if (response.statusCode == 200) {
