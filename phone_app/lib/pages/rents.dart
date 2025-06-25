@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -232,48 +231,50 @@ class RentsPage extends State<MapSample> {
   }
 
   Widget _buildStationCard(Station station) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(station.name, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              IconButton(
-                icon: Icon(_isFavorite(station) ? Icons.favorite : Icons.favorite_border, color: Colors.red),
-                onPressed: () => _toggleFavorite(station),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text('Vélos disponibles : ${station.capacity}', style: const TextStyle(fontSize: 16)),
-          const SizedBox(height: 16),
-          SizedBox(
-            width: double.infinity,
-            child: Row(
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: ElevatedButton.icon(
-                    icon: const Icon(Icons.directions),
-                    label: const Text('Itinéraire Google Maps'),
-                    onPressed: () => openGoogleMaps(station),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: ElevatedButton.icon(
-                    icon: const Icon(Icons.lock),
-                    label: const Text('Réserver'),
-                    onPressed: () => _reserveStation(station),
-                  ),
+                Text(station.name, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                IconButton(
+                  icon: Icon(_isFavorite(station) ? Icons.favorite : Icons.favorite_border, color: Colors.red),
+                  onPressed: () => _toggleFavorite(station),
                 ),
               ],
             ),
-          ),
-        ],
+            const SizedBox(height: 8),
+            Text('Vélos disponibles : ${station.capacity}', style: const TextStyle(fontSize: 16)),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      icon: const Icon(Icons.directions),
+                      label: const Text('Itinéraire Google Maps'),
+                      onPressed: () => openGoogleMaps(station),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      icon: const Icon(Icons.lock),
+                      label: const Text('Réserver'),
+                      onPressed: () => _reserveStation(station),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
