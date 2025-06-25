@@ -42,24 +42,26 @@ class _MainLayoutState extends State<MainLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _getPage(_selectedIndex),
-      bottomNavigationBar: Container(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        padding: const EdgeInsets.only(left: 24, right:24, bottom: 18, top: 6), // Exterior margins
+      bottomNavigationBar: SafeArea(
         child: Container(
-          decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(50),
-          ),
-          padding: const EdgeInsets.all(10), // Interior
-          child: GNav(
-            color: Colors.green,
-            activeColor: Colors.green,
-            tabBackgroundColor: Colors.green.withValues(alpha: 0.25),
-            padding: const EdgeInsets.all(16),
-            gap: 12,
-            selectedIndex: _selectedIndex,
-            onTabChange: _onTabTapped,
-            tabs: _tabs,
+          color: Theme.of(context).scaffoldBackgroundColor,
+          padding: const EdgeInsets.only(left: 24, right:24, bottom: 6, top: 6), // Exterior margins
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(50),
+            ),
+            padding: const EdgeInsets.all(10), // Interior
+            child: GNav(
+              color: Colors.green,
+              activeColor: Colors.green,
+              tabBackgroundColor: Colors.green.withValues(alpha: 0.25),
+              padding: const EdgeInsets.all(16),
+              gap: 12,
+              selectedIndex: _selectedIndex,
+              onTabChange: _onTabTapped,
+              tabs: _tabs,
+            ),
           ),
         ),
       ),
