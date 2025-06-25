@@ -14,6 +14,8 @@ export DB_NAME="$DB_NAME"
 export DB_USER="$DB_USER"
 export DB_PASSWORD="$DB_PASSWORD"
 
+touch ".env"
+
 # Run setup check
 OUTPUT=$(python setup.py)
 TRIES=0
@@ -41,7 +43,6 @@ export PGPASSWORD="$DB_PASSWORD"
 psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" -f database/script.pgsql
 
 echo "Database setup complete"
-
 
 # Check setup success
 if echo "$OUTPUT" | grep -q "success"; then
