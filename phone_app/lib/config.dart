@@ -1,1 +1,1 @@
-final String apiUrl = "10.0.2.2:8000";
+final String apiUrl = "86.252.47.179:7777";

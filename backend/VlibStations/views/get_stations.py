@@ -29,7 +29,7 @@ def get_stations_request(req: HttpRequest) -> JsonResponse:
     if page_size > 1000:
         return JsonResponse({"error": "Page size cannot exceed 1000"}, status=400)
     
-    return JsonResponse(get_stations(page, page_size)['data'], safe=False)
+    return JsonResponse(get_stations(page, page_size), safe=False)
 
 
 def get_stations(page: int, page_size: int) -> dict:
@@ -53,6 +53,4 @@ def get_stations(page: int, page_size: int) -> dict:
             "latitude": location.latitude,
             "longitude": location.longitude
         })
-        
-    
-    return {"data": {"stations": STATIONS_LIST}}
+    return {"stations": STATIONS_LIST}
