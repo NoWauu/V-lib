@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS rents (
 CREATE TABLE IF NOT EXISTS favorites (
     id_user INT NOT NULL,
     id_station INT NOT NULL,
-    PRIMARY KEY (id_user, station_code),
+    PRIMARY KEY (id_user, id_station),
     FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE,
-    FOREIGN KEY (station_code) REFERENCES stations(station_code) ON DELETE CASCADE
+    FOREIGN KEY (id_station) REFERENCES stations(id_station) ON DELETE CASCADE
 );

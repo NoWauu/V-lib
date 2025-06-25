@@ -26,8 +26,8 @@ def station_favorite_request(req: HttpRequest) -> JsonResponse:
 
     user = AuthToken.objects.filter(token=token).first().id_user
 
-    station_code = req.POST.get('station_code')
-    station = Station.objects.filter(station_code=station_code).first()
+    id_station = req.POST.get('id_station')
+    station = Station.objects.filter(id_station=id_station).first()
 
     if not station:
         return JsonResponse({
@@ -35,14 +35,14 @@ def station_favorite_request(req: HttpRequest) -> JsonResponse:
             "message": "Missing parameters"
         }, status=400)
 
-    if Favorite.objects.filter(id_user=user, station_code=station_code).first():
-        Favorite.objects.filter(id_user=user, station_code=station_code).delete()
+    if Favorite.objects.filter(id_user=user, id_station=station).first():
+        Favorite.objects.filter(id_user=user, id_station=station).delete()
         return JsonResponse({
             "status": "success",
             "message": "Station removed from favorites"
         }, status=200)
     else:
-        Favorite.objects.create(id_user=user, station_code=station_code)
+        Favorite.objects.create(id_user=user, id_station=station)
         return JsonResponse({
             "status": "success",
             "message": "Station added to favorites"
