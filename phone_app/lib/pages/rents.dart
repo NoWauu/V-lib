@@ -44,8 +44,22 @@ class RentsPage extends State<MapSample> {
   @override
   void initState() {
     super.initState();
-    _fetchStations();
-    _setInitialLocation();
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
+    try {
+      await _fetchStations();
+      await _setInitialLocation();
+    } catch (e) {
+      debugPrint('Initialization error: $e');
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
 
@@ -176,12 +190,9 @@ class RentsPage extends State<MapSample> {
           target: LatLng(position.latitude, position.longitude),
           zoom: 16.0,
         );
-        _isLoading = false;
       });
     } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
+      _currentCameraPosition = baseLocation;
     }
   }
 
@@ -189,7 +200,8 @@ class RentsPage extends State<MapSample> {
       bearing: 0.0,
       target: LatLng(48.866667, 2.333333),
       tilt: 0.0,
-      zoom: 10.0);
+      zoom: 10.0
+  );
 
   List<Station> get _filteredStations {
     if (_searchQuery.isEmpty) return _stations;
@@ -350,9 +362,9 @@ class RentsPage extends State<MapSample> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
+    if (_isLoading || _currentCameraPosition == null) {
+      return Scaffold(
+        body: Center(child: CircularProgressIndicator(color: Colors.green.shade700,)),
       );
     }
     final suggestions = _searchQuery.isEmpty
