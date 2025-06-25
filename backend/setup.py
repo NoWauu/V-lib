@@ -29,13 +29,13 @@ DB_PORT = os.getenv("DB_PORT")
 
 REPLACE_STR = {
     "replace_django_secret_key": DJANGO_SECRET_KEY,
-    "replace_rsa_public_key": RSA_PUBLIC_KEY.save_pkcs1().decode('utf-8'),
-    "replace_rsa_private_key": RSA_PRIVATE_KEY.save_pkcs1().decode('utf-8'),
-    "replace_hmac_key": HMAC_KEY,
+    "replace_rsa_public": RSA_PUBLIC_KEY.save_pkcs1().decode('utf-8'),
+    "replace_rsa_private": RSA_PRIVATE_KEY.save_pkcs1().decode('utf-8'),
+    "replace_hmac": HMAC_KEY,
     "replace_resend": RESEND_KEY,
     "replace_front_url": FRONT_URL,
     "replace_db_name": DB_NAME,
-    "replace_db_user": DB_USER,
+    "replace_user_name": DB_USER,
     "replace_db_password": DB_PASSWORD,
     "replace_db_host": DB_HOST,
     "replace_db_port": DB_PORT,

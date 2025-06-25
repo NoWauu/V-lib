@@ -18,6 +18,8 @@ COPY . /app
 
 WORKDIR /app
 
+RUN mv .env.template .env
+
 # Install dependencies directly to /install
 RUN mkdir /install && \
     pipenv requirements > requirements.txt
@@ -27,7 +29,6 @@ RUN pip install --no-deps -r requirements.txt -t /install
 
 
 RUN dos2unix /app/launch.sh && chmod +x /app/launch.sh
-
 
 
 # Final image
