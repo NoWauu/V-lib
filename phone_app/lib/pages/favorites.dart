@@ -87,13 +87,13 @@ class _FavoritesPageState extends State<FavoritesPage> {
                           itemCount: _stations.length,
                           itemBuilder: (context, index) {
                             final station = _stations[index];
-                            final station_map = Station.fromJson(station);
+                            final stationMap = Station.fromJson(station);
                             return Card(
                               child: ListTile(
-                                title: Text(station_map.name),
-                                subtitle: Text('Capacité : ${station_map.capacity}'),
+                                title: Text(stationMap.name),
+                                subtitle: Text('Capacité : ${stationMap.capacity}'),
                             
-                                onTap: () => openGoogleMaps(station_map),
+                                onTap: () => openGoogleMaps(stationMap),
                               ),
                             );
                           },
