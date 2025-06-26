@@ -75,8 +75,8 @@ class _HistoryPageState extends State<HistoryPage> {
                         itemCount: _stations.length,
                         itemBuilder: (context, index) {
                           final station = _stations[index];
-                          final DateTime start = DateTime.parse(station['start_time']);
-                          final DateTime end = DateTime.parse(station['end_time']);
+                          final DateTime start = DateTime.parse(station['start_time']).add(Duration(hours: 2));
+                          final DateTime end = DateTime.parse(station['end_time']).add(Duration(hours: 2));
                           final bool isExpired = end.isBefore(DateTime.now());
                           return ReservationCard(
                             stationName: station['station_name'] ?? 'Station',
