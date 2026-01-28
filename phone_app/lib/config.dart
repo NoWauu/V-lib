@@ -1,0 +1,1 @@
+final String apiUrl = "86.252.47.179:7777";

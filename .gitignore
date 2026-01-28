@@ -9,3 +9,4 @@ logs/
 
 # Remove IDE files
 .idea/
+phone_app/android/secrets.properties

@@ -82,7 +82,7 @@ def register_request(req: HttpRequest) -> JsonResponse:
                 'phone_number': phone_number,
                 'token_data': {
                     'token': auth_token.token,
-                    'expiration_date': auth_token.expiration_time
+                    'expiration_date': auth_token.expiration_time.timestamp()
                 }
             }
         }, status=201)

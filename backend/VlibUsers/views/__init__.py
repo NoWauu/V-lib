@@ -7,3 +7,4 @@ from .add_rent import *
 from .remove_rent import *
 from .update_user import *
 from .get_user_history import *
+from .check_email_verified import *
